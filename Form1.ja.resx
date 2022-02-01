@@ -120,19 +120,13 @@
   <data name="label2.Text" xml:space="preserve">
     <value>password</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="textBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 154</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="textBox3.PasswordChar" type="System.Char, mscorlib" xml:space="preserve">
     <value>*</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="textBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 20</value>
-  </data>
-  <data name="textBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
   </data>
   <data name="textBox2.PasswordChar" type="System.Char, mscorlib" xml:space="preserve">
     <value>*</value>
