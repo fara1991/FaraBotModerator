@@ -110,6 +110,29 @@ namespace FaraBotModerator
             this.Timer1TextBox = new System.Windows.Forms.TextBox();
             this.Timer1Label = new System.Windows.Forms.Label();
             this.Timer1NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.FixedTimer1DateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.FixedTimer1CheckBox = new System.Windows.Forms.CheckBox();
+            this.FixedTimer1TextBox = new System.Windows.Forms.TextBox();
+            this.Timer4CheckBox = new System.Windows.Forms.CheckBox();
+            this.Timer4TextBox = new System.Windows.Forms.TextBox();
+            this.Timer4Label = new System.Windows.Forms.Label();
+            this.Timer4NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.FixedTimer2TextBox = new System.Windows.Forms.TextBox();
+            this.FixedTimer2CheckBox = new System.Windows.Forms.CheckBox();
+            this.FixedTimer2DateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.FixedTimer3TextBox = new System.Windows.Forms.TextBox();
+            this.FixedTimer3CheckBox = new System.Windows.Forms.CheckBox();
+            this.FixedTimer3DateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.FixedTimer4TextBox = new System.Windows.Forms.TextBox();
+            this.FixedTimer4CheckBox = new System.Windows.Forms.CheckBox();
+            this.FixedTimer4DateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.FixedTimer5TextBox = new System.Windows.Forms.TextBox();
+            this.FixedTimer5CheckBox = new System.Windows.Forms.CheckBox();
+            this.FixedTimer5DateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.MenuTab.SuspendLayout();
             this.MainSettingTab.SuspendLayout();
             this.TwitterGroupBox.SuspendLayout();
@@ -124,10 +147,13 @@ namespace FaraBotModerator
             this.DeepLAPIProGroupBox.SuspendLayout();
             this.DeepLAPIFreeGroupBox.SuspendLayout();
             this.TimerTab.SuspendLayout();
+            this.FixedNotificationGroupBox.SuspendLayout();
             this.CycleNotificationGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.Timer3NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.Timer2NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.Timer1NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer4NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuTab
@@ -686,7 +712,7 @@ namespace FaraBotModerator
             this.AutoBotChildTab.Location = new System.Drawing.Point(3, 3);
             this.AutoBotChildTab.Name = "AutoBotChildTab";
             this.AutoBotChildTab.SelectedIndex = 0;
-            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 427);
+            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 533);
             this.AutoBotChildTab.TabIndex = 0;
             // 
             // TranslateTab
@@ -696,7 +722,7 @@ namespace FaraBotModerator
             this.TranslateTab.Location = new System.Drawing.Point(4, 22);
             this.TranslateTab.Name = "TranslateTab";
             this.TranslateTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslateTab.Size = new System.Drawing.Size(754, 401);
+            this.TranslateTab.Size = new System.Drawing.Size(754, 507);
             this.TranslateTab.TabIndex = 0;
             this.TranslateTab.Text = "Translate";
             this.TranslateTab.ToolTipText = "チャット翻訳設定を行います。";
@@ -765,7 +791,7 @@ namespace FaraBotModerator
             this.TimerTab.Location = new System.Drawing.Point(4, 22);
             this.TimerTab.Name = "TimerTab";
             this.TimerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TimerTab.Size = new System.Drawing.Size(754, 401);
+            this.TimerTab.Size = new System.Drawing.Size(754, 507);
             this.TimerTab.TabIndex = 1;
             this.TimerTab.Text = "Timer";
             this.TimerTab.ToolTipText = "一定時間毎のTwitchチャット通知設定を行います。";
@@ -773,67 +799,90 @@ namespace FaraBotModerator
             // 
             // FixedNotificationGroupBox
             // 
-            this.FixedNotificationGroupBox.Location = new System.Drawing.Point(6, 203);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer5TextBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer5CheckBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer5DateTimePicker);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer4TextBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer4CheckBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer4DateTimePicker);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer3TextBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer3CheckBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer3DateTimePicker);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer2TextBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer2CheckBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer2DateTimePicker);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer1TextBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer1CheckBox);
+            this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer1DateTimePicker);
+            this.FixedNotificationGroupBox.Location = new System.Drawing.Point(6, 154);
             this.FixedNotificationGroupBox.Name = "FixedNotificationGroupBox";
-            this.FixedNotificationGroupBox.Size = new System.Drawing.Size(742, 193);
+            this.FixedNotificationGroupBox.Size = new System.Drawing.Size(742, 144);
             this.FixedNotificationGroupBox.TabIndex = 1;
             this.FixedNotificationGroupBox.TabStop = false;
             this.FixedNotificationGroupBox.Text = "Fixed Notifications";
             // 
             // CycleNotificationGroupBox
             // 
+            this.CycleNotificationGroupBox.Controls.Add(this.checkBox1);
+            this.CycleNotificationGroupBox.Controls.Add(this.textBox2);
+            this.CycleNotificationGroupBox.Controls.Add(this.label1);
+            this.CycleNotificationGroupBox.Controls.Add(this.numericUpDown1);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer4CheckBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer4TextBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer4Label);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer4NumericUpDown);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer3CheckBox);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer3TextBox);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer3Label);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer3NumericUpDown);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer2CheckBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer1NumericUpDown);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer2NumericUpDown);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer2TextBox);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer2Label);
-            this.CycleNotificationGroupBox.Controls.Add(this.Timer2NumericUpDown);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer1CheckBox);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer1TextBox);
             this.CycleNotificationGroupBox.Controls.Add(this.Timer1Label);
-            this.CycleNotificationGroupBox.Controls.Add(this.Timer1NumericUpDown);
             this.CycleNotificationGroupBox.Location = new System.Drawing.Point(6, 3);
             this.CycleNotificationGroupBox.Name = "CycleNotificationGroupBox";
-            this.CycleNotificationGroupBox.Size = new System.Drawing.Size(742, 193);
+            this.CycleNotificationGroupBox.Size = new System.Drawing.Size(742, 145);
             this.CycleNotificationGroupBox.TabIndex = 0;
             this.CycleNotificationGroupBox.TabStop = false;
             this.CycleNotificationGroupBox.Text = "Cycle Notifications";
             // 
             // Timer3CheckBox
             // 
-            this.Timer3CheckBox.Location = new System.Drawing.Point(6, 91);
+            this.Timer3CheckBox.Location = new System.Drawing.Point(6, 68);
             this.Timer3CheckBox.Name = "Timer3CheckBox";
-            this.Timer3CheckBox.Size = new System.Drawing.Size(62, 26);
+            this.Timer3CheckBox.Size = new System.Drawing.Size(62, 19);
             this.Timer3CheckBox.TabIndex = 8;
             this.Timer3CheckBox.Text = "Timer3";
             this.Timer3CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer3TextBox
             // 
-            this.Timer3TextBox.Location = new System.Drawing.Point(204, 95);
+            this.Timer3TextBox.Location = new System.Drawing.Point(246, 68);
             this.Timer3TextBox.Name = "Timer3TextBox";
-            this.Timer3TextBox.Size = new System.Drawing.Size(532, 20);
+            this.Timer3TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer3TextBox.TabIndex = 11;
             // 
             // Timer3Label
             // 
-            this.Timer3Label.Location = new System.Drawing.Point(119, 92);
+            this.Timer3Label.Location = new System.Drawing.Point(161, 68);
             this.Timer3Label.Name = "Timer3Label";
-            this.Timer3Label.Size = new System.Drawing.Size(79, 25);
+            this.Timer3Label.Size = new System.Drawing.Size(79, 20);
             this.Timer3Label.TabIndex = 10;
-            this.Timer3Label.Text = "minutes/times";
+            this.Timer3Label.Text = "seconds/times";
             this.Timer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Timer3NumericUpDown
             // 
             this.Timer3NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer3NumericUpDown.Location = new System.Drawing.Point(74, 95);
+            this.Timer3NumericUpDown.Location = new System.Drawing.Point(98, 68);
             this.Timer3NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
             this.Timer3NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
             this.Timer3NumericUpDown.Name = "Timer3NumericUpDown";
-            this.Timer3NumericUpDown.Size = new System.Drawing.Size(39, 20);
+            this.Timer3NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer3NumericUpDown.TabIndex = 9;
             this.Timer3NumericUpDown.Tag = "";
             this.Timer3NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
@@ -841,37 +890,37 @@ namespace FaraBotModerator
             // 
             // Timer2CheckBox
             // 
-            this.Timer2CheckBox.Location = new System.Drawing.Point(6, 56);
+            this.Timer2CheckBox.Location = new System.Drawing.Point(6, 43);
             this.Timer2CheckBox.Name = "Timer2CheckBox";
-            this.Timer2CheckBox.Size = new System.Drawing.Size(62, 26);
+            this.Timer2CheckBox.Size = new System.Drawing.Size(62, 19);
             this.Timer2CheckBox.TabIndex = 4;
             this.Timer2CheckBox.Text = "Timer2";
             this.Timer2CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer2TextBox
             // 
-            this.Timer2TextBox.Location = new System.Drawing.Point(204, 60);
+            this.Timer2TextBox.Location = new System.Drawing.Point(246, 43);
             this.Timer2TextBox.Name = "Timer2TextBox";
-            this.Timer2TextBox.Size = new System.Drawing.Size(532, 20);
+            this.Timer2TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer2TextBox.TabIndex = 7;
             // 
             // Timer2Label
             // 
-            this.Timer2Label.Location = new System.Drawing.Point(119, 57);
+            this.Timer2Label.Location = new System.Drawing.Point(161, 43);
             this.Timer2Label.Name = "Timer2Label";
-            this.Timer2Label.Size = new System.Drawing.Size(79, 25);
+            this.Timer2Label.Size = new System.Drawing.Size(79, 20);
             this.Timer2Label.TabIndex = 6;
-            this.Timer2Label.Text = "minutes/times";
+            this.Timer2Label.Text = "seconds/times";
             this.Timer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Timer2NumericUpDown
             // 
             this.Timer2NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer2NumericUpDown.Location = new System.Drawing.Point(74, 60);
+            this.Timer2NumericUpDown.Location = new System.Drawing.Point(98, 43);
             this.Timer2NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
             this.Timer2NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
             this.Timer2NumericUpDown.Name = "Timer2NumericUpDown";
-            this.Timer2NumericUpDown.Size = new System.Drawing.Size(39, 20);
+            this.Timer2NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer2NumericUpDown.TabIndex = 5;
             this.Timer2NumericUpDown.Tag = "";
             this.Timer2NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
@@ -879,41 +928,247 @@ namespace FaraBotModerator
             // 
             // Timer1CheckBox
             // 
-            this.Timer1CheckBox.Location = new System.Drawing.Point(6, 20);
+            this.Timer1CheckBox.Location = new System.Drawing.Point(6, 18);
             this.Timer1CheckBox.Name = "Timer1CheckBox";
-            this.Timer1CheckBox.Size = new System.Drawing.Size(62, 26);
+            this.Timer1CheckBox.Size = new System.Drawing.Size(62, 19);
             this.Timer1CheckBox.TabIndex = 0;
             this.Timer1CheckBox.Text = "Timer1";
             this.Timer1CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer1TextBox
             // 
-            this.Timer1TextBox.Location = new System.Drawing.Point(204, 23);
+            this.Timer1TextBox.Location = new System.Drawing.Point(246, 18);
             this.Timer1TextBox.Name = "Timer1TextBox";
-            this.Timer1TextBox.Size = new System.Drawing.Size(532, 20);
+            this.Timer1TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer1TextBox.TabIndex = 3;
             // 
             // Timer1Label
             // 
-            this.Timer1Label.Location = new System.Drawing.Point(119, 21);
+            this.Timer1Label.Location = new System.Drawing.Point(161, 18);
             this.Timer1Label.Name = "Timer1Label";
-            this.Timer1Label.Size = new System.Drawing.Size(79, 25);
+            this.Timer1Label.Size = new System.Drawing.Size(79, 20);
             this.Timer1Label.TabIndex = 2;
-            this.Timer1Label.Text = "minutes/times";
+            this.Timer1Label.Text = "seconds/times";
             this.Timer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Timer1NumericUpDown
             // 
             this.Timer1NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer1NumericUpDown.Location = new System.Drawing.Point(74, 23);
+            this.Timer1NumericUpDown.Location = new System.Drawing.Point(98, 18);
             this.Timer1NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
             this.Timer1NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
             this.Timer1NumericUpDown.Name = "Timer1NumericUpDown";
-            this.Timer1NumericUpDown.Size = new System.Drawing.Size(39, 20);
+            this.Timer1NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer1NumericUpDown.TabIndex = 1;
             this.Timer1NumericUpDown.Tag = "";
             this.Timer1NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
             this.Timer1NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            // 
+            // FixedTimer1DateTimePicker
+            // 
+            this.FixedTimer1DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.FixedTimer1DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.FixedTimer1DateTimePicker.Location = new System.Drawing.Point(98, 18);
+            this.FixedTimer1DateTimePicker.Name = "FixedTimer1DateTimePicker";
+            this.FixedTimer1DateTimePicker.Size = new System.Drawing.Size(142, 20);
+            this.FixedTimer1DateTimePicker.TabIndex = 0;
+            this.FixedTimer1DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
+            // 
+            // FixedTimer1CheckBox
+            // 
+            this.FixedTimer1CheckBox.Location = new System.Drawing.Point(6, 19);
+            this.FixedTimer1CheckBox.Name = "FixedTimer1CheckBox";
+            this.FixedTimer1CheckBox.Size = new System.Drawing.Size(86, 19);
+            this.FixedTimer1CheckBox.TabIndex = 1;
+            this.FixedTimer1CheckBox.Text = "FixedTimer1";
+            this.FixedTimer1CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FixedTimer1TextBox
+            // 
+            this.FixedTimer1TextBox.Location = new System.Drawing.Point(246, 18);
+            this.FixedTimer1TextBox.Name = "FixedTimer1TextBox";
+            this.FixedTimer1TextBox.Size = new System.Drawing.Size(490, 20);
+            this.FixedTimer1TextBox.TabIndex = 2;
+            // 
+            // Timer4CheckBox
+            // 
+            this.Timer4CheckBox.Location = new System.Drawing.Point(6, 93);
+            this.Timer4CheckBox.Name = "Timer4CheckBox";
+            this.Timer4CheckBox.Size = new System.Drawing.Size(62, 19);
+            this.Timer4CheckBox.TabIndex = 12;
+            this.Timer4CheckBox.Text = "Timer4";
+            this.Timer4CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Timer4TextBox
+            // 
+            this.Timer4TextBox.Location = new System.Drawing.Point(246, 93);
+            this.Timer4TextBox.Name = "Timer4TextBox";
+            this.Timer4TextBox.Size = new System.Drawing.Size(490, 20);
+            this.Timer4TextBox.TabIndex = 15;
+            // 
+            // Timer4Label
+            // 
+            this.Timer4Label.Location = new System.Drawing.Point(161, 93);
+            this.Timer4Label.Name = "Timer4Label";
+            this.Timer4Label.Size = new System.Drawing.Size(79, 20);
+            this.Timer4Label.TabIndex = 14;
+            this.Timer4Label.Text = "seconds/times";
+            this.Timer4Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Timer4NumericUpDown
+            // 
+            this.Timer4NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
+            this.Timer4NumericUpDown.Location = new System.Drawing.Point(98, 93);
+            this.Timer4NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
+            this.Timer4NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer4NumericUpDown.Name = "Timer4NumericUpDown";
+            this.Timer4NumericUpDown.Size = new System.Drawing.Size(57, 20);
+            this.Timer4NumericUpDown.TabIndex = 13;
+            this.Timer4NumericUpDown.Tag = "";
+            this.Timer4NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.Timer4NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Location = new System.Drawing.Point(6, 118);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(62, 19);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.Text = "Timer5";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(246, 118);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(490, 20);
+            this.textBox2.TabIndex = 19;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(161, 118);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 20);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "seconds/times";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Increment = new decimal(new int[] {5, 0, 0, 0});
+            this.numericUpDown1.Location = new System.Drawing.Point(98, 118);
+            this.numericUpDown1.Maximum = new decimal(new int[] {120, 0, 0, 0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
+            this.numericUpDown1.TabIndex = 17;
+            this.numericUpDown1.Tag = "";
+            this.numericUpDown1.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.numericUpDown1.Value = new decimal(new int[] {15, 0, 0, 0});
+            // 
+            // FixedTimer2TextBox
+            // 
+            this.FixedTimer2TextBox.Location = new System.Drawing.Point(246, 43);
+            this.FixedTimer2TextBox.Name = "FixedTimer2TextBox";
+            this.FixedTimer2TextBox.Size = new System.Drawing.Size(490, 20);
+            this.FixedTimer2TextBox.TabIndex = 5;
+            // 
+            // FixedTimer2CheckBox
+            // 
+            this.FixedTimer2CheckBox.Location = new System.Drawing.Point(6, 43);
+            this.FixedTimer2CheckBox.Name = "FixedTimer2CheckBox";
+            this.FixedTimer2CheckBox.Size = new System.Drawing.Size(86, 19);
+            this.FixedTimer2CheckBox.TabIndex = 4;
+            this.FixedTimer2CheckBox.Text = "FixedTimer2";
+            this.FixedTimer2CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FixedTimer2DateTimePicker
+            // 
+            this.FixedTimer2DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.FixedTimer2DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.FixedTimer2DateTimePicker.Location = new System.Drawing.Point(98, 43);
+            this.FixedTimer2DateTimePicker.Name = "FixedTimer2DateTimePicker";
+            this.FixedTimer2DateTimePicker.Size = new System.Drawing.Size(142, 20);
+            this.FixedTimer2DateTimePicker.TabIndex = 3;
+            this.FixedTimer2DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
+            // 
+            // FixedTimer3TextBox
+            // 
+            this.FixedTimer3TextBox.Location = new System.Drawing.Point(246, 68);
+            this.FixedTimer3TextBox.Name = "FixedTimer3TextBox";
+            this.FixedTimer3TextBox.Size = new System.Drawing.Size(490, 20);
+            this.FixedTimer3TextBox.TabIndex = 8;
+            // 
+            // FixedTimer3CheckBox
+            // 
+            this.FixedTimer3CheckBox.Location = new System.Drawing.Point(6, 68);
+            this.FixedTimer3CheckBox.Name = "FixedTimer3CheckBox";
+            this.FixedTimer3CheckBox.Size = new System.Drawing.Size(86, 19);
+            this.FixedTimer3CheckBox.TabIndex = 7;
+            this.FixedTimer3CheckBox.Text = "FixedTimer3";
+            this.FixedTimer3CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FixedTimer3DateTimePicker
+            // 
+            this.FixedTimer3DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.FixedTimer3DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.FixedTimer3DateTimePicker.Location = new System.Drawing.Point(98, 68);
+            this.FixedTimer3DateTimePicker.Name = "FixedTimer3DateTimePicker";
+            this.FixedTimer3DateTimePicker.Size = new System.Drawing.Size(142, 20);
+            this.FixedTimer3DateTimePicker.TabIndex = 6;
+            this.FixedTimer3DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
+            // 
+            // FixedTimer4TextBox
+            // 
+            this.FixedTimer4TextBox.Location = new System.Drawing.Point(246, 93);
+            this.FixedTimer4TextBox.Name = "FixedTimer4TextBox";
+            this.FixedTimer4TextBox.Size = new System.Drawing.Size(490, 20);
+            this.FixedTimer4TextBox.TabIndex = 11;
+            // 
+            // FixedTimer4CheckBox
+            // 
+            this.FixedTimer4CheckBox.Location = new System.Drawing.Point(6, 93);
+            this.FixedTimer4CheckBox.Name = "FixedTimer4CheckBox";
+            this.FixedTimer4CheckBox.Size = new System.Drawing.Size(86, 19);
+            this.FixedTimer4CheckBox.TabIndex = 10;
+            this.FixedTimer4CheckBox.Text = "FixedTimer4";
+            this.FixedTimer4CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FixedTimer4DateTimePicker
+            // 
+            this.FixedTimer4DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.FixedTimer4DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.FixedTimer4DateTimePicker.Location = new System.Drawing.Point(98, 93);
+            this.FixedTimer4DateTimePicker.Name = "FixedTimer4DateTimePicker";
+            this.FixedTimer4DateTimePicker.Size = new System.Drawing.Size(142, 20);
+            this.FixedTimer4DateTimePicker.TabIndex = 9;
+            this.FixedTimer4DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
+            // 
+            // FixedTimer5TextBox
+            // 
+            this.FixedTimer5TextBox.Location = new System.Drawing.Point(246, 118);
+            this.FixedTimer5TextBox.Name = "FixedTimer5TextBox";
+            this.FixedTimer5TextBox.Size = new System.Drawing.Size(490, 20);
+            this.FixedTimer5TextBox.TabIndex = 14;
+            // 
+            // FixedTimer5CheckBox
+            // 
+            this.FixedTimer5CheckBox.Location = new System.Drawing.Point(6, 118);
+            this.FixedTimer5CheckBox.Name = "FixedTimer5CheckBox";
+            this.FixedTimer5CheckBox.Size = new System.Drawing.Size(86, 19);
+            this.FixedTimer5CheckBox.TabIndex = 13;
+            this.FixedTimer5CheckBox.Text = "FixedTimer5";
+            this.FixedTimer5CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FixedTimer5DateTimePicker
+            // 
+            this.FixedTimer5DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
+            this.FixedTimer5DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.FixedTimer5DateTimePicker.Location = new System.Drawing.Point(98, 118);
+            this.FixedTimer5DateTimePicker.Name = "FixedTimer5DateTimePicker";
+            this.FixedTimer5DateTimePicker.Size = new System.Drawing.Size(142, 20);
+            this.FixedTimer5DateTimePicker.TabIndex = 12;
+            this.FixedTimer5DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
             // 
             // FaraBotModeratorForm
             // 
@@ -946,13 +1201,47 @@ namespace FaraBotModerator
             this.DeepLAPIFreeGroupBox.ResumeLayout(false);
             this.DeepLAPIFreeGroupBox.PerformLayout();
             this.TimerTab.ResumeLayout(false);
+            this.FixedNotificationGroupBox.ResumeLayout(false);
+            this.FixedNotificationGroupBox.PerformLayout();
             this.CycleNotificationGroupBox.ResumeLayout(false);
             this.CycleNotificationGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize) (this.Timer3NumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.Timer2NumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.Timer1NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer4NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.TextBox FixedTimer4TextBox;
+        private System.Windows.Forms.CheckBox FixedTimer4CheckBox;
+        private System.Windows.Forms.DateTimePicker FixedTimer4DateTimePicker;
+        private System.Windows.Forms.TextBox FixedTimer5TextBox;
+        private System.Windows.Forms.CheckBox FixedTimer5CheckBox;
+        private System.Windows.Forms.DateTimePicker FixedTimer5DateTimePicker;
+
+        private System.Windows.Forms.TextBox FixedTimer3TextBox;
+        private System.Windows.Forms.CheckBox FixedTimer3CheckBox;
+        private System.Windows.Forms.DateTimePicker FixedTimer3DateTimePicker;
+
+        private System.Windows.Forms.TextBox FixedTimer2TextBox;
+        private System.Windows.Forms.CheckBox FixedTimer2CheckBox;
+        private System.Windows.Forms.DateTimePicker FixedTimer2DateTimePicker;
+
+        private System.Windows.Forms.CheckBox Timer4CheckBox;
+        private System.Windows.Forms.TextBox Timer4TextBox;
+        private System.Windows.Forms.Label Timer4Label;
+        private System.Windows.Forms.NumericUpDown Timer4NumericUpDown;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+
+        private System.Windows.Forms.TextBox FixedTimer1TextBox;
+
+        private System.Windows.Forms.CheckBox FixedTimer1CheckBox;
+
+        private System.Windows.Forms.DateTimePicker FixedTimer1DateTimePicker;
 
         private System.Windows.Forms.TextBox Timer1TextBox;
         private System.Windows.Forms.CheckBox Timer3CheckBox;
