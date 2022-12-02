@@ -17,7 +17,7 @@ namespace FaraBotModerator
         private TwitchApiController _twitchApiController;
         private TwitchPubSubController _twitchPubSubController;
         private TwitterController _twitterController;
-        
+
         // Secret Keys
         private string _twitchUserName;
         private string _twitchAccessToken;
@@ -55,17 +55,27 @@ namespace FaraBotModerator
 
             if (!string.IsNullOrEmpty(_twitchUserName))
             {
-                TwitchUserNameTextBox.Text = _twitchUserName;
+                TwitchClientUserNameTextBox.Text = _twitchUserName;
             }
 
             if (!string.IsNullOrEmpty(_twitchAccessToken))
             {
-                TwitchAccessTokenTextBox.Text = _twitchAccessToken;
+                TwitchClientAccessTokenTextBox.Text = _twitchAccessToken;
             }
 
             if (!string.IsNullOrEmpty(_twitchChannelName))
             {
-                TwitchChannelNameLabel.Text = $@"ChannelName: {_twitchChannelName}";
+                TwitchClientChannelNameTextBox.Text = _twitchChannelName;
+            }
+
+            if (!string.IsNullOrEmpty(_twitchApiClientId))
+            {
+                TwitchApiClientIdTextBox.Text = _twitchApiClientId;
+            }
+
+            if (!string.IsNullOrEmpty(_twitchApiSecret))
+            {
+                TwitchApiSecretTextBox.Text = _twitchApiSecret;
             }
 
             if (!string.IsNullOrEmpty(_twitterApiKey))
@@ -89,55 +99,21 @@ namespace FaraBotModerator
             }
         }
 
-        private void SaveSecretValue()
-        {
-            var secretKeys = new SecretKeyModel
-            {
-                Twitch = new TwitchSecretKeyModel
-                {
-                    Client = new TwitchClientKeyModel
-                    {
-                        UserName = _twitchUserName, 
-                        AccessToken = _twitchAccessToken,
-                        ChannelName = _twitchChannelName
-                    },
-                    Api = new TwitchApiKeyModel
-                    {
-                        ClientId = _twitchApiClientId,
-                        Secret = _twitchApiSecret
-                    },
-                    PubSub = new TwitchPubSubKeyModel
-                    {
-                        AccessToken = _twitchPubSubAccessToken,
-                        RefreshToken = _twitchPubSubRefreshToken
-                    }
-                },
-                Twitter = new TwitterKeyModel
-                {
-                    ApiKey = _twitterApiKey,
-                    ApiSecret = _twitterApiSecret
-                },
-                DeepL = new DeepLKeyModel
-                {
-                    FreeAuthKey = _deeplApiFreeAuthKey,
-                    ProAuthKey = _deeplApiProAuthKey
-                }
-            };
-
-            SecretKeyController.SaveKeys(secretKeys);
-        }
-
         private void TwitchConnectionButton_Click(object sender, EventArgs e)
         {
             try
             {
-                _twitchClientController = new TwitchClientController(_twitchUserName, _twitchAccessToken, _twitchChannelName, FollowEventTextBox.Text, RaidEventTextBox.Text, SubscriptionEventTextBox.Text, BitsEventTextBox.Text, GiftEventTextBox.Text, BouyomiChanConnectCheckBox.Checked);
+                _twitchClientController = new TwitchClientController(_twitchUserName, _twitchAccessToken,
+                    _twitchChannelName, FollowEventTextBox.Text, RaidEventTextBox.Text, SubscriptionEventTextBox.Text,
+                    BitsEventTextBox.Text, GiftEventTextBox.Text, BouyomiChanConnectCheckBox.Checked);
                 _twitchClientController.Connect();
-                
-                _twitchApiController = new TwitchApiController(_twitchClientController, _twitchApiClientId, _twitchApiSecret, TwitchUserNameTextBox.Text);
+
+                _twitchApiController = new TwitchApiController(_twitchClientController, _twitchApiClientId,
+                    _twitchApiSecret, TwitchClientUserNameTextBox.Text);
                 var channelId = _twitchApiController.GetTwitchChannelId();
-                
-                _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId, _twitchApiClientId, _twitchApiSecret);
+
+                _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId,
+                    _twitchApiClientId, _twitchApiSecret);
                 _twitchPubSubController.Connect();
                 TwitchConnectionStateLabel.Text = @"State: Connect";
             }
@@ -215,13 +191,83 @@ namespace FaraBotModerator
 
         private void Application_Exit(object sender, EventArgs e)
         {
-            SaveSecretValue();
+            SecretKeyController.SaveKeys(
+                TwitchClientUserNameTextBox.Text,
+                TwitchClientAccessTokenTextBox.Text,
+                TwitchClientChannelNameTextBox.Text,
+                TwitchApiClientIdTextBox.Text,
+                TwitchApiSecretTextBox.Text,
+                _twitchPubSubAccessToken,
+                _twitchPubSubRefreshToken,
+                _twitterApiKey,
+                _twitterApiSecret,
+                _deeplApiFreeAuthKey,
+                _deeplApiProAuthKey);
+
             Application.ApplicationExit -= Application_Exit;
         }
-        
+
         private void FollowTestButton_Click(object sender, EventArgs e)
         {
             // _twitchClientController
+        }
+
+        private void TwitchClientSaveButton_Click(object sender, EventArgs e)
+        {
+            SecretKeyController.SaveKeys(
+                TwitchClientUserNameTextBox.Text,
+                TwitchClientAccessTokenTextBox.Text,
+                TwitchClientChannelNameTextBox.Text,
+                TwitchApiClientIdTextBox.Text,
+                TwitchApiSecretTextBox.Text,
+                _twitchPubSubAccessToken,
+                _twitchPubSubRefreshToken,
+                _twitterApiKey,
+                _twitterApiSecret,
+                _deeplApiFreeAuthKey,
+                _deeplApiProAuthKey);
+        }
+
+        private void TwitchApiSaveButton_Click(object sender, EventArgs e)
+        {
+            SecretKeyController.SaveKeys(
+                TwitchClientUserNameTextBox.Text,
+                TwitchClientAccessTokenTextBox.Text,
+                TwitchClientChannelNameTextBox.Text,
+                TwitchApiClientIdTextBox.Text,
+                TwitchApiSecretTextBox.Text,
+                _twitchPubSubAccessToken,
+                _twitchPubSubRefreshToken,
+                _twitterApiKey,
+                _twitterApiSecret,
+                _deeplApiFreeAuthKey,
+                _deeplApiProAuthKey);        }
+
+        private void TwitterApiSaveButton_Click(object sender, EventArgs e)
+        {
+            SecretKeyController.SaveKeys(
+                TwitchClientUserNameTextBox.Text,
+                TwitchClientAccessTokenTextBox.Text,
+                TwitchClientChannelNameTextBox.Text,
+                TwitchApiClientIdTextBox.Text,
+                TwitchApiSecretTextBox.Text,
+                _twitchPubSubAccessToken,
+                _twitchPubSubRefreshToken,
+                _twitterApiKey,
+                _twitterApiSecret,
+                _deeplApiFreeAuthKey,
+                _deeplApiProAuthKey);        }
+
+        private void TwitterApiButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("https://developer.twitter.com/en/portal/dashboard");
+            }
+            catch (Exception ex)
+            {
+                LogController.OutputLog(ex.Message);
+            }
         }
     }
 }

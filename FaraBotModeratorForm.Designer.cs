@@ -36,6 +36,8 @@ namespace FaraBotModerator
             this.MainSettingTab = new System.Windows.Forms.TabPage();
             this.ChatBoxGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitterGroupBox = new System.Windows.Forms.GroupBox();
+            this.TwitterApiButton = new System.Windows.Forms.Button();
+            this.TwitterApiSaveButton = new System.Windows.Forms.Button();
             this.TwitterTweetTextBox = new System.Windows.Forms.GroupBox();
             this.TwitterSendRichTextBox = new System.Windows.Forms.RichTextBox();
             this.TwitterAPISecretTextBox = new System.Windows.Forms.TextBox();
@@ -47,29 +49,39 @@ namespace FaraBotModerator
             this.TwitterConnectionButton = new System.Windows.Forms.Button();
             this.TwitterDisconnectionButton = new System.Windows.Forms.Button();
             this.TwitchGroupBox = new System.Windows.Forms.GroupBox();
+            this.TwitchApiGroupBox = new System.Windows.Forms.GroupBox();
+            this.TwitchApiSaveButton = new System.Windows.Forms.Button();
+            this.TwitchApiSecretTextBox = new System.Windows.Forms.TextBox();
+            this.TwitchApiSecretLabel = new System.Windows.Forms.Label();
+            this.TwitchApiClientIdTextBox = new System.Windows.Forms.TextBox();
+            this.TwitchApiClientIdLabel = new System.Windows.Forms.Label();
+            this.TwitchClientGroupBox = new System.Windows.Forms.GroupBox();
+            this.TwitchClientAccessTokenButton = new System.Windows.Forms.Button();
+            this.TwitchClientSaveButton = new System.Windows.Forms.Button();
+            this.TwitchClientChannelNameTextBox = new System.Windows.Forms.TextBox();
+            this.TwitchClientUserNameLabel = new System.Windows.Forms.Label();
+            this.TwitchClientAccessTokenLabel = new System.Windows.Forms.Label();
+            this.TwitchClientChannelNameLabel = new System.Windows.Forms.Label();
+            this.TwitchClientUserNameTextBox = new System.Windows.Forms.TextBox();
+            this.TwitchClientAccessTokenTextBox = new System.Windows.Forms.TextBox();
             this.BouyomiChanConnectCheckBox = new System.Windows.Forms.CheckBox();
-            this.TwitchChannelNameLabel = new System.Windows.Forms.Label();
-            this.TwitchAccessTokenButton = new System.Windows.Forms.Button();
             this.TwitchConnectionStateLabel = new System.Windows.Forms.Label();
             this.TwitchDisconnectButton = new System.Windows.Forms.Button();
             this.TwitchConnectionButton = new System.Windows.Forms.Button();
-            this.TwitchAccessTokenTextBox = new System.Windows.Forms.TextBox();
-            this.TwitchUserNameTextBox = new System.Windows.Forms.TextBox();
-            this.TwitchAccessTokenLabel = new System.Windows.Forms.Label();
-            this.TwitchUserNameLabel = new System.Windows.Forms.Label();
             this.ReactionEventTab = new System.Windows.Forms.TabPage();
+            this.FollowTextLabel = new System.Windows.Forms.Label();
             this.GiftTestButton = new System.Windows.Forms.Button();
             this.BitsTestButton = new System.Windows.Forms.Button();
             this.SubscriptionTestButton = new System.Windows.Forms.Button();
             this.RaidTestButton = new System.Windows.Forms.Button();
             this.FollowTestButton = new System.Windows.Forms.Button();
             this.GiftEventTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.GiftTextLabel = new System.Windows.Forms.Label();
             this.ReplaceNotificationTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.BitsTextLabel = new System.Windows.Forms.Label();
             this.BitsEventTextBox = new System.Windows.Forms.TextBox();
             this.SubscriptionEventTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.SubscriptionTextLabel = new System.Windows.Forms.Label();
             this.RaidEventTextBox = new System.Windows.Forms.TextBox();
             this.RaidTextLabel = new System.Windows.Forms.Label();
             this.FollowEventTextBox = new System.Windows.Forms.TextBox();
@@ -86,19 +98,25 @@ namespace FaraBotModerator
             this.TimerTab = new System.Windows.Forms.TabPage();
             this.FixedNotificationGroupBox = new System.Windows.Forms.GroupBox();
             this.CycleNotificationGroupBox = new System.Windows.Forms.GroupBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.Timer3CheckBox = new System.Windows.Forms.CheckBox();
+            this.Timer3TextBox = new System.Windows.Forms.TextBox();
+            this.Timer3Label = new System.Windows.Forms.Label();
+            this.Timer3NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.Timer2CheckBox = new System.Windows.Forms.CheckBox();
+            this.Timer2TextBox = new System.Windows.Forms.TextBox();
+            this.Timer2Label = new System.Windows.Forms.Label();
+            this.Timer2NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.Timer1CheckBox = new System.Windows.Forms.CheckBox();
+            this.Timer1TextBox = new System.Windows.Forms.TextBox();
+            this.Timer1Label = new System.Windows.Forms.Label();
+            this.Timer1NumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.MenuTab.SuspendLayout();
             this.MainSettingTab.SuspendLayout();
             this.TwitterGroupBox.SuspendLayout();
             this.TwitterTweetTextBox.SuspendLayout();
             this.TwitchGroupBox.SuspendLayout();
+            this.TwitchApiGroupBox.SuspendLayout();
+            this.TwitchClientGroupBox.SuspendLayout();
             this.ReactionEventTab.SuspendLayout();
             this.AutoBotTab.SuspendLayout();
             this.AutoBotChildTab.SuspendLayout();
@@ -107,8 +125,9 @@ namespace FaraBotModerator
             this.DeepLAPIFreeGroupBox.SuspendLayout();
             this.TimerTab.SuspendLayout();
             this.CycleNotificationGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer3NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer2NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer1NumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuTab
@@ -116,10 +135,10 @@ namespace FaraBotModerator
             this.MenuTab.Controls.Add(this.MainSettingTab);
             this.MenuTab.Controls.Add(this.ReactionEventTab);
             this.MenuTab.Controls.Add(this.AutoBotTab);
-            this.MenuTab.Location = new System.Drawing.Point(12, 12);
+            this.MenuTab.Location = new System.Drawing.Point(12, 13);
             this.MenuTab.Name = "MenuTab";
             this.MenuTab.SelectedIndex = 0;
-            this.MenuTab.Size = new System.Drawing.Size(776, 426);
+            this.MenuTab.Size = new System.Drawing.Size(776, 565);
             this.MenuTab.TabIndex = 0;
             // 
             // MainSettingTab
@@ -130,7 +149,7 @@ namespace FaraBotModerator
             this.MainSettingTab.Location = new System.Drawing.Point(4, 22);
             this.MainSettingTab.Name = "MainSettingTab";
             this.MainSettingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MainSettingTab.Size = new System.Drawing.Size(768, 400);
+            this.MainSettingTab.Size = new System.Drawing.Size(768, 539);
             this.MainSettingTab.TabIndex = 0;
             this.MainSettingTab.Text = "Main Settings";
             this.MainSettingTab.ToolTipText = "Twitch接続やTwitter送信の設定を行います。";
@@ -138,15 +157,17 @@ namespace FaraBotModerator
             // 
             // ChatBoxGroupBox
             // 
-            this.ChatBoxGroupBox.Location = new System.Drawing.Point(365, 6);
+            this.ChatBoxGroupBox.Location = new System.Drawing.Point(365, 7);
             this.ChatBoxGroupBox.Name = "ChatBoxGroupBox";
-            this.ChatBoxGroupBox.Size = new System.Drawing.Size(397, 388);
+            this.ChatBoxGroupBox.Size = new System.Drawing.Size(397, 498);
             this.ChatBoxGroupBox.TabIndex = 2;
             this.ChatBoxGroupBox.TabStop = false;
             this.ChatBoxGroupBox.Text = "ChatBox";
             // 
             // TwitterGroupBox
             // 
+            this.TwitterGroupBox.Controls.Add(this.TwitterApiButton);
+            this.TwitterGroupBox.Controls.Add(this.TwitterApiSaveButton);
             this.TwitterGroupBox.Controls.Add(this.TwitterTweetTextBox);
             this.TwitterGroupBox.Controls.Add(this.TwitterAPISecretTextBox);
             this.TwitterGroupBox.Controls.Add(this.TwitterAPIKeyTextBox);
@@ -156,61 +177,81 @@ namespace FaraBotModerator
             this.TwitterGroupBox.Controls.Add(this.TwitterConnectionStateLabel);
             this.TwitterGroupBox.Controls.Add(this.TwitterConnectionButton);
             this.TwitterGroupBox.Controls.Add(this.TwitterDisconnectionButton);
-            this.TwitterGroupBox.Location = new System.Drawing.Point(6, 203);
+            this.TwitterGroupBox.Location = new System.Drawing.Point(6, 326);
             this.TwitterGroupBox.Name = "TwitterGroupBox";
-            this.TwitterGroupBox.Size = new System.Drawing.Size(353, 191);
+            this.TwitterGroupBox.Size = new System.Drawing.Size(353, 207);
             this.TwitterGroupBox.TabIndex = 1;
             this.TwitterGroupBox.TabStop = false;
             this.TwitterGroupBox.Text = "Twitter";
             // 
+            // TwitterApiButton
+            // 
+            this.TwitterApiButton.Location = new System.Drawing.Point(185, 66);
+            this.TwitterApiButton.Name = "TwitterApiButton";
+            this.TwitterApiButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterApiButton.TabIndex = 12;
+            this.TwitterApiButton.Text = "Twitter API";
+            this.TwitterApiButton.UseVisualStyleBackColor = true;
+            this.TwitterApiButton.Click += new System.EventHandler(this.TwitterApiButton_Click);
+            // 
+            // TwitterApiSaveButton
+            // 
+            this.TwitterApiSaveButton.Location = new System.Drawing.Point(266, 66);
+            this.TwitterApiSaveButton.Name = "TwitterApiSaveButton";
+            this.TwitterApiSaveButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterApiSaveButton.TabIndex = 11;
+            this.TwitterApiSaveButton.Text = "Save";
+            this.TwitterApiSaveButton.UseVisualStyleBackColor = true;
+            this.TwitterApiSaveButton.Click += new System.EventHandler(this.TwitterApiSaveButton_Click);
+            // 
             // TwitterTweetTextBox
             // 
             this.TwitterTweetTextBox.Controls.Add(this.TwitterSendRichTextBox);
-            this.TwitterTweetTextBox.Location = new System.Drawing.Point(6, 70);
+            this.TwitterTweetTextBox.Location = new System.Drawing.Point(6, 89);
             this.TwitterTweetTextBox.Name = "TwitterTweetTextBox";
-            this.TwitterTweetTextBox.Size = new System.Drawing.Size(341, 86);
+            this.TwitterTweetTextBox.Size = new System.Drawing.Size(341, 81);
             this.TwitterTweetTextBox.TabIndex = 10;
             this.TwitterTweetTextBox.TabStop = false;
             this.TwitterTweetTextBox.Text = "Tweet";
             // 
             // TwitterSendRichTextBox
             // 
-            this.TwitterSendRichTextBox.Location = new System.Drawing.Point(6, 18);
+            this.TwitterSendRichTextBox.Location = new System.Drawing.Point(6, 19);
             this.TwitterSendRichTextBox.Name = "TwitterSendRichTextBox";
-            this.TwitterSendRichTextBox.Size = new System.Drawing.Size(329, 62);
+            this.TwitterSendRichTextBox.Size = new System.Drawing.Size(329, 55);
             this.TwitterSendRichTextBox.TabIndex = 4;
             this.TwitterSendRichTextBox.Text = "test\n\n@game_Fara";
             // 
             // TwitterAPISecretTextBox
             // 
-            this.TwitterAPISecretTextBox.Location = new System.Drawing.Point(112, 37);
+            this.TwitterAPISecretTextBox.Location = new System.Drawing.Point(112, 40);
             this.TwitterAPISecretTextBox.Name = "TwitterAPISecretTextBox";
             this.TwitterAPISecretTextBox.PasswordChar = '●';
-            this.TwitterAPISecretTextBox.Size = new System.Drawing.Size(235, 19);
+            this.TwitterAPISecretTextBox.Size = new System.Drawing.Size(235, 20);
             this.TwitterAPISecretTextBox.TabIndex = 9;
             // 
             // TwitterAPIKeyTextBox
             // 
-            this.TwitterAPIKeyTextBox.Location = new System.Drawing.Point(112, 12);
+            this.TwitterAPIKeyTextBox.Location = new System.Drawing.Point(112, 13);
             this.TwitterAPIKeyTextBox.Name = "TwitterAPIKeyTextBox";
             this.TwitterAPIKeyTextBox.PasswordChar = '●';
-            this.TwitterAPIKeyTextBox.Size = new System.Drawing.Size(235, 19);
+            this.TwitterAPIKeyTextBox.Size = new System.Drawing.Size(235, 20);
             this.TwitterAPIKeyTextBox.TabIndex = 8;
             // 
             // TwitterAPISecretLabel
             // 
-            this.TwitterAPISecretLabel.Location = new System.Drawing.Point(6, 37);
+            this.TwitterAPISecretLabel.Location = new System.Drawing.Point(6, 40);
             this.TwitterAPISecretLabel.Name = "TwitterAPISecretLabel";
-            this.TwitterAPISecretLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitterAPISecretLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitterAPISecretLabel.TabIndex = 7;
             this.TwitterAPISecretLabel.Text = "API Secret";
             this.TwitterAPISecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitterAPIKeyLabel
             // 
-            this.TwitterAPIKeyLabel.Location = new System.Drawing.Point(6, 15);
+            this.TwitterAPIKeyLabel.Location = new System.Drawing.Point(6, 16);
             this.TwitterAPIKeyLabel.Name = "TwitterAPIKeyLabel";
-            this.TwitterAPIKeyLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitterAPIKeyLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitterAPIKeyLabel.TabIndex = 6;
             this.TwitterAPIKeyLabel.Text = "API Key";
             this.TwitterAPIKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -218,9 +259,9 @@ namespace FaraBotModerator
             // TwitterPushTweetButton
             // 
             this.TwitterPushTweetButton.Enabled = false;
-            this.TwitterPushTweetButton.Location = new System.Drawing.Point(112, 162);
+            this.TwitterPushTweetButton.Location = new System.Drawing.Point(112, 176);
             this.TwitterPushTweetButton.Name = "TwitterPushTweetButton";
-            this.TwitterPushTweetButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterPushTweetButton.Size = new System.Drawing.Size(75, 25);
             this.TwitterPushTweetButton.TabIndex = 5;
             this.TwitterPushTweetButton.Text = "Tweet";
             this.TwitterPushTweetButton.UseVisualStyleBackColor = true;
@@ -228,18 +269,18 @@ namespace FaraBotModerator
             // 
             // TwitterConnectionStateLabel
             // 
-            this.TwitterConnectionStateLabel.Location = new System.Drawing.Point(3, 167);
+            this.TwitterConnectionStateLabel.Location = new System.Drawing.Point(3, 181);
             this.TwitterConnectionStateLabel.Name = "TwitterConnectionStateLabel";
-            this.TwitterConnectionStateLabel.Size = new System.Drawing.Size(103, 15);
+            this.TwitterConnectionStateLabel.Size = new System.Drawing.Size(103, 16);
             this.TwitterConnectionStateLabel.TabIndex = 3;
             this.TwitterConnectionStateLabel.Text = "State: Disconnect";
             this.TwitterConnectionStateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitterConnectionButton
             // 
-            this.TwitterConnectionButton.Location = new System.Drawing.Point(193, 162);
+            this.TwitterConnectionButton.Location = new System.Drawing.Point(193, 176);
             this.TwitterConnectionButton.Name = "TwitterConnectionButton";
-            this.TwitterConnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterConnectionButton.Size = new System.Drawing.Size(75, 25);
             this.TwitterConnectionButton.TabIndex = 0;
             this.TwitterConnectionButton.Text = "Connect";
             this.TwitterConnectionButton.UseVisualStyleBackColor = true;
@@ -247,9 +288,9 @@ namespace FaraBotModerator
             // 
             // TwitterDisconnectionButton
             // 
-            this.TwitterDisconnectionButton.Location = new System.Drawing.Point(272, 162);
+            this.TwitterDisconnectionButton.Location = new System.Drawing.Point(272, 176);
             this.TwitterDisconnectionButton.Name = "TwitterDisconnectionButton";
-            this.TwitterDisconnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterDisconnectionButton.Size = new System.Drawing.Size(75, 25);
             this.TwitterDisconnectionButton.TabIndex = 1;
             this.TwitterDisconnectionButton.Text = "Disconnect";
             this.TwitterDisconnectionButton.UseVisualStyleBackColor = true;
@@ -257,65 +298,182 @@ namespace FaraBotModerator
             // 
             // TwitchGroupBox
             // 
+            this.TwitchGroupBox.Controls.Add(this.TwitchApiGroupBox);
+            this.TwitchGroupBox.Controls.Add(this.TwitchClientGroupBox);
             this.TwitchGroupBox.Controls.Add(this.BouyomiChanConnectCheckBox);
-            this.TwitchGroupBox.Controls.Add(this.TwitchChannelNameLabel);
-            this.TwitchGroupBox.Controls.Add(this.TwitchAccessTokenButton);
             this.TwitchGroupBox.Controls.Add(this.TwitchConnectionStateLabel);
             this.TwitchGroupBox.Controls.Add(this.TwitchDisconnectButton);
             this.TwitchGroupBox.Controls.Add(this.TwitchConnectionButton);
-            this.TwitchGroupBox.Controls.Add(this.TwitchAccessTokenTextBox);
-            this.TwitchGroupBox.Controls.Add(this.TwitchUserNameTextBox);
-            this.TwitchGroupBox.Controls.Add(this.TwitchAccessTokenLabel);
-            this.TwitchGroupBox.Controls.Add(this.TwitchUserNameLabel);
-            this.TwitchGroupBox.Location = new System.Drawing.Point(6, 6);
+            this.TwitchGroupBox.Location = new System.Drawing.Point(6, 7);
             this.TwitchGroupBox.Name = "TwitchGroupBox";
-            this.TwitchGroupBox.Size = new System.Drawing.Size(353, 191);
+            this.TwitchGroupBox.Size = new System.Drawing.Size(353, 313);
             this.TwitchGroupBox.TabIndex = 0;
             this.TwitchGroupBox.TabStop = false;
             this.TwitchGroupBox.Text = "Twitch";
+            // 
+            // TwitchApiGroupBox
+            // 
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiSaveButton);
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiSecretTextBox);
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiSecretLabel);
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdTextBox);
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdLabel);
+            this.TwitchApiGroupBox.Location = new System.Drawing.Point(6, 150);
+            this.TwitchApiGroupBox.Name = "TwitchApiGroupBox";
+            this.TwitchApiGroupBox.Size = new System.Drawing.Size(341, 101);
+            this.TwitchApiGroupBox.TabIndex = 10;
+            this.TwitchApiGroupBox.TabStop = false;
+            this.TwitchApiGroupBox.Text = "API";
+            // 
+            // TwitchApiSaveButton
+            // 
+            this.TwitchApiSaveButton.Location = new System.Drawing.Point(260, 71);
+            this.TwitchApiSaveButton.Name = "TwitchApiSaveButton";
+            this.TwitchApiSaveButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchApiSaveButton.TabIndex = 4;
+            this.TwitchApiSaveButton.Text = "Save";
+            this.TwitchApiSaveButton.UseVisualStyleBackColor = true;
+            this.TwitchApiSaveButton.Click += new System.EventHandler(this.TwitchApiSaveButton_Click);
+            // 
+            // TwitchApiSecretTextBox
+            // 
+            this.TwitchApiSecretTextBox.Location = new System.Drawing.Point(112, 45);
+            this.TwitchApiSecretTextBox.Name = "TwitchApiSecretTextBox";
+            this.TwitchApiSecretTextBox.Size = new System.Drawing.Size(223, 20);
+            this.TwitchApiSecretTextBox.TabIndex = 3;
+            // 
+            // TwitchApiSecretLabel
+            // 
+            this.TwitchApiSecretLabel.Location = new System.Drawing.Point(3, 48);
+            this.TwitchApiSecretLabel.Name = "TwitchApiSecretLabel";
+            this.TwitchApiSecretLabel.Size = new System.Drawing.Size(100, 17);
+            this.TwitchApiSecretLabel.TabIndex = 2;
+            this.TwitchApiSecretLabel.Text = "Secret";
+            // 
+            // TwitchApiClientIdTextBox
+            // 
+            this.TwitchApiClientIdTextBox.Location = new System.Drawing.Point(112, 19);
+            this.TwitchApiClientIdTextBox.Name = "TwitchApiClientIdTextBox";
+            this.TwitchApiClientIdTextBox.Size = new System.Drawing.Size(223, 20);
+            this.TwitchApiClientIdTextBox.TabIndex = 1;
+            // 
+            // TwitchApiClientIdLabel
+            // 
+            this.TwitchApiClientIdLabel.Location = new System.Drawing.Point(3, 22);
+            this.TwitchApiClientIdLabel.Name = "TwitchApiClientIdLabel";
+            this.TwitchApiClientIdLabel.Size = new System.Drawing.Size(100, 17);
+            this.TwitchApiClientIdLabel.TabIndex = 0;
+            this.TwitchApiClientIdLabel.Text = "ClientId";
+            // 
+            // TwitchClientGroupBox
+            // 
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenButton);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientSaveButton);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientChannelNameTextBox);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientUserNameLabel);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenLabel);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientChannelNameLabel);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientUserNameTextBox);
+            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenTextBox);
+            this.TwitchClientGroupBox.Location = new System.Drawing.Point(6, 17);
+            this.TwitchClientGroupBox.Name = "TwitchClientGroupBox";
+            this.TwitchClientGroupBox.Size = new System.Drawing.Size(341, 125);
+            this.TwitchClientGroupBox.TabIndex = 0;
+            this.TwitchClientGroupBox.TabStop = false;
+            this.TwitchClientGroupBox.Text = "Client";
+            // 
+            // TwitchClientAccessTokenButton
+            // 
+            this.TwitchClientAccessTokenButton.Location = new System.Drawing.Point(179, 92);
+            this.TwitchClientAccessTokenButton.Name = "TwitchClientAccessTokenButton";
+            this.TwitchClientAccessTokenButton.Size = new System.Drawing.Size(75, 25);
+            this.TwitchClientAccessTokenButton.TabIndex = 7;
+            this.TwitchClientAccessTokenButton.Text = "Get Token";
+            this.TwitchClientAccessTokenButton.UseVisualStyleBackColor = true;
+            this.TwitchClientAccessTokenButton.Click += new System.EventHandler(this.TwitchAccessTokenButton_Click);
+            // 
+            // TwitchClientSaveButton
+            // 
+            this.TwitchClientSaveButton.Location = new System.Drawing.Point(260, 93);
+            this.TwitchClientSaveButton.Name = "TwitchClientSaveButton";
+            this.TwitchClientSaveButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchClientSaveButton.TabIndex = 11;
+            this.TwitchClientSaveButton.Text = "Save";
+            this.TwitchClientSaveButton.UseVisualStyleBackColor = true;
+            this.TwitchClientSaveButton.Click += new System.EventHandler(this.TwitchClientSaveButton_Click);
+            // 
+            // TwitchClientChannelNameTextBox
+            // 
+            this.TwitchClientChannelNameTextBox.Location = new System.Drawing.Point(112, 67);
+            this.TwitchClientChannelNameTextBox.Name = "TwitchClientChannelNameTextBox";
+            this.TwitchClientChannelNameTextBox.Size = new System.Drawing.Size(223, 20);
+            this.TwitchClientChannelNameTextBox.TabIndex = 10;
+            // 
+            // TwitchClientUserNameLabel
+            // 
+            this.TwitchClientUserNameLabel.Location = new System.Drawing.Point(3, 16);
+            this.TwitchClientUserNameLabel.Name = "TwitchClientUserNameLabel";
+            this.TwitchClientUserNameLabel.Size = new System.Drawing.Size(100, 17);
+            this.TwitchClientUserNameLabel.TabIndex = 0;
+            this.TwitchClientUserNameLabel.Text = "UserName";
+            this.TwitchClientUserNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // TwitchClientAccessTokenLabel
+            // 
+            this.TwitchClientAccessTokenLabel.Location = new System.Drawing.Point(3, 42);
+            this.TwitchClientAccessTokenLabel.Name = "TwitchClientAccessTokenLabel";
+            this.TwitchClientAccessTokenLabel.Size = new System.Drawing.Size(100, 17);
+            this.TwitchClientAccessTokenLabel.TabIndex = 1;
+            this.TwitchClientAccessTokenLabel.Text = "AccessToken";
+            this.TwitchClientAccessTokenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // TwitchClientChannelNameLabel
+            // 
+            this.TwitchClientChannelNameLabel.Location = new System.Drawing.Point(3, 71);
+            this.TwitchClientChannelNameLabel.Name = "TwitchClientChannelNameLabel";
+            this.TwitchClientChannelNameLabel.Size = new System.Drawing.Size(100, 17);
+            this.TwitchClientChannelNameLabel.TabIndex = 8;
+            this.TwitchClientChannelNameLabel.Text = "ChannelName";
+            // 
+            // TwitchClientUserNameTextBox
+            // 
+            this.TwitchClientUserNameTextBox.Location = new System.Drawing.Point(112, 15);
+            this.TwitchClientUserNameTextBox.Name = "TwitchClientUserNameTextBox";
+            this.TwitchClientUserNameTextBox.Size = new System.Drawing.Size(223, 20);
+            this.TwitchClientUserNameTextBox.TabIndex = 2;
+            // 
+            // TwitchClientAccessTokenTextBox
+            // 
+            this.TwitchClientAccessTokenTextBox.Location = new System.Drawing.Point(112, 41);
+            this.TwitchClientAccessTokenTextBox.Name = "TwitchClientAccessTokenTextBox";
+            this.TwitchClientAccessTokenTextBox.PasswordChar = '●';
+            this.TwitchClientAccessTokenTextBox.Size = new System.Drawing.Size(223, 20);
+            this.TwitchClientAccessTokenTextBox.TabIndex = 3;
             // 
             // BouyomiChanConnectCheckBox
             // 
             this.BouyomiChanConnectCheckBox.Checked = true;
             this.BouyomiChanConnectCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.BouyomiChanConnectCheckBox.Location = new System.Drawing.Point(6, 79);
+            this.BouyomiChanConnectCheckBox.Location = new System.Drawing.Point(6, 255);
             this.BouyomiChanConnectCheckBox.Name = "BouyomiChanConnectCheckBox";
-            this.BouyomiChanConnectCheckBox.Size = new System.Drawing.Size(146, 24);
+            this.BouyomiChanConnectCheckBox.Size = new System.Drawing.Size(146, 27);
             this.BouyomiChanConnectCheckBox.TabIndex = 9;
             this.BouyomiChanConnectCheckBox.Text = "BouyomiChanConnect";
             this.BouyomiChanConnectCheckBox.UseVisualStyleBackColor = true;
             // 
-            // TwitchChannelNameLabel
-            // 
-            this.TwitchChannelNameLabel.Location = new System.Drawing.Point(6, 64);
-            this.TwitchChannelNameLabel.Name = "TwitchChannelNameLabel";
-            this.TwitchChannelNameLabel.Size = new System.Drawing.Size(260, 21);
-            this.TwitchChannelNameLabel.TabIndex = 8;
-            this.TwitchChannelNameLabel.Text = "ChannelName: xxx";
-            // 
-            // TwitchAccessTokenButton
-            // 
-            this.TwitchAccessTokenButton.Location = new System.Drawing.Point(272, 62);
-            this.TwitchAccessTokenButton.Name = "TwitchAccessTokenButton";
-            this.TwitchAccessTokenButton.Size = new System.Drawing.Size(75, 23);
-            this.TwitchAccessTokenButton.TabIndex = 7;
-            this.TwitchAccessTokenButton.Text = "Get Token";
-            this.TwitchAccessTokenButton.UseVisualStyleBackColor = true;
-            this.TwitchAccessTokenButton.Click += new System.EventHandler(this.TwitchAccessTokenButton_Click);
-            // 
             // TwitchConnectionStateLabel
             // 
-            this.TwitchConnectionStateLabel.Location = new System.Drawing.Point(6, 167);
+            this.TwitchConnectionStateLabel.Location = new System.Drawing.Point(6, 285);
             this.TwitchConnectionStateLabel.Name = "TwitchConnectionStateLabel";
-            this.TwitchConnectionStateLabel.Size = new System.Drawing.Size(100, 13);
+            this.TwitchConnectionStateLabel.Size = new System.Drawing.Size(100, 14);
             this.TwitchConnectionStateLabel.TabIndex = 6;
             this.TwitchConnectionStateLabel.Text = "State: Disconnect";
             // 
             // TwitchDisconnectButton
             // 
-            this.TwitchDisconnectButton.Location = new System.Drawing.Point(272, 162);
+            this.TwitchDisconnectButton.Location = new System.Drawing.Point(266, 279);
             this.TwitchDisconnectButton.Name = "TwitchDisconnectButton";
-            this.TwitchDisconnectButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchDisconnectButton.Size = new System.Drawing.Size(75, 25);
             this.TwitchDisconnectButton.TabIndex = 5;
             this.TwitchDisconnectButton.Text = "Disconnect";
             this.TwitchDisconnectButton.UseVisualStyleBackColor = true;
@@ -323,61 +481,29 @@ namespace FaraBotModerator
             // 
             // TwitchConnectionButton
             // 
-            this.TwitchConnectionButton.Location = new System.Drawing.Point(193, 162);
+            this.TwitchConnectionButton.Location = new System.Drawing.Point(185, 279);
             this.TwitchConnectionButton.Name = "TwitchConnectionButton";
-            this.TwitchConnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchConnectionButton.Size = new System.Drawing.Size(75, 25);
             this.TwitchConnectionButton.TabIndex = 4;
             this.TwitchConnectionButton.Text = "Connect";
             this.TwitchConnectionButton.UseVisualStyleBackColor = true;
             this.TwitchConnectionButton.Click += new System.EventHandler(this.TwitchConnectionButton_Click);
             // 
-            // TwitchAccessTokenTextBox
-            // 
-            this.TwitchAccessTokenTextBox.Location = new System.Drawing.Point(112, 37);
-            this.TwitchAccessTokenTextBox.Name = "TwitchAccessTokenTextBox";
-            this.TwitchAccessTokenTextBox.PasswordChar = '●';
-            this.TwitchAccessTokenTextBox.Size = new System.Drawing.Size(235, 19);
-            this.TwitchAccessTokenTextBox.TabIndex = 3;
-            // 
-            // TwitchUserNameTextBox
-            // 
-            this.TwitchUserNameTextBox.Location = new System.Drawing.Point(112, 12);
-            this.TwitchUserNameTextBox.Name = "TwitchUserNameTextBox";
-            this.TwitchUserNameTextBox.Size = new System.Drawing.Size(235, 19);
-            this.TwitchUserNameTextBox.TabIndex = 2;
-            // 
-            // TwitchAccessTokenLabel
-            // 
-            this.TwitchAccessTokenLabel.Location = new System.Drawing.Point(6, 37);
-            this.TwitchAccessTokenLabel.Name = "TwitchAccessTokenLabel";
-            this.TwitchAccessTokenLabel.Size = new System.Drawing.Size(100, 16);
-            this.TwitchAccessTokenLabel.TabIndex = 1;
-            this.TwitchAccessTokenLabel.Text = "AccessToken";
-            this.TwitchAccessTokenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // TwitchUserNameLabel
-            // 
-            this.TwitchUserNameLabel.Location = new System.Drawing.Point(6, 15);
-            this.TwitchUserNameLabel.Name = "TwitchUserNameLabel";
-            this.TwitchUserNameLabel.Size = new System.Drawing.Size(100, 16);
-            this.TwitchUserNameLabel.TabIndex = 0;
-            this.TwitchUserNameLabel.Text = "UserName";
-            this.TwitchUserNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // ReactionEventTab
             // 
+            this.ReactionEventTab.Controls.Add(this.FollowTextLabel);
             this.ReactionEventTab.Controls.Add(this.GiftTestButton);
             this.ReactionEventTab.Controls.Add(this.BitsTestButton);
             this.ReactionEventTab.Controls.Add(this.SubscriptionTestButton);
             this.ReactionEventTab.Controls.Add(this.RaidTestButton);
             this.ReactionEventTab.Controls.Add(this.FollowTestButton);
             this.ReactionEventTab.Controls.Add(this.GiftEventTextBox);
-            this.ReactionEventTab.Controls.Add(this.label3);
+            this.ReactionEventTab.Controls.Add(this.GiftTextLabel);
             this.ReactionEventTab.Controls.Add(this.ReplaceNotificationTextBox);
-            this.ReactionEventTab.Controls.Add(this.label2);
+            this.ReactionEventTab.Controls.Add(this.BitsTextLabel);
             this.ReactionEventTab.Controls.Add(this.BitsEventTextBox);
             this.ReactionEventTab.Controls.Add(this.SubscriptionEventTextBox);
-            this.ReactionEventTab.Controls.Add(this.label1);
+            this.ReactionEventTab.Controls.Add(this.SubscriptionTextLabel);
             this.ReactionEventTab.Controls.Add(this.RaidEventTextBox);
             this.ReactionEventTab.Controls.Add(this.RaidTextLabel);
             this.ReactionEventTab.Controls.Add(this.FollowEventTextBox);
@@ -385,53 +511,62 @@ namespace FaraBotModerator
             this.ReactionEventTab.Location = new System.Drawing.Point(4, 22);
             this.ReactionEventTab.Name = "ReactionEventTab";
             this.ReactionEventTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ReactionEventTab.Size = new System.Drawing.Size(768, 400);
+            this.ReactionEventTab.Size = new System.Drawing.Size(768, 539);
             this.ReactionEventTab.TabIndex = 1;
             this.ReactionEventTab.Text = "Reaction Event";
             this.ReactionEventTab.ToolTipText = "TwitchでFollowやRaid等のアクションに応じた設定を行います。";
             this.ReactionEventTab.UseVisualStyleBackColor = true;
             // 
+            // FollowTextLabel
+            // 
+            this.FollowTextLabel.Location = new System.Drawing.Point(6, 7);
+            this.FollowTextLabel.Name = "FollowTextLabel";
+            this.FollowTextLabel.Size = new System.Drawing.Size(78, 23);
+            this.FollowTextLabel.TabIndex = 27;
+            this.FollowTextLabel.Text = "Follow";
+            this.FollowTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // GiftTestButton
             // 
-            this.GiftTestButton.Location = new System.Drawing.Point(711, 106);
+            this.GiftTestButton.Location = new System.Drawing.Point(711, 115);
             this.GiftTestButton.Name = "GiftTestButton";
-            this.GiftTestButton.Size = new System.Drawing.Size(51, 19);
+            this.GiftTestButton.Size = new System.Drawing.Size(51, 21);
             this.GiftTestButton.TabIndex = 26;
             this.GiftTestButton.Text = "Test";
             this.GiftTestButton.UseVisualStyleBackColor = true;
             // 
             // BitsTestButton
             // 
-            this.BitsTestButton.Location = new System.Drawing.Point(711, 81);
+            this.BitsTestButton.Location = new System.Drawing.Point(711, 88);
             this.BitsTestButton.Name = "BitsTestButton";
-            this.BitsTestButton.Size = new System.Drawing.Size(51, 19);
+            this.BitsTestButton.Size = new System.Drawing.Size(51, 21);
             this.BitsTestButton.TabIndex = 25;
             this.BitsTestButton.Text = "Test";
             this.BitsTestButton.UseVisualStyleBackColor = true;
             // 
             // SubscriptionTestButton
             // 
-            this.SubscriptionTestButton.Location = new System.Drawing.Point(711, 56);
+            this.SubscriptionTestButton.Location = new System.Drawing.Point(711, 61);
             this.SubscriptionTestButton.Name = "SubscriptionTestButton";
-            this.SubscriptionTestButton.Size = new System.Drawing.Size(51, 19);
+            this.SubscriptionTestButton.Size = new System.Drawing.Size(51, 21);
             this.SubscriptionTestButton.TabIndex = 24;
             this.SubscriptionTestButton.Text = "Test";
             this.SubscriptionTestButton.UseVisualStyleBackColor = true;
             // 
             // RaidTestButton
             // 
-            this.RaidTestButton.Location = new System.Drawing.Point(711, 31);
+            this.RaidTestButton.Location = new System.Drawing.Point(711, 34);
             this.RaidTestButton.Name = "RaidTestButton";
-            this.RaidTestButton.Size = new System.Drawing.Size(51, 19);
+            this.RaidTestButton.Size = new System.Drawing.Size(51, 21);
             this.RaidTestButton.TabIndex = 23;
             this.RaidTestButton.Text = "Test";
             this.RaidTestButton.UseVisualStyleBackColor = true;
             // 
             // FollowTestButton
             // 
-            this.FollowTestButton.Location = new System.Drawing.Point(711, 6);
+            this.FollowTestButton.Location = new System.Drawing.Point(711, 7);
             this.FollowTestButton.Name = "FollowTestButton";
-            this.FollowTestButton.Size = new System.Drawing.Size(51, 19);
+            this.FollowTestButton.Size = new System.Drawing.Size(51, 21);
             this.FollowTestButton.TabIndex = 22;
             this.FollowTestButton.Text = "Test";
             this.FollowTestButton.UseVisualStyleBackColor = true;
@@ -439,96 +574,96 @@ namespace FaraBotModerator
             // 
             // GiftEventTextBox
             // 
-            this.GiftEventTextBox.Location = new System.Drawing.Point(90, 106);
+            this.GiftEventTextBox.Location = new System.Drawing.Point(90, 115);
             this.GiftEventTextBox.Name = "GiftEventTextBox";
-            this.GiftEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.GiftEventTextBox.Size = new System.Drawing.Size(615, 20);
             this.GiftEventTextBox.TabIndex = 21;
             this.GiftEventTextBox.Text = "Thanks gift {giftedUserName} gamefa16Hi";
             // 
-            // label3
+            // GiftTextLabel
             // 
-            this.label3.Location = new System.Drawing.Point(6, 106);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 19);
-            this.label3.TabIndex = 20;
-            this.label3.Text = "Gift";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.GiftTextLabel.Location = new System.Drawing.Point(6, 115);
+            this.GiftTextLabel.Name = "GiftTextLabel";
+            this.GiftTextLabel.Size = new System.Drawing.Size(78, 21);
+            this.GiftTextLabel.TabIndex = 20;
+            this.GiftTextLabel.Text = "Gift";
+            this.GiftTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ReplaceNotificationTextBox
             // 
-            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 131);
+            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 142);
             this.ReplaceNotificationTextBox.Multiline = true;
             this.ReplaceNotificationTextBox.Name = "ReplaceNotificationTextBox";
             this.ReplaceNotificationTextBox.ReadOnly = true;
-            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 263);
+            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 285);
             this.ReplaceNotificationTextBox.TabIndex = 19;
             this.ReplaceNotificationTextBox.Text = resources.GetString("ReplaceNotificationTextBox.Text");
             // 
-            // label2
+            // BitsTextLabel
             // 
-            this.label2.Location = new System.Drawing.Point(6, 81);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 19);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "Bits";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BitsTextLabel.Location = new System.Drawing.Point(6, 88);
+            this.BitsTextLabel.Name = "BitsTextLabel";
+            this.BitsTextLabel.Size = new System.Drawing.Size(78, 21);
+            this.BitsTextLabel.TabIndex = 18;
+            this.BitsTextLabel.Text = "Bits";
+            this.BitsTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // BitsEventTextBox
             // 
-            this.BitsEventTextBox.Location = new System.Drawing.Point(90, 81);
+            this.BitsEventTextBox.Location = new System.Drawing.Point(90, 88);
             this.BitsEventTextBox.Name = "BitsEventTextBox";
-            this.BitsEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.BitsEventTextBox.Size = new System.Drawing.Size(615, 20);
             this.BitsEventTextBox.TabIndex = 17;
             this.BitsEventTextBox.Text = "Thanks {bitsAmount} bits (total {totalBitsAmount}) {bitsSendUserName} gamefa16Hi";
             // 
             // SubscriptionEventTextBox
             // 
-            this.SubscriptionEventTextBox.Location = new System.Drawing.Point(90, 56);
+            this.SubscriptionEventTextBox.Location = new System.Drawing.Point(90, 61);
             this.SubscriptionEventTextBox.Name = "SubscriptionEventTextBox";
-            this.SubscriptionEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.SubscriptionEventTextBox.Size = new System.Drawing.Size(615, 20);
             this.SubscriptionEventTextBox.TabIndex = 16;
             this.SubscriptionEventTextBox.Text = "Thanks subscription {subscriberName} gamefa16Hi";
             // 
-            // label1
+            // SubscriptionTextLabel
             // 
-            this.label1.Location = new System.Drawing.Point(6, 56);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 19);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Subscription";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SubscriptionTextLabel.Location = new System.Drawing.Point(6, 61);
+            this.SubscriptionTextLabel.Name = "SubscriptionTextLabel";
+            this.SubscriptionTextLabel.Size = new System.Drawing.Size(78, 21);
+            this.SubscriptionTextLabel.TabIndex = 15;
+            this.SubscriptionTextLabel.Text = "Subscription";
+            this.SubscriptionTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RaidEventTextBox
             // 
-            this.RaidEventTextBox.Location = new System.Drawing.Point(90, 31);
+            this.RaidEventTextBox.Location = new System.Drawing.Point(90, 34);
             this.RaidEventTextBox.Name = "RaidEventTextBox";
-            this.RaidEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.RaidEventTextBox.Size = new System.Drawing.Size(615, 20);
             this.RaidEventTextBox.TabIndex = 14;
             this.RaidEventTextBox.Text = "Welcome raiders, thanks raid {raiderName} gamefa16Hi. Please follow us! {url}";
             // 
             // RaidTextLabel
             // 
-            this.RaidTextLabel.Location = new System.Drawing.Point(6, 31);
+            this.RaidTextLabel.Location = new System.Drawing.Point(6, 34);
             this.RaidTextLabel.Name = "RaidTextLabel";
-            this.RaidTextLabel.Size = new System.Drawing.Size(78, 19);
+            this.RaidTextLabel.Size = new System.Drawing.Size(78, 21);
             this.RaidTextLabel.TabIndex = 13;
             this.RaidTextLabel.Text = "Raid";
             this.RaidTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FollowEventTextBox
             // 
-            this.FollowEventTextBox.Location = new System.Drawing.Point(90, 6);
+            this.FollowEventTextBox.Location = new System.Drawing.Point(90, 7);
             this.FollowEventTextBox.Name = "FollowEventTextBox";
-            this.FollowEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.FollowEventTextBox.Size = new System.Drawing.Size(615, 20);
             this.FollowEventTextBox.TabIndex = 12;
             this.FollowEventTextBox.Text = "{followerName}, thanks follow gamefa16Hi. Follower Channel URL: {followerChannelU" + "rl}";
             // 
             // FollowedTextLabel
             // 
             this.FollowedTextLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FollowedTextLabel.Location = new System.Drawing.Point(6, 6);
+            this.FollowedTextLabel.Location = new System.Drawing.Point(6, 58);
             this.FollowedTextLabel.Name = "FollowedTextLabel";
-            this.FollowedTextLabel.Size = new System.Drawing.Size(78, 19);
+            this.FollowedTextLabel.Size = new System.Drawing.Size(78, 21);
             this.FollowedTextLabel.TabIndex = 11;
             this.FollowedTextLabel.Text = "Follow";
             this.FollowedTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -538,7 +673,7 @@ namespace FaraBotModerator
             this.AutoBotTab.Controls.Add(this.AutoBotChildTab);
             this.AutoBotTab.Location = new System.Drawing.Point(4, 22);
             this.AutoBotTab.Name = "AutoBotTab";
-            this.AutoBotTab.Size = new System.Drawing.Size(768, 400);
+            this.AutoBotTab.Size = new System.Drawing.Size(768, 539);
             this.AutoBotTab.TabIndex = 2;
             this.AutoBotTab.Text = "Auto Bot";
             this.AutoBotTab.ToolTipText = "定期的なチャット通知や翻訳設定を行います。";
@@ -551,7 +686,7 @@ namespace FaraBotModerator
             this.AutoBotChildTab.Location = new System.Drawing.Point(3, 3);
             this.AutoBotChildTab.Name = "AutoBotChildTab";
             this.AutoBotChildTab.SelectedIndex = 0;
-            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 394);
+            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 427);
             this.AutoBotChildTab.TabIndex = 0;
             // 
             // TranslateTab
@@ -561,7 +696,7 @@ namespace FaraBotModerator
             this.TranslateTab.Location = new System.Drawing.Point(4, 22);
             this.TranslateTab.Name = "TranslateTab";
             this.TranslateTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslateTab.Size = new System.Drawing.Size(754, 368);
+            this.TranslateTab.Size = new System.Drawing.Size(754, 401);
             this.TranslateTab.TabIndex = 0;
             this.TranslateTab.Text = "Translate";
             this.TranslateTab.ToolTipText = "チャット翻訳設定を行います。";
@@ -571,26 +706,26 @@ namespace FaraBotModerator
             // 
             this.DeepLAPIProGroupBox.Controls.Add(this.DeepLAPIProAuthKeyTextBox);
             this.DeepLAPIProGroupBox.Controls.Add(this.DeepLAPIProAuthKeyLabel);
-            this.DeepLAPIProGroupBox.Location = new System.Drawing.Point(6, 112);
+            this.DeepLAPIProGroupBox.Location = new System.Drawing.Point(6, 121);
             this.DeepLAPIProGroupBox.Name = "DeepLAPIProGroupBox";
-            this.DeepLAPIProGroupBox.Size = new System.Drawing.Size(348, 100);
+            this.DeepLAPIProGroupBox.Size = new System.Drawing.Size(348, 108);
             this.DeepLAPIProGroupBox.TabIndex = 1;
             this.DeepLAPIProGroupBox.TabStop = false;
             this.DeepLAPIProGroupBox.Text = "DeepL Pro";
             // 
             // DeepLAPIProAuthKeyTextBox
             // 
-            this.DeepLAPIProAuthKeyTextBox.Location = new System.Drawing.Point(65, 17);
+            this.DeepLAPIProAuthKeyTextBox.Location = new System.Drawing.Point(65, 18);
             this.DeepLAPIProAuthKeyTextBox.Name = "DeepLAPIProAuthKeyTextBox";
             this.DeepLAPIProAuthKeyTextBox.PasswordChar = '●';
-            this.DeepLAPIProAuthKeyTextBox.Size = new System.Drawing.Size(277, 19);
+            this.DeepLAPIProAuthKeyTextBox.Size = new System.Drawing.Size(277, 20);
             this.DeepLAPIProAuthKeyTextBox.TabIndex = 1;
             // 
             // DeepLAPIProAuthKeyLabel
             // 
-            this.DeepLAPIProAuthKeyLabel.Location = new System.Drawing.Point(6, 15);
+            this.DeepLAPIProAuthKeyLabel.Location = new System.Drawing.Point(6, 16);
             this.DeepLAPIProAuthKeyLabel.Name = "DeepLAPIProAuthKeyLabel";
-            this.DeepLAPIProAuthKeyLabel.Size = new System.Drawing.Size(53, 23);
+            this.DeepLAPIProAuthKeyLabel.Size = new System.Drawing.Size(53, 25);
             this.DeepLAPIProAuthKeyLabel.TabIndex = 0;
             this.DeepLAPIProAuthKeyLabel.Text = "Auth Key";
             this.DeepLAPIProAuthKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -599,26 +734,26 @@ namespace FaraBotModerator
             // 
             this.DeepLAPIFreeGroupBox.Controls.Add(this.DeepLAPIFreeAuthKeyTextBox);
             this.DeepLAPIFreeGroupBox.Controls.Add(this.DeepLAPIFreeAuthKeyLabel);
-            this.DeepLAPIFreeGroupBox.Location = new System.Drawing.Point(6, 6);
+            this.DeepLAPIFreeGroupBox.Location = new System.Drawing.Point(6, 7);
             this.DeepLAPIFreeGroupBox.Name = "DeepLAPIFreeGroupBox";
-            this.DeepLAPIFreeGroupBox.Size = new System.Drawing.Size(348, 100);
+            this.DeepLAPIFreeGroupBox.Size = new System.Drawing.Size(348, 108);
             this.DeepLAPIFreeGroupBox.TabIndex = 0;
             this.DeepLAPIFreeGroupBox.TabStop = false;
             this.DeepLAPIFreeGroupBox.Text = "DeepL Free";
             // 
             // DeepLAPIFreeAuthKeyTextBox
             // 
-            this.DeepLAPIFreeAuthKeyTextBox.Location = new System.Drawing.Point(65, 17);
+            this.DeepLAPIFreeAuthKeyTextBox.Location = new System.Drawing.Point(65, 18);
             this.DeepLAPIFreeAuthKeyTextBox.Name = "DeepLAPIFreeAuthKeyTextBox";
             this.DeepLAPIFreeAuthKeyTextBox.PasswordChar = '●';
-            this.DeepLAPIFreeAuthKeyTextBox.Size = new System.Drawing.Size(277, 19);
+            this.DeepLAPIFreeAuthKeyTextBox.Size = new System.Drawing.Size(277, 20);
             this.DeepLAPIFreeAuthKeyTextBox.TabIndex = 1;
             // 
             // DeepLAPIFreeAuthKeyLabel
             // 
-            this.DeepLAPIFreeAuthKeyLabel.Location = new System.Drawing.Point(6, 15);
+            this.DeepLAPIFreeAuthKeyLabel.Location = new System.Drawing.Point(6, 16);
             this.DeepLAPIFreeAuthKeyLabel.Name = "DeepLAPIFreeAuthKeyLabel";
-            this.DeepLAPIFreeAuthKeyLabel.Size = new System.Drawing.Size(53, 23);
+            this.DeepLAPIFreeAuthKeyLabel.Size = new System.Drawing.Size(53, 25);
             this.DeepLAPIFreeAuthKeyLabel.TabIndex = 0;
             this.DeepLAPIFreeAuthKeyLabel.Text = "Auth Key";
             this.DeepLAPIFreeAuthKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -630,7 +765,7 @@ namespace FaraBotModerator
             this.TimerTab.Location = new System.Drawing.Point(4, 22);
             this.TimerTab.Name = "TimerTab";
             this.TimerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TimerTab.Size = new System.Drawing.Size(754, 368);
+            this.TimerTab.Size = new System.Drawing.Size(754, 401);
             this.TimerTab.TabIndex = 1;
             this.TimerTab.Text = "Timer";
             this.TimerTab.ToolTipText = "一定時間毎のTwitchチャット通知設定を行います。";
@@ -638,112 +773,154 @@ namespace FaraBotModerator
             // 
             // FixedNotificationGroupBox
             // 
-            this.FixedNotificationGroupBox.Location = new System.Drawing.Point(6, 187);
+            this.FixedNotificationGroupBox.Location = new System.Drawing.Point(6, 203);
             this.FixedNotificationGroupBox.Name = "FixedNotificationGroupBox";
-            this.FixedNotificationGroupBox.Size = new System.Drawing.Size(742, 178);
+            this.FixedNotificationGroupBox.Size = new System.Drawing.Size(742, 193);
             this.FixedNotificationGroupBox.TabIndex = 1;
             this.FixedNotificationGroupBox.TabStop = false;
             this.FixedNotificationGroupBox.Text = "Fixed Notifications";
             // 
             // CycleNotificationGroupBox
             // 
-            this.CycleNotificationGroupBox.Controls.Add(this.checkBox2);
-            this.CycleNotificationGroupBox.Controls.Add(this.textBox2);
-            this.CycleNotificationGroupBox.Controls.Add(this.label5);
-            this.CycleNotificationGroupBox.Controls.Add(this.numericUpDown2);
-            this.CycleNotificationGroupBox.Controls.Add(this.checkBox1);
-            this.CycleNotificationGroupBox.Controls.Add(this.textBox1);
-            this.CycleNotificationGroupBox.Controls.Add(this.label4);
-            this.CycleNotificationGroupBox.Controls.Add(this.numericUpDown1);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer3CheckBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer3TextBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer3Label);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer3NumericUpDown);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer2CheckBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer2TextBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer2Label);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer2NumericUpDown);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer1CheckBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer1TextBox);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer1Label);
+            this.CycleNotificationGroupBox.Controls.Add(this.Timer1NumericUpDown);
             this.CycleNotificationGroupBox.Location = new System.Drawing.Point(6, 3);
             this.CycleNotificationGroupBox.Name = "CycleNotificationGroupBox";
-            this.CycleNotificationGroupBox.Size = new System.Drawing.Size(742, 178);
+            this.CycleNotificationGroupBox.Size = new System.Drawing.Size(742, 193);
             this.CycleNotificationGroupBox.TabIndex = 0;
             this.CycleNotificationGroupBox.TabStop = false;
             this.CycleNotificationGroupBox.Text = "Cycle Notifications";
             // 
-            // checkBox2
+            // Timer3CheckBox
             // 
-            this.checkBox2.Location = new System.Drawing.Point(6, 52);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(62, 24);
-            this.checkBox2.TabIndex = 4;
-            this.checkBox2.Text = "Timer1";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.Timer3CheckBox.Location = new System.Drawing.Point(6, 91);
+            this.Timer3CheckBox.Name = "Timer3CheckBox";
+            this.Timer3CheckBox.Size = new System.Drawing.Size(62, 26);
+            this.Timer3CheckBox.TabIndex = 8;
+            this.Timer3CheckBox.Text = "Timer3";
+            this.Timer3CheckBox.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // Timer3TextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(204, 55);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(532, 19);
-            this.textBox2.TabIndex = 7;
+            this.Timer3TextBox.Location = new System.Drawing.Point(204, 95);
+            this.Timer3TextBox.Name = "Timer3TextBox";
+            this.Timer3TextBox.Size = new System.Drawing.Size(532, 20);
+            this.Timer3TextBox.TabIndex = 11;
             // 
-            // label5
+            // Timer3Label
             // 
-            this.label5.Location = new System.Drawing.Point(119, 53);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 23);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "minutes/times";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Timer3Label.Location = new System.Drawing.Point(119, 92);
+            this.Timer3Label.Name = "Timer3Label";
+            this.Timer3Label.Size = new System.Drawing.Size(79, 25);
+            this.Timer3Label.TabIndex = 10;
+            this.Timer3Label.Text = "minutes/times";
+            this.Timer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // numericUpDown2
+            // Timer3NumericUpDown
             // 
-            this.numericUpDown2.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.numericUpDown2.Location = new System.Drawing.Point(74, 55);
-            this.numericUpDown2.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {15, 0, 0, 0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(39, 19);
-            this.numericUpDown2.TabIndex = 5;
-            this.numericUpDown2.Tag = "";
-            this.numericUpDown2.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.numericUpDown2.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer3NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
+            this.Timer3NumericUpDown.Location = new System.Drawing.Point(74, 95);
+            this.Timer3NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
+            this.Timer3NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer3NumericUpDown.Name = "Timer3NumericUpDown";
+            this.Timer3NumericUpDown.Size = new System.Drawing.Size(39, 20);
+            this.Timer3NumericUpDown.TabIndex = 9;
+            this.Timer3NumericUpDown.Tag = "";
+            this.Timer3NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.Timer3NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
             // 
-            // checkBox1
+            // Timer2CheckBox
             // 
-            this.checkBox1.Location = new System.Drawing.Point(6, 18);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(62, 24);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Timer1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.Timer2CheckBox.Location = new System.Drawing.Point(6, 56);
+            this.Timer2CheckBox.Name = "Timer2CheckBox";
+            this.Timer2CheckBox.Size = new System.Drawing.Size(62, 26);
+            this.Timer2CheckBox.TabIndex = 4;
+            this.Timer2CheckBox.Text = "Timer2";
+            this.Timer2CheckBox.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // Timer2TextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(204, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(532, 19);
-            this.textBox1.TabIndex = 3;
+            this.Timer2TextBox.Location = new System.Drawing.Point(204, 60);
+            this.Timer2TextBox.Name = "Timer2TextBox";
+            this.Timer2TextBox.Size = new System.Drawing.Size(532, 20);
+            this.Timer2TextBox.TabIndex = 7;
             // 
-            // label4
+            // Timer2Label
             // 
-            this.label4.Location = new System.Drawing.Point(119, 19);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 23);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "minutes/times";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Timer2Label.Location = new System.Drawing.Point(119, 57);
+            this.Timer2Label.Name = "Timer2Label";
+            this.Timer2Label.Size = new System.Drawing.Size(79, 25);
+            this.Timer2Label.TabIndex = 6;
+            this.Timer2Label.Text = "minutes/times";
+            this.Timer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // numericUpDown1
+            // Timer2NumericUpDown
             // 
-            this.numericUpDown1.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.numericUpDown1.Location = new System.Drawing.Point(74, 21);
-            this.numericUpDown1.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {15, 0, 0, 0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(39, 19);
-            this.numericUpDown1.TabIndex = 1;
-            this.numericUpDown1.Tag = "";
-            this.numericUpDown1.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.numericUpDown1.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer2NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
+            this.Timer2NumericUpDown.Location = new System.Drawing.Point(74, 60);
+            this.Timer2NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
+            this.Timer2NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer2NumericUpDown.Name = "Timer2NumericUpDown";
+            this.Timer2NumericUpDown.Size = new System.Drawing.Size(39, 20);
+            this.Timer2NumericUpDown.TabIndex = 5;
+            this.Timer2NumericUpDown.Tag = "";
+            this.Timer2NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.Timer2NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            // 
+            // Timer1CheckBox
+            // 
+            this.Timer1CheckBox.Location = new System.Drawing.Point(6, 20);
+            this.Timer1CheckBox.Name = "Timer1CheckBox";
+            this.Timer1CheckBox.Size = new System.Drawing.Size(62, 26);
+            this.Timer1CheckBox.TabIndex = 0;
+            this.Timer1CheckBox.Text = "Timer1";
+            this.Timer1CheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Timer1TextBox
+            // 
+            this.Timer1TextBox.Location = new System.Drawing.Point(204, 23);
+            this.Timer1TextBox.Name = "Timer1TextBox";
+            this.Timer1TextBox.Size = new System.Drawing.Size(532, 20);
+            this.Timer1TextBox.TabIndex = 3;
+            // 
+            // Timer1Label
+            // 
+            this.Timer1Label.Location = new System.Drawing.Point(119, 21);
+            this.Timer1Label.Name = "Timer1Label";
+            this.Timer1Label.Size = new System.Drawing.Size(79, 25);
+            this.Timer1Label.TabIndex = 2;
+            this.Timer1Label.Text = "minutes/times";
+            this.Timer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Timer1NumericUpDown
+            // 
+            this.Timer1NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
+            this.Timer1NumericUpDown.Location = new System.Drawing.Point(74, 23);
+            this.Timer1NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
+            this.Timer1NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer1NumericUpDown.Name = "Timer1NumericUpDown";
+            this.Timer1NumericUpDown.Size = new System.Drawing.Size(39, 20);
+            this.Timer1NumericUpDown.TabIndex = 1;
+            this.Timer1NumericUpDown.Tag = "";
+            this.Timer1NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.Timer1NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
             // 
             // FaraBotModeratorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 590);
             this.Controls.Add(this.MenuTab);
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(15, 15);
@@ -755,7 +932,10 @@ namespace FaraBotModerator
             this.TwitterGroupBox.PerformLayout();
             this.TwitterTweetTextBox.ResumeLayout(false);
             this.TwitchGroupBox.ResumeLayout(false);
-            this.TwitchGroupBox.PerformLayout();
+            this.TwitchApiGroupBox.ResumeLayout(false);
+            this.TwitchApiGroupBox.PerformLayout();
+            this.TwitchClientGroupBox.ResumeLayout(false);
+            this.TwitchClientGroupBox.PerformLayout();
             this.ReactionEventTab.ResumeLayout(false);
             this.ReactionEventTab.PerformLayout();
             this.AutoBotTab.ResumeLayout(false);
@@ -768,23 +948,51 @@ namespace FaraBotModerator
             this.TimerTab.ResumeLayout(false);
             this.CycleNotificationGroupBox.ResumeLayout(false);
             this.CycleNotificationGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer3NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer2NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.Timer1NumericUpDown)).EndInit();
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.TextBox Timer1TextBox;
+        private System.Windows.Forms.CheckBox Timer3CheckBox;
+        private System.Windows.Forms.Label Timer3Label;
+        private System.Windows.Forms.NumericUpDown Timer3NumericUpDown;
+
+        private System.Windows.Forms.Label FollowTextLabel;
+
+        private System.Windows.Forms.Button TwitterApiButton;
+
+        private System.Windows.Forms.Button TwitterApiSaveButton;
+
+        private System.Windows.Forms.Button TwitchApiSaveButton;
+
+        private System.Windows.Forms.Button TwitchClientSaveButton;
+
+        private System.Windows.Forms.Label TwitchApiSecretLabel;
+        private System.Windows.Forms.TextBox TwitchApiSecretTextBox;
+
+        private System.Windows.Forms.TextBox TwitchApiClientIdTextBox;
+
+        private System.Windows.Forms.GroupBox TwitchApiGroupBox;
+        private System.Windows.Forms.Label TwitchApiClientIdLabel;
+
+        private System.Windows.Forms.GroupBox TwitchClientGroupBox;
+
+        private System.Windows.Forms.TextBox TwitchClientChannelNameTextBox;
+
         private System.Windows.Forms.CheckBox BouyomiChanConnectCheckBox;
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.TextBox Timer3TextBox;
+        private System.Windows.Forms.TextBox Timer2TextBox;
+        private System.Windows.Forms.Label Timer2Label;
+        private System.Windows.Forms.NumericUpDown Timer2NumericUpDown;
+        private System.Windows.Forms.CheckBox Timer1CheckBox;
+        private System.Windows.Forms.CheckBox Timer2CheckBox;
 
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label Timer1Label;
 
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown Timer1NumericUpDown;
 
         private System.Windows.Forms.Button FollowTestButton;
         private System.Windows.Forms.Button RaidTestButton;
@@ -794,14 +1002,14 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.TextBox GiftEventTextBox;
 
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label GiftTextLabel;
 
         private System.Windows.Forms.TextBox ReplaceNotificationTextBox;
 
         private System.Windows.Forms.TextBox BitsEventTextBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label BitsTextLabel;
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label SubscriptionTextLabel;
         private System.Windows.Forms.TextBox SubscriptionEventTextBox;
 
         private System.Windows.Forms.TextBox RaidEventTextBox;
@@ -826,7 +1034,7 @@ namespace FaraBotModerator
         private System.Windows.Forms.GroupBox DeepLAPIFreeGroupBox;
         private System.Windows.Forms.GroupBox DeepLAPIProGroupBox;
 
-        private System.Windows.Forms.Label TwitchChannelNameLabel;
+        private System.Windows.Forms.Label TwitchClientChannelNameLabel;
 
         private System.Windows.Forms.GroupBox TwitterTweetTextBox;
 
@@ -837,7 +1045,7 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.Label TwitterAPISecretLabel;
 
-        private System.Windows.Forms.Button TwitchAccessTokenButton;
+        private System.Windows.Forms.Button TwitchClientAccessTokenButton;
 
         private System.Windows.Forms.GroupBox ChatBoxGroupBox;
 
@@ -854,13 +1062,13 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.Label TwitchConnectionStateLabel;
 
-        public System.Windows.Forms.TextBox TwitchUserNameTextBox;
+        public System.Windows.Forms.TextBox TwitchClientUserNameTextBox;
 
-        private System.Windows.Forms.Label TwitchAccessTokenLabel;
+        private System.Windows.Forms.Label TwitchClientAccessTokenLabel;
 
-        private System.Windows.Forms.TextBox TwitchAccessTokenTextBox;
+        private System.Windows.Forms.TextBox TwitchClientAccessTokenTextBox;
 
-        private System.Windows.Forms.Label TwitchUserNameLabel;
+        private System.Windows.Forms.Label TwitchClientUserNameLabel;
 
         private System.Windows.Forms.Button TwitchDisconnectButton;
 
