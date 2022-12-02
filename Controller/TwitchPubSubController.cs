@@ -58,7 +58,7 @@ namespace FaraBotModerator.Controller
         
         public void Connect()
         {
-            // var oauthTokenResult = await TwitchResponseOAuthToken();
+            var oauthTokenResult = TwitchResponseOAuthToken();
             _twitchPubSub.Connect();
         }
 
