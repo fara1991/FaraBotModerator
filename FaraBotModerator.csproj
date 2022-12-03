@@ -74,6 +74,7 @@
         <Compile Include="Model\DeepLTranslationModel.cs" />
         <Compile Include="Model\SecretKeyModel.cs" />
         <Compile Include="Model\TextRegexModel.cs" />
+        <Compile Include="Model\TwitchApiAuthorizeModel.cs" />
         <Compile Include="Model\TwitchApiTokenModel.cs" />
         <Compile Include="Model\TwitchOAuthTokenModel.cs" />
         <Compile Include="Program.cs" />

@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using System.Threading.Tasks;
-using FaraBotModerator.Model;
 using TwitchLib.Api;
-using TwitchLib.Api.Core.Enums;
-using TwitchLib.Api.Helix.Models.Channels.ModifyChannelInformation;
 using TwitchLib.Api.Services;
 using TwitchLib.Api.Services.Events;
 using TwitchLib.Api.Services.Events.FollowerService;
@@ -61,12 +51,9 @@ namespace FaraBotModerator.Controller
             var task = Task.Run(() => { return TwitchChannelIdAsync(); });
             return task.Result;
         }
-        
+
         private async Task<string> TwitchChannelIdAsync()
         {
-            var twitchApiTokenModel = await GetRequestAuthTokenAsync();
-            _twitchApi.Settings.AccessToken = twitchApiTokenModel.AccessToken;
-            
             // 期限が切れたらRefresh
             // userNameからuserIdを取得できる(userNameは一意なので)
             var userIds = new List<string>();
@@ -76,37 +63,6 @@ namespace FaraBotModerator.Controller
             return _twitchChannelId;
         }
         
-        private async Task<TwitchApiTokenModel> GetRequestAuthTokenAsync()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var request = CreateHttpRequestMessage();
-                var response = await httpClient.SendAsync(request);
-                var responseBody = response.Content.ReadAsStringAsync().Result;
-                var option = new JsonSerializerOptions
-                {
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-                };
-                var jsonString =
-                    JsonSerializer.Deserialize<TwitchApiTokenModel>(responseBody,
-                        option); 
-                return jsonString;
-            }
-        }
-
-        private HttpRequestMessage CreateHttpRequestMessage()
-        {
-            var request = new HttpRequestMessage(new HttpMethod("POST"), "https://id.twitch.tv/oauth2/token");
-            var contentList = new List<string>();
-            contentList.Add($"client_id={_twitchApi.Settings.ClientId}");
-            contentList.Add($"client_secret={_twitchApi.Settings.Secret}"); 
-            contentList.Add($"grant_type=client_credentials");
-            
-            request.Content = new StringContent(string.Join("&", contentList));
-            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
-            return request;
-        }
-
         private void TwitchApiOnNewFollowerDetected(object sender, OnNewFollowersDetectedArgs e)
         {
             var newFollowers = e.NewFollowers

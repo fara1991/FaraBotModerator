@@ -20,16 +20,20 @@ namespace FaraBotModerator.Controller
         private readonly TwitchClientController _twitchClientController;
         private static TwitchPubSub _twitchPubSub;
         private readonly string _twitchApiClientId;
+        private readonly string _twitchApiAccessToken;
         private readonly string _twitchApiSecret;
+        private readonly string _twitchChannelId;
 
-        public TwitchPubSubController(TwitchClientController twitchClientController, string twitchChannelId,
+        public TwitchPubSubController(TwitchClientController twitchClientController, string twitchChannelId, string twitchAccessToken,
             string twitchApiClientId, string twitchApiSecret)
         {
             // 認証が通ってないらしい？
             _twitchClientController = twitchClientController;
             _twitchPubSub = new TwitchPubSub();
             _twitchApiClientId = twitchApiClientId;
+            _twitchApiAccessToken = twitchAccessToken;
             _twitchApiSecret = twitchApiSecret;
+            _twitchChannelId = twitchChannelId;
 
             _twitchPubSub.OnPubSubServiceConnected += TwitchPubSubOnPubSubServiceConnected;
             _twitchPubSub.OnBitsReceivedV2 += TwitchPubSubBitsReceived;
@@ -39,9 +43,9 @@ namespace FaraBotModerator.Controller
             _twitchPubSub.OnStreamDown += TwitchPubSubOnStreamDown;
 
             _twitchPubSub.OnFollow += PubSub_OnFollow;
-            _twitchPubSub.ListenToFollows(twitchChannelId);
+            _twitchPubSub.ListenToFollows(_twitchChannelId);
             // ここで通知を検知するユーザを指定(現状は自分のみ)
-            _twitchPubSub.ListenToBitsEventsV2(twitchChannelId);
+            _twitchPubSub.ListenToBitsEventsV2(_twitchChannelId);
             _twitchPubSub.OnListenResponse += TwitchPubSubOnListenResponse;
             // _twitchPubSub.ListenToRaid(twitchChannelId);
             // _twitchPubSub.ListenToSubscriptions(twitchChannelId);
@@ -58,7 +62,7 @@ namespace FaraBotModerator.Controller
         
         public void Connect()
         {
-            var oauthTokenResult = TwitchResponseOAuthToken();
+            // var oauthTokenResult = TwitchResponseOAuthToken();
             _twitchPubSub.Connect();
         }
 
@@ -89,8 +93,7 @@ namespace FaraBotModerator.Controller
 
         private void TwitchPubSubOnPubSubServiceConnected(object sender, EventArgs e)
         {
-            // SendTopics accepts an oauth optionally, which is necessary for some topics
-            _twitchPubSub.SendTopics();
+            _twitchPubSub.SendTopics(_twitchApiAccessToken);
         }
 
         private void TwitchPubSubOnListenResponse(object sender, OnListenResponseArgs e)
