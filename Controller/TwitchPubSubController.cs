@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -121,13 +117,13 @@ namespace FaraBotModerator.Controller
                 var parameter =
                     $"client_id={_twitchApiClientId}" +
                     $"&client_secret={_twitchApiSecret}" +
-                    $"&code=yro086hsolzz6od15748irpa9fmunl" +
-                    $"&grant_type=authorization_code" +
-                    $"&redirect_uri=http://localhost";
+                    "&code=yro086hsolzz6od15748irpa9fmunl" +
+                    "&grant_type=authorization_code" +
+                    "&redirect_uri=http://localhost";
                 // var parameter =
                     // $"grant_type=client_credentials&client_id={_twitchApiClientId}&client_secret={_twitchApiSecret}";
                 var content = new StringContent(parameter, Encoding.Default, "application/x-www-form-urlencoded");
-                var response = await httpClient.PostAsync($"https://id.twitch.tv/oauth2/token", content);
+                var response = await httpClient.PostAsync("https://id.twitch.tv/oauth2/token", content);
 
                 var responseBody = response.Content.ReadAsStringAsync().Result;
                 var option = new JsonSerializerOptions

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Windows.Forms;
-using FaraBotModerator.Controller;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using FaraBotModerator.Controller;
 using FaraBotModerator.Model;
 using FaraBotModerator.Properties;
 
@@ -18,6 +17,7 @@ namespace FaraBotModerator
         private TwitchPubSubController _twitchPubSubController;
         private TwitterController _twitterController;
         private string _twitchApiAccessToken;
+        private bool _authorizeButtonPushed;
 
         public FaraBotModeratorForm()
         {
@@ -79,37 +79,50 @@ namespace FaraBotModerator
             SecretKeyController.SaveKeys(secretKeys);
         }
 
-        private void InitializeWebServer()
+        private async Task InitializeWebServer()
         {
-            var server = new HttpListener();
-            server.Prefixes.Add($"http://localhost:{Settings.Default.Port}/");
-            server.Start();
-            Task.Run(() =>
-            {
-                while (true)
-                {
-                    // WebServerどうしよ
-                    var context = server.GetContext();
-                    var request = context.Request;
-                    var response = context.Response;
-                    var directory = Directory.GetCurrentDirectory() + "\\Web";
-                    var file = directory + "\\index.html";
-                    if (!Directory.Exists(directory))
-                    {
-                        Directory.CreateDirectory(directory);
-                    }
-                    if (!File.Exists(file))
-                    {
-                        File.Create(file);
-                    }
+            await TwitchApiTokenWebView.EnsureCoreWebView2Async(null);
+            WebViewGoSite("https://google.com");
+            // var server = new HttpListener();
+            // var localUrl = $"http://localhost:{Settings.Default.Port}/";
+            // server.Prefixes.Clear();
+            // server.Prefixes.Add(localUrl);
+            // server.Start();
+            var directory = Directory.GetCurrentDirectory() + "\\Web";
+            var file = directory + "\\index.html";
 
-                    var text = Encoding.UTF8.GetBytes("");
-                    var content = File.ReadAllBytes(file);
-                    response.OutputStream.Write(content, 0, content.Length);
-                    
-                    response.Close();
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (!File.Exists(file))
+            {
+                File.Create(file);
+            }
+
+            while (true)
+            {
+                await Task.Delay(1);
+                var url = TwitchApiTokenWebView.CoreWebView2.Source;
+                if (!_authorizeButtonPushed || !url.Contains("code="))
+                {
+                    continue;
                 }
-            });
+
+                _authorizeButtonPushed = false;
+                var code = Regex.Match(url, @"code=(.*?)&.*?").Groups[1];
+                // TODO 取得したコード使ってaccessToken要求する(あとで)
+                // WebViewをAppで表示する必要ないのでnew作成→終わったら削除でいいかも
+
+            }
+        }
+
+        private void WebViewGoSite(string url)
+        {
+            // ブラウザではなくWebViewを開く
+            // WebViewのURLを設定し、レスポンスで返ってきたURLからCodeを取得したい
+            TwitchApiTokenWebView.CoreWebView2.Navigate(url);
         }
 
         private void TwitchConnectionButton_Click(object sender, EventArgs e)
@@ -125,7 +138,7 @@ namespace FaraBotModerator
 
                 _twitchApiController = new TwitchApiController(_twitchClientController, TwitchApiClientIdTextBox.Text,
                     TwitchApiSecretTextBox.Text, TwitchClientUserNameTextBox.Text);
-                
+
                 var channelId = _twitchApiController.GetTwitchChannelId();
 
                 _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId, "",
@@ -233,11 +246,11 @@ namespace FaraBotModerator
             // var accessToken = authToken.AccessToken;
             // var refreshToken = authToken.RefreshToken;
             //refreshTokenはaccessToken期限切れなら設定
-            var requestUrl = 
-                "https://id.twitch.tv/oauth2/authorize" + 
-                $"?client_id={TwitchApiClientIdTextBox.Text}" + 
-                $"&redirect_uri=http://localhost%3A{Settings.Default.Port}" +  
-                "&response_type=code" + 
+            var requestUrl =
+                "https://id.twitch.tv/oauth2/authorize" +
+                $"?client_id={TwitchApiClientIdTextBox.Text}" +
+                $"&redirect_uri=http://localhost%3A{Settings.Default.Port}" +
+                "&response_type=code" +
                 "&scope=bits%3Aread " + // bitsリーダーボード表示
                 "channel%3Amanage%3Amoderators " + // moderator追加、削除
                 "channel%3Amanage%3Apolls " + // アンケート作成
@@ -264,11 +277,12 @@ namespace FaraBotModerator
                 "chat%3Aedit " + // Chat送信
                 "chat%3Aread " + // Chat受信
                 "whispers:read " + // Whisper受信
-                "whispers%3Aedit" +  // Whisper送信
+                "whispers%3Aedit" + // Whisper送信
                 "&state=c3ab8aa609ea11e793ae92361f002671";
             try
             {
-                Process.Start(requestUrl);
+                _authorizeButtonPushed = true;
+                WebViewGoSite(requestUrl);
             }
             catch (Exception ex)
             {

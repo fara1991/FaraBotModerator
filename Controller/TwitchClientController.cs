@@ -5,6 +5,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Remoting;
 using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using FaraBotModerator.Model;
+using FNF.Utility;
+using TwitchLib.Api.Helix.Models.Users.GetUsers;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
@@ -12,15 +18,8 @@ using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Events;
 using TwitchLib.Communication.Models;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using FaraBotModerator.Model;
-using FNF.Utility;
 using TwitchLib.PubSub.Events;
 using OnLogArgs = TwitchLib.Client.Events.OnLogArgs;
-using TwitchLib.Api.Helix.Models.Users.GetUsers;
-using Microsoft.SmallBasic.Library;
 
 namespace FaraBotModerator.Controller
 {

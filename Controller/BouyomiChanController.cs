@@ -2,12 +2,10 @@
 //棒読みちゃんにIpcClientChannelで接続して読み上げを行うためのクラスです。
 //ご自由にお使いください。
 //System.Runtime.Remotingを参照設定する必要があります
+
 using System;
-using System.IO;
-using System.Text;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
-using FaraBotModerator.Model;
 
 namespace FNF.Utility {
 

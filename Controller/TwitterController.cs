@@ -1,7 +1,7 @@
-﻿using System;
-using CoreTweet;
+﻿using System.Configuration;
 using System.Diagnostics;
-using System.Configuration;
+using CoreTweet;
+using Microsoft.VisualBasic;
 
 namespace FaraBotModerator.Controller
 {
@@ -16,7 +16,7 @@ namespace FaraBotModerator.Controller
             var session = OAuth.Authorize(apiKey, apiSecret);
             Process.Start(session.AuthorizeUri.AbsoluteUri);
 
-            var pinCode = Microsoft.VisualBasic.Interaction.InputBox("PINコードを入力してください", "認証用PINコード入力", "", -1, -1);
+            var pinCode = Interaction.InputBox("PINコードを入力してください", "認証用PINコード入力");
             _token = session.GetTokens(pinCode);
         }
 
