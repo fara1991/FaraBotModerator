@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Remoting;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -89,29 +90,47 @@ namespace FaraBotModerator.Controller
             LogController.OutputLog($@"Connected to {e.AutoJoinChannel}");
         }
 
+        /// <summary>
+        /// Botを停止します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TwitchClientOnDisconnected(object sender, OnDisconnectedEventArgs e)
         {
             _twitchClient.SendMessage(_userName, "Logout FaraBot");
             LogController.OutputLog("Logout FaraBot");
         }
 
+        /// <summary>
+        /// Botを起動します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TwitchClientOnJoinedChannel(object sender, OnJoinedChannelArgs e)
         {
             _twitchClient.SendMessage(_userName, "Login FaraBot");
             LogController.OutputLog("Login FaraBot.");
         }
 
-        public void SendFollowPubSubMessage(User follower)
+        /// <summary>
+        /// Followerが増えたときに実行されます。
+        /// </summary>
+        /// <param name="e"></param>
+        public void SendFollowPubSubMessage(OnFollowArgs e)
         {
             
-            var followerChannelUrl = $"https://twitch.tv/{follower.Login}";
-            var followerName = follower.DisplayName;
+            var followerChannelUrl = $"https://twitch.tv/{e.Username}";
+            var followerName = e.DisplayName;
             var message = _followedDisplayText.Replace("{followerName}", followerName)
                 .Replace("{followerChannelUrl}", followerChannelUrl);
             _twitchClient.SendMessage(_twitchClient.TwitchUsername, message);
             LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}");
         }
 
+        /// <summary>
+        /// Bitsを受け取った時に実行されます。
+        /// </summary>
+        /// <param name="e"></param>
         public void SendBitsPubSubMessage(OnBitsReceivedV2Args e)
         {
             var channel = _twitchClient.TwitchUsername;
@@ -126,6 +145,26 @@ namespace FaraBotModerator.Controller
             LogController.OutputLog($"<Bits> Name: {bitsSendUserName}, URL: {bitsReceivedChannelUrl}");
         }
 
+        public void SendPrepareRaidPubSubMessage(OnRaidUpdateV2Args e)
+        {
+            var channel = _twitchClient.TwitchUsername;
+            var targetUserName = e.TargetLogin;
+            // var message = ここにアプリのテキスト読み込み
+        }
+        
+        public void SendRaidGoPubSubMessage(OnRaidGoArgs e)
+        {
+            var channel = e.TargetChannelId;
+            var name = e.TargetDisplayName;
+            var a = e.TargetProfileImage;
+            var b = e.ChannelId;
+        }
+        
+        /// <summary>
+        /// 新規サブスクが増えたときに実行されます。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TwitchClientOnNewSubscriber(object sender, OnNewSubscriberArgs e)
         {
             var channel = e.Channel;
@@ -136,6 +175,11 @@ namespace FaraBotModerator.Controller
             LogController.OutputLog($"<Subscriber> Name: {subscriberName} URL: {url}");
         }
 
+        /// <summary>
+        /// サブスクを受け取った時に実行されます。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TwitchClientOnGiftedSubscription(object sender, OnGiftedSubscriptionArgs e)
         {
             var channel = e.Channel;
@@ -146,6 +190,11 @@ namespace FaraBotModerator.Controller
             LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}");
         }
 
+        /// <summary>
+        /// 別チャンネルからRaidが来たときに実行されます。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TwitchClientOnRaidNotification(object sender, OnRaidNotificationArgs e)
         {
             var channel = e.Channel;
@@ -239,16 +288,12 @@ namespace FaraBotModerator.Controller
         private static async Task<DeepLTranslationModel> DeepLTranslationResult(string sourceMessage,
             string targetLanguage, HttpClient httpClient)
         {
-            var contentList = CreateContentList(sourceMessage, targetLanguage);
-
-            var request = new HttpRequestMessage(new HttpMethod("POST"),
-                "https://api-free.deepl.com/v2/translate");
-            request.Content = new StringContent(string.Join("&", contentList));
-            request.Content.Headers.ContentType =
-                MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
-
-            var response = await httpClient.SendAsync(request);
+            var deepLAuthKey = ConfigurationManager.AppSettings.Get("DeepLAuthKey");
+            var parameter = $"auth_key={deepLAuthKey}&text={sourceMessage}&target_lang={targetLanguage}";
+            var content = new StringContent(parameter, Encoding.Default, "application/x-www-form-urlencoded");
+            var response = await httpClient.PostAsync("https://api-free.deepl.com/v2/translate", content);
             var responseBody = response.Content.ReadAsStringAsync().Result;
+
             var option = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
@@ -257,16 +302,6 @@ namespace FaraBotModerator.Controller
                 JsonSerializer.Deserialize<DeepLTranslationModel>(responseBody,
                     option);
             return jsonString;
-        }
-
-        private static List<string> CreateContentList(string sourceMessage, string targetLanguage)
-        {
-            var contentList = new List<string>();
-            string deepLAuthKey = ConfigurationManager.AppSettings.Get("DeepLAuthKey");
-            contentList.Add($"auth_key={deepLAuthKey}");
-            contentList.Add($"text={sourceMessage}");
-            contentList.Add($"target_lang={targetLanguage}");
-            return contentList;
         }
 
         private bool isJapaneseLanguage(string message)

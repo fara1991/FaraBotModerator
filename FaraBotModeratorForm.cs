@@ -1,12 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
+using System.Drawing;
+using System.Net.Http;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FaraBotModerator.Controller;
 using FaraBotModerator.Model;
 using FaraBotModerator.Properties;
+using Microsoft.Web.WebView2.WinForms;
 
 namespace FaraBotModerator
 {
@@ -16,30 +22,163 @@ namespace FaraBotModerator
         private TwitchApiController _twitchApiController;
         private TwitchPubSubController _twitchPubSubController;
         private TwitterController _twitterController;
-        private string _twitchApiAccessToken;
+        private Form _authorizeTokenForm;
+        private WebView2 _authorizeTokenWebView;
         private bool _authorizeButtonPushed;
 
         public FaraBotModeratorForm()
         {
             InitializeComponent();
-            LoadSecretValue();
+            InitializeSecretValue();
+            InitializeTokenForm();
             InitializeWebServer();
         }
 
-        private void LoadSecretValue()
+        private void InitializeSecretValue()
         {
             var secretKeys = SecretKeyController.LoadKeys();
             TwitchClientUserNameTextBox.Text = secretKeys?.Twitch.Client.UserName;
             TwitchClientAccessTokenTextBox.Text = secretKeys?.Twitch.Client.AccessToken;
             TwitchClientChannelNameTextBox.Text = secretKeys?.Twitch.Client.ChannelName;
             TwitchApiClientIdTextBox.Text = secretKeys?.Twitch.Api.ClientId;
-            TwitchApiSecretTextBox.Text = secretKeys?.Twitch.Api.Secret;
-            // TwitchPubSubAccessTokenTextBox.Text = secretKeys?.Twitch.PubSub.AccessToken;
-            // TwitchPubSubRefreshTokenTextBox.Text = secretKeys?.Twitch.PubSub.RefreshToken;
+            TwitchApiClientSecretTextBox.Text = secretKeys?.Twitch.Api.Secret;
             TwitterAPIKeyTextBox.Text = secretKeys?.Twitter.ApiKey;
             TwitterAPISecretTextBox.Text = secretKeys?.Twitter.ApiSecret;
             DeepLAPIFreeAuthKeyTextBox.Text = secretKeys?.DeepL.FreeAuthKey;
             DeepLAPIProAuthKeyTextBox.Text = secretKeys?.DeepL.ProAuthKey;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeTokenForm()
+        {
+            _authorizeTokenWebView = new WebView2();
+            _authorizeTokenWebView.Name = "TwitchApiTokenWebView";
+            _authorizeTokenWebView.Size = new Size(640, 640);
+            _authorizeTokenWebView.Location = new Point(365, 6);
+            // _authorizeTokenWebView.Source = new System.Uri("https://www.microsoft.com", System.UriKind.Absolute);
+
+            _authorizeTokenForm = new Form();
+            var resources = new ComponentResourceManager(typeof(FaraBotModeratorForm));
+            _authorizeTokenForm.Icon = (Icon) resources.GetObject("$this.Icon");
+            _authorizeTokenForm.Text = @"Authentication Token Browser";
+            _authorizeTokenForm.Controls.Add(_authorizeTokenWebView);
+            _authorizeTokenForm.Hide();
+        }
+
+        private async Task InitializeWebServer()
+        {
+            UpdateRefreshToken();
+
+            await _authorizeTokenWebView.EnsureCoreWebView2Async(null);
+            while (true)
+            {
+                await Task.Delay(1);
+                var url = _authorizeTokenWebView.CoreWebView2.Source;
+                if (!_authorizeButtonPushed || !url.Contains("code="))
+                {
+                    continue;
+                }
+
+                _authorizeButtonPushed = false;
+
+                UpdateAccessToken(url);
+                HideWebView();
+            }
+            // ReSharper disable once FunctionNeverReturns
+        }
+
+        private void UpdateRefreshToken()
+        {
+            if (Settings.Default.RefreshToken != "" && DateTime.Now < Settings.Default.ExpirationDate)
+            {
+                var parameter =
+                    $"client_id={TwitchApiClientIdTextBox.Text}" +
+                    $"&client_secret={TwitchApiClientSecretTextBox.Text}" +
+                    "&grant_type=refresh_token" +
+                    $"&refresh_token={Settings.Default.RefreshToken}";
+                var response = Task.Run(() =>
+                    PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")
+                ).Result;
+
+                if (response.responseBody.Contains("error"))
+                {
+                    LogController.OutputLog(
+                        "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
+                    throw new HttpRequestException(
+                        "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
+                }
+
+                var jsonString =
+                    JsonSerializer.Deserialize<TwitchRefreshTokenModel>(response.responseBody, response.option);
+                Settings.Default.AccessToken = jsonString?.AccessToken;
+                Settings.Default.RefreshToken = jsonString?.RefreshToken;
+                Settings.Default.Save();
+            }
+        }
+
+        private void UpdateAccessToken(string url)
+        {
+            var code = Regex.Match(url, @"code=(.*?)&.*?").Groups[1];
+            var parameter =
+                $"client_id={TwitchApiClientIdTextBox.Text}" +
+                $"&client_secret={TwitchApiClientSecretTextBox.Text}" +
+                $"&code={code}" +
+                "&grant_type=authorization_code" +
+                $"&redirect_uri=http://localhost:{Settings.Default.Port}";
+            var response = Task.Run(() => PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")).Result;
+            if (response.responseBody.Contains("Invalid authorization code"))
+            {
+                LogController.OutputLog(
+                    "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
+                throw new HttpRequestException(
+                    "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
+            }
+
+            var jsonString =
+                JsonSerializer.Deserialize<TwitchOAuthTokenModel>(response.responseBody, response.option);
+            Settings.Default.AccessToken = jsonString?.AccessToken;
+            Settings.Default.RefreshToken = jsonString?.RefreshToken;
+            if (jsonString?.ExpiresIn != null)
+            {
+                var datetime = DateTime.Now;
+                Settings.Default.ExpirationDate = datetime.AddSeconds(jsonString.ExpiresIn);
+            }
+
+            Settings.Default.Save();
+        }
+
+        private async Task<(string responseBody, JsonSerializerOptions option)> PostResponseBodyAsync(string parameter,
+            string url)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var content = new StringContent(parameter, Encoding.Default, "application/x-www-form-urlencoded");
+                var response = await httpClient.PostAsync(url, content);
+
+                var responseBody = response.Content.ReadAsStringAsync().Result;
+                var option = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+
+                return (responseBody, option);
+            }
+        }
+
+        private void ShowWebView(string requestUrl)
+        {
+            // Button押した瞬間だけフラグ変更。InitializeWebServer()内で押した瞬間を判定
+            _authorizeButtonPushed = true;
+            _authorizeTokenForm.Show(this);
+            _authorizeTokenWebView.CoreWebView2.Navigate(requestUrl);
+        }
+
+        private void HideWebView()
+        {
+            _authorizeButtonPushed = false;
+            _authorizeTokenForm.Hide();
         }
 
         private void SaveSecretValue()
@@ -57,12 +196,7 @@ namespace FaraBotModerator
                     Api = new TwitchApiKeyModel
                     {
                         ClientId = TwitchApiClientIdTextBox.Text,
-                        Secret = TwitchApiSecretTextBox.Text
-                        // },
-                        // PubSub = new TwitchPubSubKeyModel
-                        // {
-                        // AccessToken = TwitchPubSubAccessTokenTextBox.Text,
-                        // RefreshToken = TwitchPubSubRefreshTokenTextBox.Text
+                        Secret = TwitchApiClientSecretTextBox.Text
                     }
                 },
                 Twitter = new TwitterKeyModel
@@ -79,52 +213,6 @@ namespace FaraBotModerator
             SecretKeyController.SaveKeys(secretKeys);
         }
 
-        private async Task InitializeWebServer()
-        {
-            await TwitchApiTokenWebView.EnsureCoreWebView2Async(null);
-            WebViewGoSite("https://google.com");
-            // var server = new HttpListener();
-            // var localUrl = $"http://localhost:{Settings.Default.Port}/";
-            // server.Prefixes.Clear();
-            // server.Prefixes.Add(localUrl);
-            // server.Start();
-            var directory = Directory.GetCurrentDirectory() + "\\Web";
-            var file = directory + "\\index.html";
-
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            if (!File.Exists(file))
-            {
-                File.Create(file);
-            }
-
-            while (true)
-            {
-                await Task.Delay(1);
-                var url = TwitchApiTokenWebView.CoreWebView2.Source;
-                if (!_authorizeButtonPushed || !url.Contains("code="))
-                {
-                    continue;
-                }
-
-                _authorizeButtonPushed = false;
-                var code = Regex.Match(url, @"code=(.*?)&.*?").Groups[1];
-                // TODO 取得したコード使ってaccessToken要求する(あとで)
-                // WebViewをAppで表示する必要ないのでnew作成→終わったら削除でいいかも
-
-            }
-        }
-
-        private void WebViewGoSite(string url)
-        {
-            // ブラウザではなくWebViewを開く
-            // WebViewのURLを設定し、レスポンスで返ってきたURLからCodeを取得したい
-            TwitchApiTokenWebView.CoreWebView2.Navigate(url);
-        }
-
         private void TwitchConnectionButton_Click(object sender, EventArgs e)
         {
             try
@@ -136,19 +224,17 @@ namespace FaraBotModerator
                     BitsEventTextBox.Text, GiftEventTextBox.Text, BouyomiChanConnectCheckBox.Checked);
                 _twitchClientController.Connect();
 
-                _twitchApiController = new TwitchApiController(_twitchClientController, TwitchApiClientIdTextBox.Text,
-                    TwitchApiSecretTextBox.Text, TwitchClientUserNameTextBox.Text);
+                _twitchApiController = new TwitchApiController(TwitchApiClientIdTextBox.Text,
+                    TwitchApiClientSecretTextBox.Text, TwitchClientUserNameTextBox.Text);
 
                 var channelId = _twitchApiController.GetTwitchChannelId();
 
-                _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId, "",
-                    TwitchApiClientIdTextBox.Text, TwitchApiSecretTextBox.Text);
+                _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
                 _twitchPubSubController.Connect();
                 TwitchConnectionStateLabel.Text = @"State: Connect";
             }
             catch (Exception ex)
             {
-                // 接続失敗したらアプリ左下に表示したい
                 LogController.OutputLog(ex.Message);
             }
         }
@@ -242,9 +328,6 @@ namespace FaraBotModerator
 
         private void TwitchApiAuthorizeButton_Click(object sender, EventArgs e)
         {
-            // var authToken = _twitchApiController.GetTwitchOauthToken();
-            // var accessToken = authToken.AccessToken;
-            // var refreshToken = authToken.RefreshToken;
             //refreshTokenはaccessToken期限切れなら設定
             var requestUrl =
                 "https://id.twitch.tv/oauth2/authorize" +
@@ -281,8 +364,7 @@ namespace FaraBotModerator
                 "&state=c3ab8aa609ea11e793ae92361f002671";
             try
             {
-                _authorizeButtonPushed = true;
-                WebViewGoSite(requestUrl);
+                ShowWebView(requestUrl);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace FaraBotModerator.Model
 {
@@ -11,7 +12,7 @@ namespace FaraBotModerator.Model
         [JsonPropertyName("expires_in")]
         public int ExpiresIn { get; set; }
         [JsonPropertyName("scope")]
-        public string Scope { get; set; }
+        public List<string> Scope { get; set; }
         [JsonPropertyName("token_type")]
         public string TokenType { get; set; }
     }

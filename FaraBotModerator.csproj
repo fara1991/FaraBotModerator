@@ -75,8 +75,8 @@
         <Compile Include="Model\SecretKeyModel.cs" />
         <Compile Include="Model\TextRegexModel.cs" />
         <Compile Include="Model\TwitchApiAuthorizeModel.cs" />
-        <Compile Include="Model\TwitchApiTokenModel.cs" />
         <Compile Include="Model\TwitchOAuthTokenModel.cs" />
+        <Compile Include="Model\TwitchRefreshTokenModel.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <EmbeddedResource Include="FaraBotModeratorForm.resx">

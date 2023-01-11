@@ -34,7 +34,6 @@ namespace FaraBotModerator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FaraBotModeratorForm));
             this.MenuTab = new System.Windows.Forms.TabControl();
             this.MainSettingTab = new System.Windows.Forms.TabPage();
-            this.TwitchApiTokenWebView = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.TwitterGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitterApiButton = new System.Windows.Forms.Button();
             this.TwitterTweetTextBox = new System.Windows.Forms.GroupBox();
@@ -50,8 +49,8 @@ namespace FaraBotModerator
             this.TwitchGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitchApiGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitchApiAuthorizeButton = new System.Windows.Forms.Button();
-            this.TwitchApiSecretTextBox = new System.Windows.Forms.TextBox();
-            this.TwitchApiSecretLabel = new System.Windows.Forms.Label();
+            this.TwitchApiClientSecretTextBox = new System.Windows.Forms.TextBox();
+            this.TwitchApiClientSecretLabel = new System.Windows.Forms.Label();
             this.TwitchApiClientIdTextBox = new System.Windows.Forms.TextBox();
             this.TwitchApiClientIdLabel = new System.Windows.Forms.Label();
             this.TwitchClientGroupBox = new System.Windows.Forms.GroupBox();
@@ -134,7 +133,6 @@ namespace FaraBotModerator
             this.Timer1Label = new System.Windows.Forms.Label();
             this.MenuTab.SuspendLayout();
             this.MainSettingTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.TwitchApiTokenWebView)).BeginInit();
             this.TwitterGroupBox.SuspendLayout();
             this.TwitterTweetTextBox.SuspendLayout();
             this.TwitchGroupBox.SuspendLayout();
@@ -164,34 +162,22 @@ namespace FaraBotModerator
             this.MenuTab.Location = new System.Drawing.Point(12, 12);
             this.MenuTab.Name = "MenuTab";
             this.MenuTab.SelectedIndex = 0;
-            this.MenuTab.Size = new System.Drawing.Size(776, 650);
+            this.MenuTab.Size = new System.Drawing.Size(776, 649);
             this.MenuTab.TabIndex = 0;
             // 
             // MainSettingTab
             // 
-            this.MainSettingTab.Controls.Add(this.TwitchApiTokenWebView);
+            this.MainSettingTab.Controls.Add(this.ChatBoxGroupBox);
             this.MainSettingTab.Controls.Add(this.TwitterGroupBox);
             this.MainSettingTab.Controls.Add(this.TwitchGroupBox);
             this.MainSettingTab.Location = new System.Drawing.Point(4, 22);
             this.MainSettingTab.Name = "MainSettingTab";
             this.MainSettingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MainSettingTab.Size = new System.Drawing.Size(768, 624);
+            this.MainSettingTab.Size = new System.Drawing.Size(768, 623);
             this.MainSettingTab.TabIndex = 0;
             this.MainSettingTab.Text = "Main Settings";
             this.MainSettingTab.ToolTipText = "Twitch接続やTwitter送信の設定を行います。";
             this.MainSettingTab.UseVisualStyleBackColor = true;
-            // 
-            // TwitchApiTokenWebView
-            // 
-            this.TwitchApiTokenWebView.AllowExternalDrop = true;
-            this.TwitchApiTokenWebView.CreationProperties = null;
-            this.TwitchApiTokenWebView.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.TwitchApiTokenWebView.Location = new System.Drawing.Point(365, 6);
-            this.TwitchApiTokenWebView.Name = "TwitchApiTokenWebView";
-            this.TwitchApiTokenWebView.Size = new System.Drawing.Size(397, 605);
-            this.TwitchApiTokenWebView.Source = new System.Uri("https://www.microsoft.com", System.UriKind.Absolute);
-            this.TwitchApiTokenWebView.TabIndex = 2;
-            this.TwitchApiTokenWebView.ZoomFactor = 1D;
             // 
             // TwitterGroupBox
             // 
@@ -332,8 +318,8 @@ namespace FaraBotModerator
             // TwitchApiGroupBox
             // 
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiAuthorizeButton);
-            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiSecretTextBox);
-            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiSecretLabel);
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientSecretTextBox);
+            this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientSecretLabel);
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdTextBox);
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdLabel);
             this.TwitchApiGroupBox.Location = new System.Drawing.Point(6, 138);
@@ -353,22 +339,22 @@ namespace FaraBotModerator
             this.TwitchApiAuthorizeButton.UseVisualStyleBackColor = true;
             this.TwitchApiAuthorizeButton.Click += new System.EventHandler(this.TwitchApiAuthorizeButton_Click);
             // 
-            // TwitchApiSecretTextBox
+            // TwitchApiClientSecretTextBox
             // 
-            this.TwitchApiSecretTextBox.Location = new System.Drawing.Point(112, 42);
-            this.TwitchApiSecretTextBox.Name = "TwitchApiSecretTextBox";
-            this.TwitchApiSecretTextBox.PasswordChar = '●';
-            this.TwitchApiSecretTextBox.Size = new System.Drawing.Size(223, 19);
-            this.TwitchApiSecretTextBox.TabIndex = 3;
+            this.TwitchApiClientSecretTextBox.Location = new System.Drawing.Point(112, 42);
+            this.TwitchApiClientSecretTextBox.Name = "TwitchApiClientSecretTextBox";
+            this.TwitchApiClientSecretTextBox.PasswordChar = '●';
+            this.TwitchApiClientSecretTextBox.Size = new System.Drawing.Size(223, 19);
+            this.TwitchApiClientSecretTextBox.TabIndex = 3;
             // 
-            // TwitchApiSecretLabel
+            // TwitchApiClientSecretLabel
             // 
-            this.TwitchApiSecretLabel.Location = new System.Drawing.Point(3, 44);
-            this.TwitchApiSecretLabel.Name = "TwitchApiSecretLabel";
-            this.TwitchApiSecretLabel.Size = new System.Drawing.Size(100, 16);
-            this.TwitchApiSecretLabel.TabIndex = 2;
-            this.TwitchApiSecretLabel.Text = "Secret";
-            this.TwitchApiSecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.TwitchApiClientSecretLabel.Location = new System.Drawing.Point(3, 44);
+            this.TwitchApiClientSecretLabel.Name = "TwitchApiClientSecretLabel";
+            this.TwitchApiClientSecretLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitchApiClientSecretLabel.TabIndex = 2;
+            this.TwitchApiClientSecretLabel.Text = "ClientSecret";
+            this.TwitchApiClientSecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitchApiClientIdTextBox
             // 
@@ -703,7 +689,6 @@ namespace FaraBotModerator
             // 
             // TranslateTab
             // 
-            this.TranslateTab.Controls.Add(this.ChatBoxGroupBox);
             this.TranslateTab.Controls.Add(this.DeepLAPIProGroupBox);
             this.TranslateTab.Controls.Add(this.DeepLAPIFreeGroupBox);
             this.TranslateTab.Location = new System.Drawing.Point(4, 22);
@@ -717,9 +702,9 @@ namespace FaraBotModerator
             // 
             // ChatBoxGroupBox
             // 
-            this.ChatBoxGroupBox.Location = new System.Drawing.Point(360, 6);
+            this.ChatBoxGroupBox.Location = new System.Drawing.Point(374, 6);
             this.ChatBoxGroupBox.Name = "ChatBoxGroupBox";
-            this.ChatBoxGroupBox.Size = new System.Drawing.Size(388, 454);
+            this.ChatBoxGroupBox.Size = new System.Drawing.Size(388, 614);
             this.ChatBoxGroupBox.TabIndex = 2;
             this.ChatBoxGroupBox.TabStop = false;
             this.ChatBoxGroupBox.Text = "ChatBox";
@@ -1180,7 +1165,6 @@ namespace FaraBotModerator
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FaraBotModeratorForm_FormClosing);
             this.MenuTab.ResumeLayout(false);
             this.MainSettingTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.TwitchApiTokenWebView)).EndInit();
             this.TwitterGroupBox.ResumeLayout(false);
             this.TwitterGroupBox.PerformLayout();
             this.TwitterTweetTextBox.ResumeLayout(false);
@@ -1210,8 +1194,6 @@ namespace FaraBotModerator
             ((System.ComponentModel.ISupportInitialize) (this.Timer2NumericUpDown)).EndInit();
             this.ResumeLayout(false);
         }
-
-        private Microsoft.Web.WebView2.WinForms.WebView2 TwitchApiTokenWebView;
 
         private System.Windows.Forms.Button TwitchApiAuthorizeButton;
 
@@ -1254,8 +1236,8 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.Button TwitterApiButton;
 
-        private System.Windows.Forms.Label TwitchApiSecretLabel;
-        private System.Windows.Forms.TextBox TwitchApiSecretTextBox;
+        private System.Windows.Forms.Label TwitchApiClientSecretLabel;
+        private System.Windows.Forms.TextBox TwitchApiClientSecretTextBox;
 
         private System.Windows.Forms.TextBox TwitchApiClientIdTextBox;
 
