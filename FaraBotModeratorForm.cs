@@ -46,6 +46,11 @@ namespace FaraBotModerator
             TwitterAPISecretTextBox.Text = secretKeys?.Twitter.ApiSecret;
             DeepLAPIFreeAuthKeyTextBox.Text = secretKeys?.DeepL.FreeAuthKey;
             DeepLAPIProAuthKeyTextBox.Text = secretKeys?.DeepL.ProAuthKey;
+            FollowEventTextBox.Text = secretKeys?.Event.Follow;
+            RaidEventTextBox.Text = secretKeys?.Event.Raid;
+            SubscriptionEventTextBox.Text = secretKeys?.Event.Subscription;
+            BitsEventTextBox.Text = secretKeys?.Event.Bits;
+            GiftEventTextBox.Text = secretKeys?.Event.Gift;
         }
 
         /// <summary>
@@ -57,7 +62,6 @@ namespace FaraBotModerator
             _authorizeTokenWebView.Name = "TwitchApiTokenWebView";
             _authorizeTokenWebView.Size = new Size(640, 640);
             _authorizeTokenWebView.Location = new Point(365, 6);
-            // _authorizeTokenWebView.Source = new System.Uri("https://www.microsoft.com", System.UriKind.Absolute);
 
             _authorizeTokenForm = new Form();
             var resources = new ComponentResourceManager(typeof(FaraBotModeratorForm));
@@ -69,8 +73,6 @@ namespace FaraBotModerator
 
         private async Task InitializeWebServer()
         {
-            UpdateRefreshToken();
-
             await _authorizeTokenWebView.EnsureCoreWebView2Async(null);
             while (true)
             {
@@ -89,35 +91,41 @@ namespace FaraBotModerator
             // ReSharper disable once FunctionNeverReturns
         }
 
+        /// <summary>
+        /// Token期限切れの時に呼び出してTokenを更新します。
+        /// </summary>
+        /// <exception cref="HttpRequestException"></exception>
         private void UpdateRefreshToken()
         {
-            if (Settings.Default.RefreshToken != "" && DateTime.Now < Settings.Default.ExpirationDate)
+            var parameter =
+                $"client_id={TwitchApiClientIdTextBox.Text}" +
+                $"&client_secret={TwitchApiClientSecretTextBox.Text}" +
+                "&grant_type=refresh_token" +
+                $"&refresh_token={Settings.Default.RefreshToken}";
+            var response = Task.Run(() =>
+                PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")
+            ).Result;
+
+            if (response.responseBody.Contains("error"))
             {
-                var parameter =
-                    $"client_id={TwitchApiClientIdTextBox.Text}" +
-                    $"&client_secret={TwitchApiClientSecretTextBox.Text}" +
-                    "&grant_type=refresh_token" +
-                    $"&refresh_token={Settings.Default.RefreshToken}";
-                var response = Task.Run(() =>
-                    PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")
-                ).Result;
-
-                if (response.responseBody.Contains("error"))
-                {
-                    LogController.OutputLog(
-                        "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
-                    throw new HttpRequestException(
-                        "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
-                }
-
-                var jsonString =
-                    JsonSerializer.Deserialize<TwitchRefreshTokenModel>(response.responseBody, response.option);
-                Settings.Default.AccessToken = jsonString?.AccessToken;
-                Settings.Default.RefreshToken = jsonString?.RefreshToken;
-                Settings.Default.Save();
+                LogController.OutputLog(
+                    "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
+                throw new HttpRequestException(
+                    "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.");
             }
+
+            var jsonString =
+                JsonSerializer.Deserialize<TwitchRefreshTokenModel>(response.responseBody, response.option);
+            Settings.Default.AccessToken = jsonString?.AccessToken;
+            Settings.Default.RefreshToken = jsonString?.RefreshToken;
+            Settings.Default.Save();
         }
 
+        /// <summary>
+        /// Twitch API Access Tokenを取得、更新します。
+        /// </summary>
+        /// <param name="url"></param>
+        /// <exception cref="HttpRequestException"></exception>
         private void UpdateAccessToken(string url)
         {
             var code = Regex.Match(url, @"code=(.*?)&.*?").Groups[1];
@@ -149,6 +157,12 @@ namespace FaraBotModerator
             Settings.Default.Save();
         }
 
+        /// <summary>
+        /// 指定URLに対してPost Requestを送信します。
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private async Task<(string responseBody, JsonSerializerOptions option)> PostResponseBodyAsync(string parameter,
             string url)
         {
@@ -167,6 +181,10 @@ namespace FaraBotModerator
             }
         }
 
+        /// <summary>
+        /// 指定URLのページをWebViewで表示します。
+        /// </summary>
+        /// <param name="requestUrl"></param>
         private void ShowWebView(string requestUrl)
         {
             // Button押した瞬間だけフラグ変更。InitializeWebServer()内で押した瞬間を判定
@@ -175,12 +193,18 @@ namespace FaraBotModerator
             _authorizeTokenWebView.CoreWebView2.Navigate(requestUrl);
         }
 
+        /// <summary>
+        /// WebViewを非表示にします。
+        /// </summary>
         private void HideWebView()
         {
             _authorizeButtonPushed = false;
             _authorizeTokenForm.Hide();
         }
 
+        /// <summary>
+        /// Secretの値を保存します。
+        /// </summary>
         private void SaveSecretValue()
         {
             var secretKeys = new SecretKeyModel
@@ -208,6 +232,14 @@ namespace FaraBotModerator
                 {
                     FreeAuthKey = DeepLAPIFreeAuthKeyTextBox.Text,
                     ProAuthKey = DeepLAPIProAuthKeyTextBox.Text
+                },
+                Event = new ReactionEventModel
+                {
+                    Follow = FollowEventTextBox.Text,
+                    Raid = RaidEventTextBox.Text,
+                    Subscription = SubscriptionEventTextBox.Text,
+                    Bits = BitsEventTextBox.Text,
+                    Gift = GiftEventTextBox.Text
                 }
             };
             SecretKeyController.SaveKeys(secretKeys);

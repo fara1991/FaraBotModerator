@@ -51,11 +51,6 @@ namespace FaraBotModerator.Controller
                     {
                         ClientId = "",
                         Secret = ""
-                    },
-                    PubSub = new TwitchPubSubKeyModel
-                    {
-                        AccessToken = "",
-                        RefreshToken = ""
                     }
                 },
                 Twitter = new TwitterKeyModel
@@ -67,6 +62,14 @@ namespace FaraBotModerator.Controller
                 {
                     FreeAuthKey = "",
                     ProAuthKey = ""
+                },
+                Event = new ReactionEventModel
+                {
+                    Follow = "",
+                    Raid = "",
+                    Subscription = "",
+                    Bits = "",
+                    Gift = ""
                 }
             };
 
