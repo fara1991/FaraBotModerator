@@ -64,6 +64,7 @@ namespace FaraBotModerator
             _authorizeTokenWebView.Location = new Point(365, 6);
 
             _authorizeTokenForm = new Form();
+            _authorizeTokenForm.ControlBox = false;
             var resources = new ComponentResourceManager(typeof(FaraBotModeratorForm));
             _authorizeTokenForm.Icon = (Icon) resources.GetObject("$this.Icon");
             _authorizeTokenForm.Text = @"Authentication Token Browser";
@@ -190,6 +191,15 @@ namespace FaraBotModerator
             // Button押した瞬間だけフラグ変更。InitializeWebServer()内で押した瞬間を判定
             _authorizeButtonPushed = true;
             _authorizeTokenForm.Show(this);
+            TwitchClientAccessTokenButton.Enabled = false;
+            TwitchApiAuthorizeButton.Enabled = false;
+            TwitchConnectionButton.Enabled = false;
+            TwitchDisconnectButton.Enabled = false;
+            TwitterApiButton.Enabled = false;
+            TwitterPushTweetButton.Enabled = false;
+            TwitterConnectionButton.Enabled = false;
+            TwitterDisconnectionButton.Enabled = false;
+            MenuTab.Enabled = false;
             _authorizeTokenWebView.CoreWebView2.Navigate(requestUrl);
         }
 
@@ -200,6 +210,15 @@ namespace FaraBotModerator
         {
             _authorizeButtonPushed = false;
             _authorizeTokenForm.Hide();
+            TwitchClientAccessTokenButton.Enabled = true;
+            TwitchApiAuthorizeButton.Enabled = true;
+            TwitchConnectionButton.Enabled = true;
+            TwitchDisconnectButton.Enabled = true;
+            TwitterApiButton.Enabled = true;
+            TwitterPushTweetButton.Enabled = true;
+            TwitterConnectionButton.Enabled = true;
+            TwitterDisconnectionButton.Enabled = true;
+            MenuTab.Enabled = true;
         }
 
         /// <summary>
