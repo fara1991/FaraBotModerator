@@ -9,11 +9,17 @@ namespace FaraBotModerator.Model
         public List<DeepLTranslationChildModel> Translations { get; set; }
     }
 
-    public class DeepLTranslationChildModel
+    public abstract class DeepLTranslationChildModel
     {
+        protected DeepLTranslationChildModel(string language, string text)
+        {
+            Language = language;
+            Text = text;
+        }
+
         [JsonPropertyName("detected_source_language")]
-        public string Language { get; set; }
+        public string Language { get; }
         [JsonPropertyName("text")]
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

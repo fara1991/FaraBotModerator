@@ -10,6 +10,8 @@ namespace FaraBotModerator.Model
         public DeepLKeyModel DeepL { get; set; }
         [JsonPropertyName("twitter")]
         public TwitterKeyModel Twitter { get; set; }
+        [JsonPropertyName("event")]
+        public ReactionEventModel Event { get; set; }
     }
 
     public class TwitchSecretKeyModel
@@ -18,8 +20,6 @@ namespace FaraBotModerator.Model
         public TwitchClientKeyModel Client { get; set; }
         [JsonPropertyName("api")]
         public TwitchApiKeyModel Api { get; set; }
-        [JsonPropertyName("pubsub")]
-        public TwitchPubSubKeyModel PubSub { get; set; }
     }
 
     public class TwitchClientKeyModel
@@ -40,14 +40,6 @@ namespace FaraBotModerator.Model
         public string Secret { get; set; }
     }
 
-    public class TwitchPubSubKeyModel
-    {
-        [JsonPropertyName("accessToken")]
-        public string AccessToken { get; set; }
-        [JsonPropertyName("refreshToken")]
-        public string RefreshToken { get; set; }
-    }
-
     public class DeepLKeyModel
     {
         [JsonPropertyName("freeAuthKey")]
@@ -62,5 +54,18 @@ namespace FaraBotModerator.Model
         public string ApiKey { get; set; }
         [JsonPropertyName("apiSecret")]
         public string ApiSecret { get; set; }
+    }
+    public class ReactionEventModel
+    {
+        [JsonPropertyName("follow")]
+        public string Follow { get; set; }
+        [JsonPropertyName("raid")]
+        public string Raid { get; set; }
+        [JsonPropertyName("subscription")]
+        public string Subscription { get; set; }
+        [JsonPropertyName("bits")]
+        public string Bits { get; set; }
+        [JsonPropertyName("gift")]
+        public string Gift { get; set; }
     }
 }

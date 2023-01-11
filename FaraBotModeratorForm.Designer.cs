@@ -34,6 +34,7 @@ namespace FaraBotModerator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FaraBotModeratorForm));
             this.MenuTab = new System.Windows.Forms.TabControl();
             this.MainSettingTab = new System.Windows.Forms.TabPage();
+            this.ChatBoxGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitterGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitterApiButton = new System.Windows.Forms.Button();
             this.TwitterTweetTextBox = new System.Windows.Forms.GroupBox();
@@ -82,11 +83,9 @@ namespace FaraBotModerator
             this.RaidEventTextBox = new System.Windows.Forms.TextBox();
             this.RaidTextLabel = new System.Windows.Forms.Label();
             this.FollowEventTextBox = new System.Windows.Forms.TextBox();
-            this.FollowedTextLabel = new System.Windows.Forms.Label();
             this.AutoBotTab = new System.Windows.Forms.TabPage();
             this.AutoBotChildTab = new System.Windows.Forms.TabControl();
             this.TranslateTab = new System.Windows.Forms.TabPage();
-            this.ChatBoxGroupBox = new System.Windows.Forms.GroupBox();
             this.DeepLAPIProGroupBox = new System.Windows.Forms.GroupBox();
             this.DeepLAPIProAuthKeyTextBox = new System.Windows.Forms.TextBox();
             this.DeepLAPIProAuthKeyLabel = new System.Windows.Forms.Label();
@@ -178,6 +177,15 @@ namespace FaraBotModerator
             this.MainSettingTab.Text = "Main Settings";
             this.MainSettingTab.ToolTipText = "Twitch接続やTwitter送信の設定を行います。";
             this.MainSettingTab.UseVisualStyleBackColor = true;
+            // 
+            // ChatBoxGroupBox
+            // 
+            this.ChatBoxGroupBox.Location = new System.Drawing.Point(374, 6);
+            this.ChatBoxGroupBox.Name = "ChatBoxGroupBox";
+            this.ChatBoxGroupBox.Size = new System.Drawing.Size(388, 614);
+            this.ChatBoxGroupBox.TabIndex = 2;
+            this.ChatBoxGroupBox.TabStop = false;
+            this.ChatBoxGroupBox.Text = "ChatBox";
             // 
             // TwitterGroupBox
             // 
@@ -505,11 +513,10 @@ namespace FaraBotModerator
             this.ReactionEventTab.Controls.Add(this.RaidEventTextBox);
             this.ReactionEventTab.Controls.Add(this.RaidTextLabel);
             this.ReactionEventTab.Controls.Add(this.FollowEventTextBox);
-            this.ReactionEventTab.Controls.Add(this.FollowedTextLabel);
             this.ReactionEventTab.Location = new System.Drawing.Point(4, 22);
             this.ReactionEventTab.Name = "ReactionEventTab";
             this.ReactionEventTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ReactionEventTab.Size = new System.Drawing.Size(768, 624);
+            this.ReactionEventTab.Size = new System.Drawing.Size(768, 623);
             this.ReactionEventTab.TabIndex = 1;
             this.ReactionEventTab.Text = "Reaction Event";
             this.ReactionEventTab.ToolTipText = "TwitchでFollowやRaid等のアクションに応じた設定を行います。";
@@ -589,11 +596,11 @@ namespace FaraBotModerator
             // 
             // ReplaceNotificationTextBox
             // 
-            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 131);
+            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 396);
             this.ReplaceNotificationTextBox.Multiline = true;
             this.ReplaceNotificationTextBox.Name = "ReplaceNotificationTextBox";
             this.ReplaceNotificationTextBox.ReadOnly = true;
-            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 263);
+            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 224);
             this.ReplaceNotificationTextBox.TabIndex = 19;
             this.ReplaceNotificationTextBox.Text = resources.GetString("ReplaceNotificationTextBox.Text");
             // 
@@ -656,22 +663,12 @@ namespace FaraBotModerator
             this.FollowEventTextBox.TabIndex = 12;
             this.FollowEventTextBox.Text = "{followerName}, thanks follow gamefa16Hi. Follower Channel URL: {followerChannelU" + "rl}";
             // 
-            // FollowedTextLabel
-            // 
-            this.FollowedTextLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FollowedTextLabel.Location = new System.Drawing.Point(6, 118);
-            this.FollowedTextLabel.Name = "FollowedTextLabel";
-            this.FollowedTextLabel.Size = new System.Drawing.Size(78, 19);
-            this.FollowedTextLabel.TabIndex = 11;
-            this.FollowedTextLabel.Text = "Follow";
-            this.FollowedTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // AutoBotTab
             // 
             this.AutoBotTab.Controls.Add(this.AutoBotChildTab);
             this.AutoBotTab.Location = new System.Drawing.Point(4, 22);
             this.AutoBotTab.Name = "AutoBotTab";
-            this.AutoBotTab.Size = new System.Drawing.Size(768, 624);
+            this.AutoBotTab.Size = new System.Drawing.Size(768, 623);
             this.AutoBotTab.TabIndex = 2;
             this.AutoBotTab.Text = "Auto Bot";
             this.AutoBotTab.ToolTipText = "定期的なチャット通知や翻訳設定を行います。";
@@ -699,15 +696,6 @@ namespace FaraBotModerator
             this.TranslateTab.Text = "Translate";
             this.TranslateTab.ToolTipText = "チャット翻訳設定を行います。";
             this.TranslateTab.UseVisualStyleBackColor = true;
-            // 
-            // ChatBoxGroupBox
-            // 
-            this.ChatBoxGroupBox.Location = new System.Drawing.Point(374, 6);
-            this.ChatBoxGroupBox.Name = "ChatBoxGroupBox";
-            this.ChatBoxGroupBox.Size = new System.Drawing.Size(388, 614);
-            this.ChatBoxGroupBox.TabIndex = 2;
-            this.ChatBoxGroupBox.TabStop = false;
-            this.ChatBoxGroupBox.Text = "ChatBox";
             // 
             // DeepLAPIProGroupBox
             // 
@@ -1284,8 +1272,6 @@ namespace FaraBotModerator
         private System.Windows.Forms.Label RaidTextLabel;
 
         private System.Windows.Forms.TextBox FollowEventTextBox;
-
-        private System.Windows.Forms.Label FollowedTextLabel;
 
         private System.Windows.Forms.GroupBox CycleNotificationGroupBox;
 
