@@ -56,10 +56,8 @@ namespace FaraBotModerator
             this.TwitchApiClientIdLabel = new System.Windows.Forms.Label();
             this.TwitchClientGroupBox = new System.Windows.Forms.GroupBox();
             this.TwitchClientAccessTokenButton = new System.Windows.Forms.Button();
-            this.TwitchClientChannelNameTextBox = new System.Windows.Forms.TextBox();
             this.TwitchClientUserNameLabel = new System.Windows.Forms.Label();
             this.TwitchClientAccessTokenLabel = new System.Windows.Forms.Label();
-            this.TwitchClientChannelNameLabel = new System.Windows.Forms.Label();
             this.TwitchClientUserNameTextBox = new System.Windows.Forms.TextBox();
             this.TwitchClientAccessTokenTextBox = new System.Windows.Forms.TextBox();
             this.BouyomiChanConnectCheckBox = new System.Windows.Forms.CheckBox();
@@ -67,21 +65,24 @@ namespace FaraBotModerator
             this.TwitchDisconnectButton = new System.Windows.Forms.Button();
             this.TwitchConnectionButton = new System.Windows.Forms.Button();
             this.ReactionEventTab = new System.Windows.Forms.TabPage();
-            this.FollowTextLabel = new System.Windows.Forms.Label();
+            this.ChannelPointCheckBox = new System.Windows.Forms.CheckBox();
+            this.GiftCheckBox = new System.Windows.Forms.CheckBox();
+            this.BitsCheckBox = new System.Windows.Forms.CheckBox();
+            this.SubscriptionCheckBox = new System.Windows.Forms.CheckBox();
+            this.RaidCheckBox = new System.Windows.Forms.CheckBox();
+            this.FollowCheckBox = new System.Windows.Forms.CheckBox();
+            this.ChannelPointTestButton = new System.Windows.Forms.Button();
+            this.ChannelPointEventTextBox = new System.Windows.Forms.TextBox();
             this.GiftTestButton = new System.Windows.Forms.Button();
             this.BitsTestButton = new System.Windows.Forms.Button();
             this.SubscriptionTestButton = new System.Windows.Forms.Button();
             this.RaidTestButton = new System.Windows.Forms.Button();
             this.FollowTestButton = new System.Windows.Forms.Button();
             this.GiftEventTextBox = new System.Windows.Forms.TextBox();
-            this.GiftTextLabel = new System.Windows.Forms.Label();
             this.ReplaceNotificationTextBox = new System.Windows.Forms.TextBox();
-            this.BitsTextLabel = new System.Windows.Forms.Label();
             this.BitsEventTextBox = new System.Windows.Forms.TextBox();
             this.SubscriptionEventTextBox = new System.Windows.Forms.TextBox();
-            this.SubscriptionTextLabel = new System.Windows.Forms.Label();
             this.RaidEventTextBox = new System.Windows.Forms.TextBox();
-            this.RaidTextLabel = new System.Windows.Forms.Label();
             this.FollowEventTextBox = new System.Windows.Forms.TextBox();
             this.AutoBotTab = new System.Windows.Forms.TabPage();
             this.AutoBotChildTab = new System.Windows.Forms.TabControl();
@@ -330,9 +331,9 @@ namespace FaraBotModerator
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientSecretLabel);
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdTextBox);
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdLabel);
-            this.TwitchApiGroupBox.Location = new System.Drawing.Point(6, 138);
+            this.TwitchApiGroupBox.Location = new System.Drawing.Point(6, 116);
             this.TwitchApiGroupBox.Name = "TwitchApiGroupBox";
-            this.TwitchApiGroupBox.Size = new System.Drawing.Size(341, 99);
+            this.TwitchApiGroupBox.Size = new System.Drawing.Size(341, 94);
             this.TwitchApiGroupBox.TabIndex = 10;
             this.TwitchApiGroupBox.TabStop = false;
             this.TwitchApiGroupBox.Text = "API";
@@ -384,35 +385,26 @@ namespace FaraBotModerator
             // TwitchClientGroupBox
             // 
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenButton);
-            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientChannelNameTextBox);
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientUserNameLabel);
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenLabel);
-            this.TwitchClientGroupBox.Controls.Add(this.TwitchClientChannelNameLabel);
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientUserNameTextBox);
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenTextBox);
             this.TwitchClientGroupBox.Location = new System.Drawing.Point(6, 16);
             this.TwitchClientGroupBox.Name = "TwitchClientGroupBox";
-            this.TwitchClientGroupBox.Size = new System.Drawing.Size(341, 115);
+            this.TwitchClientGroupBox.Size = new System.Drawing.Size(341, 94);
             this.TwitchClientGroupBox.TabIndex = 0;
             this.TwitchClientGroupBox.TabStop = false;
             this.TwitchClientGroupBox.Text = "Client";
             // 
             // TwitchClientAccessTokenButton
             // 
-            this.TwitchClientAccessTokenButton.Location = new System.Drawing.Point(260, 87);
+            this.TwitchClientAccessTokenButton.Location = new System.Drawing.Point(260, 63);
             this.TwitchClientAccessTokenButton.Name = "TwitchClientAccessTokenButton";
             this.TwitchClientAccessTokenButton.Size = new System.Drawing.Size(75, 23);
             this.TwitchClientAccessTokenButton.TabIndex = 7;
             this.TwitchClientAccessTokenButton.Text = "Get Token";
             this.TwitchClientAccessTokenButton.UseVisualStyleBackColor = true;
             this.TwitchClientAccessTokenButton.Click += new System.EventHandler(this.TwitchAccessTokenButton_Click);
-            // 
-            // TwitchClientChannelNameTextBox
-            // 
-            this.TwitchClientChannelNameTextBox.Location = new System.Drawing.Point(112, 62);
-            this.TwitchClientChannelNameTextBox.Name = "TwitchClientChannelNameTextBox";
-            this.TwitchClientChannelNameTextBox.Size = new System.Drawing.Size(223, 19);
-            this.TwitchClientChannelNameTextBox.TabIndex = 10;
             // 
             // TwitchClientUserNameLabel
             // 
@@ -431,15 +423,6 @@ namespace FaraBotModerator
             this.TwitchClientAccessTokenLabel.TabIndex = 1;
             this.TwitchClientAccessTokenLabel.Text = "AccessToken";
             this.TwitchClientAccessTokenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // TwitchClientChannelNameLabel
-            // 
-            this.TwitchClientChannelNameLabel.Location = new System.Drawing.Point(3, 63);
-            this.TwitchClientChannelNameLabel.Name = "TwitchClientChannelNameLabel";
-            this.TwitchClientChannelNameLabel.Size = new System.Drawing.Size(100, 16);
-            this.TwitchClientChannelNameLabel.TabIndex = 8;
-            this.TwitchClientChannelNameLabel.Text = "ChannelName";
-            this.TwitchClientChannelNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitchClientUserNameTextBox
             // 
@@ -477,6 +460,7 @@ namespace FaraBotModerator
             // 
             // TwitchDisconnectButton
             // 
+            this.TwitchDisconnectButton.Enabled = false;
             this.TwitchDisconnectButton.Location = new System.Drawing.Point(272, 302);
             this.TwitchDisconnectButton.Name = "TwitchDisconnectButton";
             this.TwitchDisconnectButton.Size = new System.Drawing.Size(75, 23);
@@ -487,6 +471,7 @@ namespace FaraBotModerator
             // 
             // TwitchConnectionButton
             // 
+            this.TwitchConnectionButton.Enabled = false;
             this.TwitchConnectionButton.Location = new System.Drawing.Point(191, 302);
             this.TwitchConnectionButton.Name = "TwitchConnectionButton";
             this.TwitchConnectionButton.Size = new System.Drawing.Size(75, 23);
@@ -497,21 +482,24 @@ namespace FaraBotModerator
             // 
             // ReactionEventTab
             // 
-            this.ReactionEventTab.Controls.Add(this.FollowTextLabel);
+            this.ReactionEventTab.Controls.Add(this.ChannelPointCheckBox);
+            this.ReactionEventTab.Controls.Add(this.GiftCheckBox);
+            this.ReactionEventTab.Controls.Add(this.BitsCheckBox);
+            this.ReactionEventTab.Controls.Add(this.SubscriptionCheckBox);
+            this.ReactionEventTab.Controls.Add(this.RaidCheckBox);
+            this.ReactionEventTab.Controls.Add(this.FollowCheckBox);
+            this.ReactionEventTab.Controls.Add(this.ChannelPointTestButton);
+            this.ReactionEventTab.Controls.Add(this.ChannelPointEventTextBox);
             this.ReactionEventTab.Controls.Add(this.GiftTestButton);
             this.ReactionEventTab.Controls.Add(this.BitsTestButton);
             this.ReactionEventTab.Controls.Add(this.SubscriptionTestButton);
             this.ReactionEventTab.Controls.Add(this.RaidTestButton);
             this.ReactionEventTab.Controls.Add(this.FollowTestButton);
             this.ReactionEventTab.Controls.Add(this.GiftEventTextBox);
-            this.ReactionEventTab.Controls.Add(this.GiftTextLabel);
             this.ReactionEventTab.Controls.Add(this.ReplaceNotificationTextBox);
-            this.ReactionEventTab.Controls.Add(this.BitsTextLabel);
             this.ReactionEventTab.Controls.Add(this.BitsEventTextBox);
             this.ReactionEventTab.Controls.Add(this.SubscriptionEventTextBox);
-            this.ReactionEventTab.Controls.Add(this.SubscriptionTextLabel);
             this.ReactionEventTab.Controls.Add(this.RaidEventTextBox);
-            this.ReactionEventTab.Controls.Add(this.RaidTextLabel);
             this.ReactionEventTab.Controls.Add(this.FollowEventTextBox);
             this.ReactionEventTab.Location = new System.Drawing.Point(4, 22);
             this.ReactionEventTab.Name = "ReactionEventTab";
@@ -522,14 +510,88 @@ namespace FaraBotModerator
             this.ReactionEventTab.ToolTipText = "TwitchでFollowやRaid等のアクションに応じた設定を行います。";
             this.ReactionEventTab.UseVisualStyleBackColor = true;
             // 
-            // FollowTextLabel
+            // ChannelPointCheckBox
             // 
-            this.FollowTextLabel.Location = new System.Drawing.Point(6, 6);
-            this.FollowTextLabel.Name = "FollowTextLabel";
-            this.FollowTextLabel.Size = new System.Drawing.Size(78, 21);
-            this.FollowTextLabel.TabIndex = 27;
-            this.FollowTextLabel.Text = "Follow";
-            this.FollowTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ChannelPointCheckBox.Checked = true;
+            this.ChannelPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ChannelPointCheckBox.Location = new System.Drawing.Point(6, 131);
+            this.ChannelPointCheckBox.Name = "ChannelPointCheckBox";
+            this.ChannelPointCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.ChannelPointCheckBox.TabIndex = 39;
+            this.ChannelPointCheckBox.Text = "ChannelPoint";
+            this.ChannelPointCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // GiftCheckBox
+            // 
+            this.GiftCheckBox.Checked = true;
+            this.GiftCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.GiftCheckBox.Location = new System.Drawing.Point(6, 106);
+            this.GiftCheckBox.Name = "GiftCheckBox";
+            this.GiftCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.GiftCheckBox.TabIndex = 38;
+            this.GiftCheckBox.Text = "Gift";
+            this.GiftCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // BitsCheckBox
+            // 
+            this.BitsCheckBox.Checked = true;
+            this.BitsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.BitsCheckBox.Location = new System.Drawing.Point(6, 81);
+            this.BitsCheckBox.Name = "BitsCheckBox";
+            this.BitsCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.BitsCheckBox.TabIndex = 37;
+            this.BitsCheckBox.Text = "Bits";
+            this.BitsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // SubscriptionCheckBox
+            // 
+            this.SubscriptionCheckBox.Checked = true;
+            this.SubscriptionCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SubscriptionCheckBox.Location = new System.Drawing.Point(6, 56);
+            this.SubscriptionCheckBox.Name = "SubscriptionCheckBox";
+            this.SubscriptionCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.SubscriptionCheckBox.TabIndex = 36;
+            this.SubscriptionCheckBox.Text = "Subscription";
+            this.SubscriptionCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // RaidCheckBox
+            // 
+            this.RaidCheckBox.Checked = true;
+            this.RaidCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RaidCheckBox.Location = new System.Drawing.Point(6, 31);
+            this.RaidCheckBox.Name = "RaidCheckBox";
+            this.RaidCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.RaidCheckBox.TabIndex = 35;
+            this.RaidCheckBox.Text = "Raid";
+            this.RaidCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // FollowCheckBox
+            // 
+            this.FollowCheckBox.Checked = true;
+            this.FollowCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.FollowCheckBox.Location = new System.Drawing.Point(6, 6);
+            this.FollowCheckBox.Name = "FollowCheckBox";
+            this.FollowCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.FollowCheckBox.TabIndex = 34;
+            this.FollowCheckBox.Text = "Follow";
+            this.FollowCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ChannelPointTestButton
+            // 
+            this.ChannelPointTestButton.Location = new System.Drawing.Point(711, 131);
+            this.ChannelPointTestButton.Name = "ChannelPointTestButton";
+            this.ChannelPointTestButton.Size = new System.Drawing.Size(51, 19);
+            this.ChannelPointTestButton.TabIndex = 30;
+            this.ChannelPointTestButton.Text = "Test";
+            this.ChannelPointTestButton.UseVisualStyleBackColor = true;
+            // 
+            // ChannelPointEventTextBox
+            // 
+            this.ChannelPointEventTextBox.Location = new System.Drawing.Point(105, 131);
+            this.ChannelPointEventTextBox.Name = "ChannelPointEventTextBox";
+            this.ChannelPointEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.ChannelPointEventTextBox.TabIndex = 29;
+            this.ChannelPointEventTextBox.Text = "{channelPointUserName} use channelPoint of {channelPointTitle} gamefa16Hi";
             // 
             // GiftTestButton
             // 
@@ -579,89 +641,53 @@ namespace FaraBotModerator
             // 
             // GiftEventTextBox
             // 
-            this.GiftEventTextBox.Location = new System.Drawing.Point(90, 106);
+            this.GiftEventTextBox.Location = new System.Drawing.Point(105, 106);
             this.GiftEventTextBox.Name = "GiftEventTextBox";
-            this.GiftEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.GiftEventTextBox.Size = new System.Drawing.Size(600, 19);
             this.GiftEventTextBox.TabIndex = 21;
-            this.GiftEventTextBox.Text = "Thanks gift {giftedUserName} gamefa16Hi";
-            // 
-            // GiftTextLabel
-            // 
-            this.GiftTextLabel.Location = new System.Drawing.Point(6, 106);
-            this.GiftTextLabel.Name = "GiftTextLabel";
-            this.GiftTextLabel.Size = new System.Drawing.Size(78, 19);
-            this.GiftTextLabel.TabIndex = 20;
-            this.GiftTextLabel.Text = "Gift";
-            this.GiftTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.GiftEventTextBox.Text = "{giftedUserName}, thanks gift present gamefa16Hi";
             // 
             // ReplaceNotificationTextBox
             // 
-            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 396);
+            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 156);
             this.ReplaceNotificationTextBox.Multiline = true;
             this.ReplaceNotificationTextBox.Name = "ReplaceNotificationTextBox";
             this.ReplaceNotificationTextBox.ReadOnly = true;
-            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 224);
+            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 436);
             this.ReplaceNotificationTextBox.TabIndex = 19;
             this.ReplaceNotificationTextBox.Text = resources.GetString("ReplaceNotificationTextBox.Text");
             // 
-            // BitsTextLabel
-            // 
-            this.BitsTextLabel.Location = new System.Drawing.Point(6, 81);
-            this.BitsTextLabel.Name = "BitsTextLabel";
-            this.BitsTextLabel.Size = new System.Drawing.Size(78, 19);
-            this.BitsTextLabel.TabIndex = 18;
-            this.BitsTextLabel.Text = "Bits";
-            this.BitsTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // BitsEventTextBox
             // 
-            this.BitsEventTextBox.Location = new System.Drawing.Point(90, 81);
+            this.BitsEventTextBox.Location = new System.Drawing.Point(105, 81);
             this.BitsEventTextBox.Name = "BitsEventTextBox";
-            this.BitsEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.BitsEventTextBox.Size = new System.Drawing.Size(600, 19);
             this.BitsEventTextBox.TabIndex = 17;
-            this.BitsEventTextBox.Text = "Thanks {bitsAmount} bits (total {totalBitsAmount}) {bitsSendUserName} gamefa16Hi";
+            this.BitsEventTextBox.Text = "{bitsSendUserName}, thanks {bitsAmount} bits (total {totalBitsAmount}) gamefa16Hi" + "";
             // 
             // SubscriptionEventTextBox
             // 
-            this.SubscriptionEventTextBox.Location = new System.Drawing.Point(90, 56);
+            this.SubscriptionEventTextBox.Location = new System.Drawing.Point(105, 56);
             this.SubscriptionEventTextBox.Name = "SubscriptionEventTextBox";
-            this.SubscriptionEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.SubscriptionEventTextBox.Size = new System.Drawing.Size(600, 19);
             this.SubscriptionEventTextBox.TabIndex = 16;
-            this.SubscriptionEventTextBox.Text = "Thanks subscription {subscriberName} gamefa16Hi";
-            // 
-            // SubscriptionTextLabel
-            // 
-            this.SubscriptionTextLabel.Location = new System.Drawing.Point(6, 56);
-            this.SubscriptionTextLabel.Name = "SubscriptionTextLabel";
-            this.SubscriptionTextLabel.Size = new System.Drawing.Size(78, 19);
-            this.SubscriptionTextLabel.TabIndex = 15;
-            this.SubscriptionTextLabel.Text = "Subscription";
-            this.SubscriptionTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SubscriptionEventTextBox.Text = "{subscriberName}, thanks subscription {totalSubscriptionMonth} time gamefa16Hi";
             // 
             // RaidEventTextBox
             // 
-            this.RaidEventTextBox.Location = new System.Drawing.Point(90, 31);
+            this.RaidEventTextBox.Location = new System.Drawing.Point(105, 31);
             this.RaidEventTextBox.Name = "RaidEventTextBox";
-            this.RaidEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.RaidEventTextBox.Size = new System.Drawing.Size(600, 19);
             this.RaidEventTextBox.TabIndex = 14;
-            this.RaidEventTextBox.Text = "Welcome raiders, thanks raid {raiderName} gamefa16Hi. Please follow us! {url}";
-            // 
-            // RaidTextLabel
-            // 
-            this.RaidTextLabel.Location = new System.Drawing.Point(6, 31);
-            this.RaidTextLabel.Name = "RaidTextLabel";
-            this.RaidTextLabel.Size = new System.Drawing.Size(78, 19);
-            this.RaidTextLabel.TabIndex = 13;
-            this.RaidTextLabel.Text = "Raid";
-            this.RaidTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.RaidEventTextBox.Text = "Welcome raiders, thanks raid {raiderName} gamefa16Hi. Channel URL: {raiderChannel" + "Url}";
             // 
             // FollowEventTextBox
             // 
-            this.FollowEventTextBox.Location = new System.Drawing.Point(90, 6);
+            this.FollowEventTextBox.Location = new System.Drawing.Point(105, 6);
             this.FollowEventTextBox.Name = "FollowEventTextBox";
-            this.FollowEventTextBox.Size = new System.Drawing.Size(615, 19);
+            this.FollowEventTextBox.Size = new System.Drawing.Size(600, 19);
             this.FollowEventTextBox.TabIndex = 12;
-            this.FollowEventTextBox.Text = "{followerName}, thanks follow gamefa16Hi. Follower Channel URL: {followerChannelU" + "rl}";
+            this.FollowEventTextBox.Text = "{followerName}, thanks follow gamefa16Hi. Channel URL: {followerChannelUrl}";
             // 
             // AutoBotTab
             // 
@@ -1183,6 +1209,17 @@ namespace FaraBotModerator
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.CheckBox ChannelPointCheckBox;
+
+        private System.Windows.Forms.CheckBox FollowCheckBox;
+        private System.Windows.Forms.CheckBox RaidCheckBox;
+        private System.Windows.Forms.CheckBox SubscriptionCheckBox;
+        private System.Windows.Forms.CheckBox BitsCheckBox;
+        private System.Windows.Forms.CheckBox GiftCheckBox;
+
+        private System.Windows.Forms.Button ChannelPointTestButton;
+        private System.Windows.Forms.TextBox ChannelPointEventTextBox;
+
         private System.Windows.Forms.Button TwitchApiAuthorizeButton;
 
         private System.Windows.Forms.TextBox FixedTimer4TextBox;
@@ -1220,8 +1257,6 @@ namespace FaraBotModerator
         private System.Windows.Forms.Label Timer3Label;
         private System.Windows.Forms.NumericUpDown Timer3NumericUpDown;
 
-        private System.Windows.Forms.Label FollowTextLabel;
-
         private System.Windows.Forms.Button TwitterApiButton;
 
         private System.Windows.Forms.Label TwitchApiClientSecretLabel;
@@ -1233,8 +1268,6 @@ namespace FaraBotModerator
         private System.Windows.Forms.Label TwitchApiClientIdLabel;
 
         private System.Windows.Forms.GroupBox TwitchClientGroupBox;
-
-        private System.Windows.Forms.TextBox TwitchClientChannelNameTextBox;
 
         private System.Windows.Forms.CheckBox BouyomiChanConnectCheckBox;
 
@@ -1257,19 +1290,13 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.TextBox GiftEventTextBox;
 
-        private System.Windows.Forms.Label GiftTextLabel;
-
         private System.Windows.Forms.TextBox ReplaceNotificationTextBox;
 
         private System.Windows.Forms.TextBox BitsEventTextBox;
-        private System.Windows.Forms.Label BitsTextLabel;
 
-        private System.Windows.Forms.Label SubscriptionTextLabel;
         private System.Windows.Forms.TextBox SubscriptionEventTextBox;
 
         private System.Windows.Forms.TextBox RaidEventTextBox;
-
-        private System.Windows.Forms.Label RaidTextLabel;
 
         private System.Windows.Forms.TextBox FollowEventTextBox;
 
@@ -1286,8 +1313,6 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.GroupBox DeepLAPIFreeGroupBox;
         private System.Windows.Forms.GroupBox DeepLAPIProGroupBox;
-
-        private System.Windows.Forms.Label TwitchClientChannelNameLabel;
 
         private System.Windows.Forms.GroupBox TwitterTweetTextBox;
 

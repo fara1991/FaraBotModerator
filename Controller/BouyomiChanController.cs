@@ -17,7 +17,7 @@ namespace FNF.Utility {
     /// <summary>
     /// 棒読みちゃんへ接続するためのクラス。
     /// </summary>
-    public class BouyomiChanColtroller : IDisposable {
+    public class BouyomiChanController : IDisposable {
 
         protected IpcClientChannel    ClientChannel;
         protected BouyomiChanRemoting RemotingObject;
@@ -26,7 +26,7 @@ namespace FNF.Utility {
         /// オブジェクト生成。
         /// 利用後にはDispose()で開放してください。
         /// </summary>
-        public BouyomiChanColtroller() {
+        public BouyomiChanController() {
             ClientChannel = new IpcClientChannel("hogehoge", null); //チャンネル名は何でもいい
             ChannelServices.RegisterChannel(ClientChannel, false);
             RemotingObject = (BouyomiChanRemoting)Activator.GetObject(typeof(BouyomiChanRemoting), "ipc://BouyomiChan/Remoting");
@@ -35,7 +35,7 @@ namespace FNF.Utility {
         /// <summary>
         /// ファイナライザ（Dispose Finalizeパターン実装）
         /// </summary>
-        ~BouyomiChanColtroller() {
+        ~BouyomiChanController() {
             Dispose(false);
         }
 

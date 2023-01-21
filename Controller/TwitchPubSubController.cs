@@ -29,28 +29,20 @@ namespace FaraBotModerator.Controller
             _twitchPubSub.OnFollow += PubSub_Followed;
             _twitchPubSub.ListenToFollows(twitchChannelId);
 
+            // TODO この辺実装する Raidは欲しい情報ないので実装しない
             // Bits
             _twitchPubSub.OnBitsReceivedV2 += PubSub_BitsReceived;
             _twitchPubSub.ListenToBitsEventsV2(twitchChannelId);
 
-            // Raid
-            _twitchPubSub.OnRaidUpdateV2 += PubSub_PrepareRaid;
-            _twitchPubSub.OnRaidGo += PubSub_RaidGo;
-            _twitchPubSub.ListenToRaid(twitchChannelId);
-            
             // Stream
             _twitchPubSub.OnStreamUp += PubSub_StreamUp;
             _twitchPubSub.OnStreamDown += PubSub_StreamDown;
 
-            // Subscription
-            _twitchPubSub.OnChannelSubscription += PubSub_ChannelSubscription;
-            _twitchPubSub.ListenToSubscriptions(twitchChannelId);
-            
             // ChannelPoint
             _twitchPubSub.OnChannelPointsRewardRedeemed += PubSub_ChannelPointReward;
             _twitchPubSub.ListenToChannelPoints(twitchChannelId);
             
-            // Video
+            // Prediction
             _twitchPubSub.OnPrediction += PubSub_Prediction;
             _twitchPubSub.ListenToPredictions(twitchChannelId);
         }
@@ -80,32 +72,12 @@ namespace FaraBotModerator.Controller
 
         public void PubSub_Followed(object sender, OnFollowArgs e)
         {
-            _twitchClientController.SendFollowPubSubMessage(e);
+            _twitchClientController.TwitchPubSubOnFollow(e);
         }
 
         private void PubSub_BitsReceived(object sender, OnBitsReceivedV2Args e)
         {
             _twitchClientController.SendBitsPubSubMessage(e);
-        }
-
-        /// <summary>
-        /// Raidコマンドを使用したときに実行されます。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PubSub_PrepareRaid(object sender, OnRaidUpdateV2Args e)
-        {
-            _twitchClientController.SendPrepareRaidPubSubMessage(e);
-        }
-
-        /// <summary>
-        /// Raidをしたときに実行されます。
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PubSub_RaidGo(object sender, OnRaidGoArgs e)
-        {
-            _twitchClientController.SendRaidGoPubSubMessage(e);
         }
 
         private void PubSub_StreamUp(object sender, OnStreamUpArgs e)
@@ -118,16 +90,14 @@ namespace FaraBotModerator.Controller
             Console.WriteLine($"Stream just went down! Server time: {e.ServerTime}");
         }
 
-        private void PubSub_ChannelSubscription(object sender, OnChannelSubscriptionArgs e)
-        {
-        }
-
         private void PubSub_ChannelPointReward(object sender, OnChannelPointsRewardRedeemedArgs e)
         {
+            _twitchClientController.SendChannelPointPubSubMessage(e);
         }
 
         private void PubSub_Prediction(object sender, OnPredictionArgs e)
         {
+            _twitchClientController.SendPredictionPubSubMessage(e);
         }
     }
 }

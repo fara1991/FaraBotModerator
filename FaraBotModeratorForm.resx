@@ -120,21 +120,34 @@
   <data name="ReplaceNotificationTextBox.Text" xml:space="preserve">
     <value>Replace Words
 
+・Follow
 {followedName} → When followed by a user, replace the userName.
---------------------------------------------------------------------------------------------------------------
 {followerChannelUrl} → When twitch events, replace event userChannel.
+
 --------------------------------------------------------------------------------------------------------------
+・Raid
 {raiderName} → When raid by a user, replace the userName.
+{raiderChannelUrl} → When raid by a user, replace the channelUrl.
+
 --------------------------------------------------------------------------------------------------------------
+・Subscription
 {subscriberName} → When subscription by a user, replace the userName.
+{totalSubscriptionMonth} → When subscription by a user, replace total subscription count.
 --------------------------------------------------------------------------------------------------------------
+・Bits
 {bitsAmount} → When throw bits by a user, replace the bits amount.
---------------------------------------------------------------------------------------------------------------
 {totalBitsAmount} → When throw bits by a user, replace the total bits amount.
---------------------------------------------------------------------------------------------------------------
 {bitsSendUserName} → When throw bits by a user, replace the userName.
+
 --------------------------------------------------------------------------------------------------------------
-{giftedUserName} → When throw gifted by a user, replace the userName.</value>
+・Gift
+{giftedUserName} → When throw gifted by a user, replace the userName.
+
+--------------------------------------------------------------------------------------------------------------
+・ChannelPoint
+{channelPointTitle} → When use channelPoint, replace the channelPoint title.
+{channelPointUserName} → When use channelPoint, replace userName with channelPoint.
+</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
