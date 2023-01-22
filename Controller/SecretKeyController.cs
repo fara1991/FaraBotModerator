@@ -45,7 +45,6 @@ namespace FaraBotModerator.Controller
                     {
                         UserName = "",
                         AccessToken = "",
-                        ChannelName = ""
                     },
                     Api = new TwitchApiKeyModel
                     {
@@ -63,13 +62,42 @@ namespace FaraBotModerator.Controller
                     FreeAuthKey = "",
                     ProAuthKey = ""
                 },
+                BouyomiChan = new BouyomiChanKeyModel
+                {
+                    Checked = true
+                },
                 Event = new ReactionEventModel
                 {
-                    Follow = "",
-                    Raid = "",
-                    Subscription = "",
-                    Bits = "",
-                    Gift = ""
+                    Follow = new ReactionFollowEvent
+                    {
+                        Checked = true,
+                        Message = "{followerName}, thanks follow gamefa16Hi. Follower Channel URL: {followerChannelUrl}"
+                    },
+                    Raid = new ReactionRaidEvent
+                    {
+                        Checked = true,
+                        Message = "Welcome raiders, thanks raid {raiderName} gamefa16Hi. Channel URL: {raiderChannelUrl}"
+                    },
+                    Subscription = new ReactionSubscriptionEvent
+                    {
+                        Checked = true,
+                        Message = "{subscriberName}, thanks subscription {totalSubscriptionMonth} time gamefa16Hi"
+                    },
+                    Bits = new ReactionBitsEvent
+                    {
+                        Checked = true,
+                        Message = "{bitsSendUserName}, thanks {bitsAmount} bits (total {totalBitsAmount}) gamefa16Hi"
+                    },
+                    Gift = new ReactionGiftEvent
+                    {
+                        Checked = true,
+                        Message = "{giftedUserName}, thanks gift present gamefa16Hi"
+                    },
+                    ChannelPoint = new ReactionChannelPointEvent
+                    {
+                        Checked = true,
+                        Message = "{channelPointUserName} use channelPoint of {channelPointTitle} gamefa16Hi"
+                    }
                 }
             };
 

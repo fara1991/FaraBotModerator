@@ -37,20 +37,40 @@ namespace FaraBotModerator
         private void InitializeSecretValue()
         {
             var secretKeys = SecretKeyController.LoadKeys();
-            TwitchClientUserNameTextBox.Text = secretKeys?.Twitch.Client.UserName;
-            TwitchClientAccessTokenTextBox.Text = secretKeys?.Twitch.Client.AccessToken;
-            TwitchClientChannelNameTextBox.Text = secretKeys?.Twitch.Client.ChannelName;
-            TwitchApiClientIdTextBox.Text = secretKeys?.Twitch.Api.ClientId;
-            TwitchApiClientSecretTextBox.Text = secretKeys?.Twitch.Api.Secret;
-            TwitterAPIKeyTextBox.Text = secretKeys?.Twitter.ApiKey;
-            TwitterAPISecretTextBox.Text = secretKeys?.Twitter.ApiSecret;
-            DeepLAPIFreeAuthKeyTextBox.Text = secretKeys?.DeepL.FreeAuthKey;
-            DeepLAPIProAuthKeyTextBox.Text = secretKeys?.DeepL.ProAuthKey;
-            FollowEventTextBox.Text = secretKeys?.Event.Follow;
-            RaidEventTextBox.Text = secretKeys?.Event.Raid;
-            SubscriptionEventTextBox.Text = secretKeys?.Event.Subscription;
-            BitsEventTextBox.Text = secretKeys?.Event.Bits;
-            GiftEventTextBox.Text = secretKeys?.Event.Gift;
+            if (secretKeys != null)
+            {
+                TwitchClientUserNameTextBox.Text = secretKeys.Twitch.Client.UserName;
+                TwitchClientAccessTokenTextBox.Text = secretKeys.Twitch.Client.AccessToken;
+                
+                TwitchApiClientIdTextBox.Text = secretKeys.Twitch.Api.ClientId;
+                TwitchApiClientSecretTextBox.Text = secretKeys.Twitch.Api.Secret;
+
+                DeepLAPIFreeAuthKeyTextBox.Text = secretKeys.DeepL.FreeAuthKey;
+                DeepLAPIProAuthKeyTextBox.Text = secretKeys.DeepL.ProAuthKey;
+                
+                TwitterAPIKeyTextBox.Text = secretKeys.Twitter.ApiKey;
+                TwitterAPISecretTextBox.Text = secretKeys.Twitter.ApiSecret;
+
+                BouyomiChanConnectCheckBox.Checked = secretKeys.BouyomiChan.Checked;
+                
+                FollowCheckBox.Checked = secretKeys.Event.Follow.Checked;
+                FollowEventTextBox.Text = secretKeys.Event.Follow.Message;
+
+                RaidCheckBox.Checked = secretKeys.Event.Raid.Checked;
+                RaidEventTextBox.Text = secretKeys.Event.Raid.Message;
+
+                SubscriptionCheckBox.Checked = secretKeys.Event.Subscription.Checked;
+                SubscriptionEventTextBox.Text = secretKeys.Event.Subscription.Message;
+
+                BitsCheckBox.Checked = secretKeys.Event.Bits.Checked;
+                BitsEventTextBox.Text = secretKeys.Event.Bits.Message;
+
+                GiftCheckBox.Checked = secretKeys.Event.Gift.Checked;
+                GiftEventTextBox.Text = secretKeys.Event.Gift.Message;
+
+                ChannelPointCheckBox.Checked = secretKeys.Event.ChannelPoint.Checked;
+                ChannelPointEventTextBox.Text = secretKeys.Event.ChannelPoint.Message;
+            }
         }
 
         /// <summary>
@@ -232,9 +252,8 @@ namespace FaraBotModerator
                 {
                     Client = new TwitchClientKeyModel
                     {
-                        UserName = TwitchClientUserNameTextBox.Text,
+                        UserName = TwitchClientUserNameTextBox.Text, // TwitchのURLの末尾の名前
                         AccessToken = TwitchClientAccessTokenTextBox.Text,
-                        ChannelName = TwitchClientChannelNameTextBox.Text
                     },
                     Api = new TwitchApiKeyModel
                     {
@@ -252,13 +271,42 @@ namespace FaraBotModerator
                     FreeAuthKey = DeepLAPIFreeAuthKeyTextBox.Text,
                     ProAuthKey = DeepLAPIProAuthKeyTextBox.Text
                 },
+                BouyomiChan = new BouyomiChanKeyModel
+                {
+                    Checked = BouyomiChanConnectCheckBox.Checked
+                },
                 Event = new ReactionEventModel
                 {
-                    Follow = FollowEventTextBox.Text,
-                    Raid = RaidEventTextBox.Text,
-                    Subscription = SubscriptionEventTextBox.Text,
-                    Bits = BitsEventTextBox.Text,
-                    Gift = GiftEventTextBox.Text
+                    Follow = new ReactionFollowEvent
+                    {
+                        Checked = FollowCheckBox.Checked,
+                        Message = FollowEventTextBox.Text
+                    },
+                    Raid = new ReactionRaidEvent
+                    {
+                        Checked = RaidCheckBox.Checked,
+                        Message = RaidEventTextBox.Text
+                    },
+                    Subscription = new ReactionSubscriptionEvent
+                    {
+                        Checked = SubscriptionCheckBox.Checked,
+                        Message = SubscriptionEventTextBox.Text
+                    },
+                    Bits = new ReactionBitsEvent
+                    {
+                        Checked = BitsCheckBox.Checked,
+                        Message = BitsEventTextBox.Text
+                    },
+                    Gift = new ReactionGiftEvent
+                    {
+                        Checked = GiftCheckBox.Checked,
+                        Message = GiftEventTextBox.Text
+                    },
+                    ChannelPoint = new ReactionChannelPointEvent
+                    {
+                        Checked = ChannelPointCheckBox.Checked,
+                        Message = ChannelPointEventTextBox.Text
+                    }
                 }
             };
             SecretKeyController.SaveKeys(secretKeys);
@@ -268,17 +316,13 @@ namespace FaraBotModerator
         {
             try
             {
-                _twitchClientController = new TwitchClientController(TwitchClientUserNameTextBox.Text,
-                    TwitchClientAccessTokenTextBox.Text,
-                    TwitchClientChannelNameTextBox.Text, FollowEventTextBox.Text, RaidEventTextBox.Text,
-                    SubscriptionEventTextBox.Text,
-                    BitsEventTextBox.Text, GiftEventTextBox.Text, BouyomiChanConnectCheckBox.Checked);
+                SaveSecretValue();
+                var secretKeys = SecretKeyController.LoadKeys();
+                _twitchClientController = new TwitchClientController(secretKeys);
                 _twitchClientController.Connect();
 
-                _twitchApiController = new TwitchApiController(TwitchApiClientIdTextBox.Text,
-                    TwitchApiClientSecretTextBox.Text, TwitchClientUserNameTextBox.Text);
-
-                var channelId = _twitchApiController.GetTwitchChannelId();
+                _twitchApiController = new TwitchApiController(secretKeys);
+                var channelId = _twitchApiController.GetTwitchChannelId(secretKeys.Twitch.Client.UserName);
 
                 _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
                 _twitchPubSubController.Connect();
