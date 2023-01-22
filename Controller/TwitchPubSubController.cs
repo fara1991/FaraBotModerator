@@ -1,11 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Threading.Tasks;
-using FaraBotModerator.Model;
 using FaraBotModerator.Properties;
 using TwitchLib.PubSub;
 using TwitchLib.PubSub.Events;

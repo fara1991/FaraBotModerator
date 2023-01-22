@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FaraBotModerator.Model;
 using TwitchLib.Api;
 
 namespace FaraBotModerator.Controller
@@ -8,39 +8,33 @@ namespace FaraBotModerator.Controller
     public class TwitchApiController
     {
         private readonly TwitchAPI _twitchApi;
-        private readonly string _twitchUserName;
-        private string _twitchChannelId;
 
-        public TwitchApiController(string apiClientId, string apiSecret, string twitchUserName)
+        public TwitchApiController(SecretKeyModel secretKeys)
         {
             _twitchApi = new TwitchAPI
             {
                 Settings =
                 {
-                    ClientId = apiClientId,
-                    Secret = apiSecret
+                    ClientId = secretKeys.Twitch.Api.ClientId,
+                    Secret = secretKeys.Twitch.Api.Secret
                 }
             };
-            _twitchUserName = twitchUserName;
-            _twitchChannelId = GetTwitchChannelId();
         }
 
-        public string GetTwitchChannelId()
+        public string GetTwitchChannelId(string userName)
         {
-            if (_twitchChannelId != null) return _twitchChannelId;
-            var task = Task.Run(TwitchChannelIdAsync);
+            var task = Task.Run(() => TwitchChannelIdAsync(userName));
             return task.Result;
         }
 
-        private async Task<string> TwitchChannelIdAsync()
+        private async Task<string> TwitchChannelIdAsync(string userName)
         {
             // 期限が切れたらRefresh
             // userNameからuserIdを取得できる(userNameは一意なので)
             var userIds = new List<string>();
-            var userLoginNames = new List<string> {_twitchUserName};
+            var userLoginNames = new List<string> {userName};
             var findUserList = await _twitchApi.Helix.Users.GetUsersAsync(userIds, userLoginNames);
-            _twitchChannelId = findUserList.Users[0].Id;
-            return _twitchChannelId;
+            return findUserList.Users[0].Id;
         }
     }
 }

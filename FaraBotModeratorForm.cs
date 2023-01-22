@@ -316,23 +316,13 @@ namespace FaraBotModerator
         {
             try
             {
-                _twitchClientController = new TwitchClientController(
-                    TwitchClientUserNameTextBox.Text,
-                    TwitchClientAccessTokenTextBox.Text,
-                    FollowEventTextBox.Text,
-                    RaidEventTextBox.Text,
-                    SubscriptionEventTextBox.Text,
-                    BitsEventTextBox.Text, 
-                    GiftEventTextBox.Text,
-                    ChannelPointEventTextBox.Text,
-                    BouyomiChanConnectCheckBox.Checked
-                    );
+                SaveSecretValue();
+                var secretKeys = SecretKeyController.LoadKeys();
+                _twitchClientController = new TwitchClientController(secretKeys);
                 _twitchClientController.Connect();
 
-                _twitchApiController = new TwitchApiController(TwitchApiClientIdTextBox.Text,
-                    TwitchApiClientSecretTextBox.Text, TwitchClientUserNameTextBox.Text);
-
-                var channelId = _twitchApiController.GetTwitchChannelId();
+                _twitchApiController = new TwitchApiController(secretKeys);
+                var channelId = _twitchApiController.GetTwitchChannelId(secretKeys.Twitch.Client.UserName);
 
                 _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
                 _twitchPubSubController.Connect();

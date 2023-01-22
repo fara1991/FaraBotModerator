@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -11,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FaraBotModerator.Model;
 using FNF.Utility;
-using TwitchLib.Api.Helix.Models.Users.GetUsers;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
@@ -19,7 +16,6 @@ using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Events;
 using TwitchLib.Communication.Models;
-using TwitchLib.PubSub.Enums;
 using TwitchLib.PubSub.Events;
 using OnLogArgs = TwitchLib.Client.Events.OnLogArgs;
 
@@ -27,24 +23,15 @@ namespace FaraBotModerator.Controller
 {
     public class TwitchClientController
     {
+        private readonly SecretKeyModel _secretKeys;
         private readonly TwitchClient _twitchClient;
         private readonly BouyomiChanController _bouyomiChanController;
-        private readonly bool _isBouyomiChanConnect;
-        private readonly string _followedDisplayText;
-        private readonly string _raidDisplayText;
-        private readonly string _subscriptionDisplayText;
-        private readonly string _bitsDisplayText;
-        private readonly string _giftDisplayText;
-        private readonly string _channelPointDisplayText;
 
-        public TwitchClientController(string userName, string accessToken,
-            string followedDisplayText, string raidDisplayText,
-            string subscriptionDisplayText, string bitsDisplayText,
-            string giftDisplayText, 
-            string channelPointDisplayText,
-            bool isBouyomiChanConnect)
+        public TwitchClientController(SecretKeyModel secretKeys)
         {
-            ConnectionCredentials credentials = new ConnectionCredentials(userName, accessToken);
+            _secretKeys = secretKeys;
+            var client = _secretKeys.Twitch.Client;
+            ConnectionCredentials credentials = new ConnectionCredentials(client.UserName, client.AccessToken);
             var clientOptions = new ClientOptions
             {
                 MessagesAllowedInPeriod = 750,
@@ -52,7 +39,7 @@ namespace FaraBotModerator.Controller
             };
             var customClient = new WebSocketClient(clientOptions);
             _twitchClient = new TwitchClient(customClient);
-            _twitchClient.Initialize(credentials, userName);
+            _twitchClient.Initialize(credentials, client.UserName);
 
             _twitchClient.OnLog += TwitchClientOnLog;
             _twitchClient.OnJoinedChannel += TwitchClientOnJoinedChannel;
@@ -64,14 +51,6 @@ namespace FaraBotModerator.Controller
             _twitchClient.OnConnected += TwitchClientOnConnected;
             _twitchClient.OnDisconnected += TwitchClientOnDisconnected;
             _bouyomiChanController = new BouyomiChanController();
-
-            _followedDisplayText = followedDisplayText;
-            _raidDisplayText = raidDisplayText;
-            _subscriptionDisplayText = subscriptionDisplayText;
-            _bitsDisplayText = bitsDisplayText;
-            _giftDisplayText = giftDisplayText;
-            _channelPointDisplayText = channelPointDisplayText;
-            _isBouyomiChanConnect = isBouyomiChanConnect;
         }
 
         public void Connect()
@@ -130,7 +109,7 @@ namespace FaraBotModerator.Controller
         {
             var followerChannelUrl = $"https://twitch.tv/{e.Username}";
             var followerName = e.DisplayName;
-            var message = _followedDisplayText.Replace("{followerName}", followerName)
+            var message = _secretKeys.Event.Follow.Message.Replace("{followerName}", followerName)
                 .Replace("{followerChannelUrl}", followerChannelUrl);
             SendMessage(message);
             LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}");
@@ -145,7 +124,7 @@ namespace FaraBotModerator.Controller
         {
             var raiderName = e.RaidNotification.MsgParamLogin;
             var raiderChannelUrl = $"https://twitch.tv/{raiderName}";
-            var message = _raidDisplayText.Replace("{raiderName}", raiderName).Replace("{raiderChannelUrl}", raiderChannelUrl);
+            var message = _secretKeys.Event.Raid.Message.Replace("{raiderName}", raiderName).Replace("{raiderChannelUrl}", raiderChannelUrl);
             SendMessage(message);
             LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}");
         }
@@ -158,7 +137,7 @@ namespace FaraBotModerator.Controller
         private void TwitchClientOnNewSubscriber(object sender, OnNewSubscriberArgs e)
         {
             var subscriberName = e.Subscriber.DisplayName;
-            var message = _subscriptionDisplayText.Replace("{subscriberName}", subscriberName).Replace("{totalSubscriptionMonth}", "1");
+            var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName).Replace("{totalSubscriptionMonth}", "1");
             SendMessage(message);
             LogController.OutputLog($"<New Subscriber> Name: {subscriberName}");
         }
@@ -172,7 +151,7 @@ namespace FaraBotModerator.Controller
         {
             var subscriberName = e.ReSubscriber.DisplayName;
             var totalSubscriptionMonth = e.ReSubscriber.Months;
-            var message = _subscriptionDisplayText.Replace("{subscriberName}", subscriberName)
+            var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
                 .Replace("{totalSubscriptionMonth}", totalSubscriptionMonth.ToString());
             SendMessage(message);
             LogController.OutputLog($"<Subscriber> Name: {subscriberName}, total: {totalSubscriptionMonth} time.");
@@ -188,7 +167,7 @@ namespace FaraBotModerator.Controller
             var bitsAmount = e.BitsUsed;
             var totalBitsAmount = e.TotalBitsUsed;
             var bitsReceivedChannelUrl = $"https://twitch.tv/{bitsSendUserName}";
-            var message = _bitsDisplayText.Replace("{bitsAmount}", bitsAmount.ToString())
+            var message = _secretKeys.Event.Bits.Message.Replace("{bitsAmount}", bitsAmount.ToString())
                 .Replace("{totalBitsAmount}", totalBitsAmount.ToString())
                 .Replace("{bitsSendUserName}", bitsSendUserName);
             SendMessage(message);
@@ -204,7 +183,7 @@ namespace FaraBotModerator.Controller
         {
             var giftedUserName = e.GiftedSubscription.DisplayName;
             var url = $"https://twitch.tv/{giftedUserName}";
-            var message = _giftDisplayText.Replace("{giftedUserName}", giftedUserName);
+            var message = _secretKeys.Event.Gift.Message.Replace("{giftedUserName}", giftedUserName);
             SendMessage(message);
             LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}");
         }
@@ -213,7 +192,7 @@ namespace FaraBotModerator.Controller
         {
             var channelPointTitle = e.RewardRedeemed.Redemption.Reward.Title;
             var channelPointUserName = e.RewardRedeemed.Redemption.User.DisplayName;
-            var message = _channelPointDisplayText
+            var message = _secretKeys.Event.ChannelPoint.Message
                 .Replace("{channelPointTitle}", channelPointTitle)
                 .Replace("{channelPointUserName}", channelPointUserName);
             SendMessage(message);
@@ -276,7 +255,7 @@ namespace FaraBotModerator.Controller
                     var translateMessage = jsonString?.Translations[0].Text;
                     SendMessage($"[FaraBot {sourceLanguage}->{targetLanguage}] {translateMessage} (by {displayName})");
 
-                    if (_isBouyomiChanConnect)
+                    if (_secretKeys.BouyomiChan.Checked)
                     {
                         // 母国語で読み上げ
                         // Song Request Manager用の読み上げ変換をしたい
@@ -295,7 +274,7 @@ namespace FaraBotModerator.Controller
             {
                 var errorMessage = "DeepL翻訳に失敗しています。詳しくはログを確認してください。";
                 SendMessage($"[FaraBot] @{_twitchClient.TwitchUsername} {errorMessage}");
-                if (_isBouyomiChanConnect)
+                if (_secretKeys.BouyomiChan.Checked)
                 {
                     _bouyomiChanController.AddTalkTask(_twitchClient.TwitchUsername, errorMessage);
                 }
