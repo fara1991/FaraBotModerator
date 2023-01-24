@@ -59,8 +59,7 @@ namespace FaraBotModerator.Controller
                 },
                 DeepL = new DeepLKeyModel
                 {
-                    FreeAuthKey = "",
-                    ProAuthKey = ""
+                    ApiKey = "",
                 },
                 BouyomiChan = new BouyomiChanKeyModel
                 {

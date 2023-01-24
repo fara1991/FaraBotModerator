@@ -32,6 +32,9 @@ namespace FaraBotModerator
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FaraBotModeratorForm));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.MenuTab = new System.Windows.Forms.TabControl();
             this.MainSettingTab = new System.Windows.Forms.TabPage();
             this.ChatBoxGroupBox = new System.Windows.Forms.GroupBox();
@@ -39,10 +42,10 @@ namespace FaraBotModerator
             this.TwitterApiButton = new System.Windows.Forms.Button();
             this.TwitterTweetTextBox = new System.Windows.Forms.GroupBox();
             this.TwitterSendRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.TwitterAPISecretTextBox = new System.Windows.Forms.TextBox();
-            this.TwitterAPIKeyTextBox = new System.Windows.Forms.TextBox();
-            this.TwitterAPISecretLabel = new System.Windows.Forms.Label();
-            this.TwitterAPIKeyLabel = new System.Windows.Forms.Label();
+            this.TwitterApiSecretTextBox = new System.Windows.Forms.TextBox();
+            this.TwitterApiKeyTextBox = new System.Windows.Forms.TextBox();
+            this.TwitterApiSecretLabel = new System.Windows.Forms.Label();
+            this.TwitterApiKeyLabel = new System.Windows.Forms.Label();
             this.TwitterPushTweetButton = new System.Windows.Forms.Button();
             this.TwitterConnectionStateLabel = new System.Windows.Forms.Label();
             this.TwitterConnectionButton = new System.Windows.Forms.Button();
@@ -87,12 +90,10 @@ namespace FaraBotModerator
             this.AutoBotTab = new System.Windows.Forms.TabPage();
             this.AutoBotChildTab = new System.Windows.Forms.TabControl();
             this.TranslateTab = new System.Windows.Forms.TabPage();
-            this.DeepLAPIProGroupBox = new System.Windows.Forms.GroupBox();
-            this.DeepLAPIProAuthKeyTextBox = new System.Windows.Forms.TextBox();
-            this.DeepLAPIProAuthKeyLabel = new System.Windows.Forms.Label();
-            this.DeepLAPIFreeGroupBox = new System.Windows.Forms.GroupBox();
-            this.DeepLAPIFreeAuthKeyTextBox = new System.Windows.Forms.TextBox();
-            this.DeepLAPIFreeAuthKeyLabel = new System.Windows.Forms.Label();
+            this.DeepLCautionLabel = new System.Windows.Forms.Label();
+            this.DeepLApiKeyTextBox = new System.Windows.Forms.TextBox();
+            this.DeepLApiKeyLabel = new System.Windows.Forms.Label();
+            this.DeepLUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.TimerTab = new System.Windows.Forms.TabPage();
             this.FixedNotificationGroupBox = new System.Windows.Forms.GroupBox();
             this.FixedTimer5TextBox = new System.Windows.Forms.TextBox();
@@ -142,8 +143,7 @@ namespace FaraBotModerator
             this.AutoBotTab.SuspendLayout();
             this.AutoBotChildTab.SuspendLayout();
             this.TranslateTab.SuspendLayout();
-            this.DeepLAPIProGroupBox.SuspendLayout();
-            this.DeepLAPIFreeGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.DeepLUsageChart)).BeginInit();
             this.TimerTab.SuspendLayout();
             this.FixedNotificationGroupBox.SuspendLayout();
             this.CycleNotificationGroupBox.SuspendLayout();
@@ -192,10 +192,10 @@ namespace FaraBotModerator
             // 
             this.TwitterGroupBox.Controls.Add(this.TwitterApiButton);
             this.TwitterGroupBox.Controls.Add(this.TwitterTweetTextBox);
-            this.TwitterGroupBox.Controls.Add(this.TwitterAPISecretTextBox);
-            this.TwitterGroupBox.Controls.Add(this.TwitterAPIKeyTextBox);
-            this.TwitterGroupBox.Controls.Add(this.TwitterAPISecretLabel);
-            this.TwitterGroupBox.Controls.Add(this.TwitterAPIKeyLabel);
+            this.TwitterGroupBox.Controls.Add(this.TwitterApiSecretTextBox);
+            this.TwitterGroupBox.Controls.Add(this.TwitterApiKeyTextBox);
+            this.TwitterGroupBox.Controls.Add(this.TwitterApiSecretLabel);
+            this.TwitterGroupBox.Controls.Add(this.TwitterApiKeyLabel);
             this.TwitterGroupBox.Controls.Add(this.TwitterPushTweetButton);
             this.TwitterGroupBox.Controls.Add(this.TwitterConnectionStateLabel);
             this.TwitterGroupBox.Controls.Add(this.TwitterConnectionButton);
@@ -235,39 +235,39 @@ namespace FaraBotModerator
             this.TwitterSendRichTextBox.TabIndex = 4;
             this.TwitterSendRichTextBox.Text = "test\n\n@game_Fara";
             // 
-            // TwitterAPISecretTextBox
+            // TwitterApiSecretTextBox
             // 
-            this.TwitterAPISecretTextBox.Location = new System.Drawing.Point(112, 37);
-            this.TwitterAPISecretTextBox.Name = "TwitterAPISecretTextBox";
-            this.TwitterAPISecretTextBox.PasswordChar = '●';
-            this.TwitterAPISecretTextBox.Size = new System.Drawing.Size(235, 19);
-            this.TwitterAPISecretTextBox.TabIndex = 9;
+            this.TwitterApiSecretTextBox.Location = new System.Drawing.Point(112, 37);
+            this.TwitterApiSecretTextBox.Name = "TwitterApiSecretTextBox";
+            this.TwitterApiSecretTextBox.PasswordChar = '●';
+            this.TwitterApiSecretTextBox.Size = new System.Drawing.Size(235, 19);
+            this.TwitterApiSecretTextBox.TabIndex = 9;
             // 
-            // TwitterAPIKeyTextBox
+            // TwitterApiKeyTextBox
             // 
-            this.TwitterAPIKeyTextBox.Location = new System.Drawing.Point(112, 12);
-            this.TwitterAPIKeyTextBox.Name = "TwitterAPIKeyTextBox";
-            this.TwitterAPIKeyTextBox.PasswordChar = '●';
-            this.TwitterAPIKeyTextBox.Size = new System.Drawing.Size(235, 19);
-            this.TwitterAPIKeyTextBox.TabIndex = 8;
+            this.TwitterApiKeyTextBox.Location = new System.Drawing.Point(112, 12);
+            this.TwitterApiKeyTextBox.Name = "TwitterApiKeyTextBox";
+            this.TwitterApiKeyTextBox.PasswordChar = '●';
+            this.TwitterApiKeyTextBox.Size = new System.Drawing.Size(235, 19);
+            this.TwitterApiKeyTextBox.TabIndex = 8;
             // 
-            // TwitterAPISecretLabel
+            // TwitterApiSecretLabel
             // 
-            this.TwitterAPISecretLabel.Location = new System.Drawing.Point(6, 37);
-            this.TwitterAPISecretLabel.Name = "TwitterAPISecretLabel";
-            this.TwitterAPISecretLabel.Size = new System.Drawing.Size(100, 16);
-            this.TwitterAPISecretLabel.TabIndex = 7;
-            this.TwitterAPISecretLabel.Text = "API Secret";
-            this.TwitterAPISecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.TwitterApiSecretLabel.Location = new System.Drawing.Point(6, 37);
+            this.TwitterApiSecretLabel.Name = "TwitterApiSecretLabel";
+            this.TwitterApiSecretLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitterApiSecretLabel.TabIndex = 7;
+            this.TwitterApiSecretLabel.Text = "API Secret";
+            this.TwitterApiSecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // TwitterAPIKeyLabel
+            // TwitterApiKeyLabel
             // 
-            this.TwitterAPIKeyLabel.Location = new System.Drawing.Point(6, 15);
-            this.TwitterAPIKeyLabel.Name = "TwitterAPIKeyLabel";
-            this.TwitterAPIKeyLabel.Size = new System.Drawing.Size(100, 16);
-            this.TwitterAPIKeyLabel.TabIndex = 6;
-            this.TwitterAPIKeyLabel.Text = "API Key";
-            this.TwitterAPIKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.TwitterApiKeyLabel.Location = new System.Drawing.Point(6, 15);
+            this.TwitterApiKeyLabel.Name = "TwitterApiKeyLabel";
+            this.TwitterApiKeyLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitterApiKeyLabel.TabIndex = 6;
+            this.TwitterApiKeyLabel.Text = "API Key";
+            this.TwitterApiKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitterPushTweetButton
             // 
@@ -707,77 +707,66 @@ namespace FaraBotModerator
             this.AutoBotChildTab.Location = new System.Drawing.Point(3, 3);
             this.AutoBotChildTab.Name = "AutoBotChildTab";
             this.AutoBotChildTab.SelectedIndex = 0;
-            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 492);
+            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 617);
             this.AutoBotChildTab.TabIndex = 0;
             // 
             // TranslateTab
             // 
-            this.TranslateTab.Controls.Add(this.DeepLAPIProGroupBox);
-            this.TranslateTab.Controls.Add(this.DeepLAPIFreeGroupBox);
+            this.TranslateTab.Controls.Add(this.DeepLCautionLabel);
+            this.TranslateTab.Controls.Add(this.DeepLApiKeyTextBox);
+            this.TranslateTab.Controls.Add(this.DeepLApiKeyLabel);
+            this.TranslateTab.Controls.Add(this.DeepLUsageChart);
             this.TranslateTab.Location = new System.Drawing.Point(4, 22);
             this.TranslateTab.Name = "TranslateTab";
             this.TranslateTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslateTab.Size = new System.Drawing.Size(754, 466);
+            this.TranslateTab.Size = new System.Drawing.Size(754, 591);
             this.TranslateTab.TabIndex = 0;
             this.TranslateTab.Text = "Translate";
             this.TranslateTab.ToolTipText = "チャット翻訳設定を行います。";
             this.TranslateTab.UseVisualStyleBackColor = true;
             // 
-            // DeepLAPIProGroupBox
+            // DeepLCautionLabel
             // 
-            this.DeepLAPIProGroupBox.Controls.Add(this.DeepLAPIProAuthKeyTextBox);
-            this.DeepLAPIProGroupBox.Controls.Add(this.DeepLAPIProAuthKeyLabel);
-            this.DeepLAPIProGroupBox.Location = new System.Drawing.Point(6, 112);
-            this.DeepLAPIProGroupBox.Name = "DeepLAPIProGroupBox";
-            this.DeepLAPIProGroupBox.Size = new System.Drawing.Size(348, 100);
-            this.DeepLAPIProGroupBox.TabIndex = 1;
-            this.DeepLAPIProGroupBox.TabStop = false;
-            this.DeepLAPIProGroupBox.Text = "DeepL Pro";
+            this.DeepLCautionLabel.ForeColor = System.Drawing.Color.Red;
+            this.DeepLCautionLabel.Location = new System.Drawing.Point(6, 47);
+            this.DeepLCautionLabel.Name = "DeepLCautionLabel";
+            this.DeepLCautionLabel.Size = new System.Drawing.Size(742, 20);
+            this.DeepLCautionLabel.TabIndex = 3;
+            this.DeepLCautionLabel.Text = "※Enter a Key for either DeepL API Free or Pro";
+            this.DeepLCautionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // DeepLAPIProAuthKeyTextBox
+            // DeepLApiKeyTextBox
             // 
-            this.DeepLAPIProAuthKeyTextBox.Location = new System.Drawing.Point(65, 17);
-            this.DeepLAPIProAuthKeyTextBox.Name = "DeepLAPIProAuthKeyTextBox";
-            this.DeepLAPIProAuthKeyTextBox.PasswordChar = '●';
-            this.DeepLAPIProAuthKeyTextBox.Size = new System.Drawing.Size(277, 19);
-            this.DeepLAPIProAuthKeyTextBox.TabIndex = 1;
+            this.DeepLApiKeyTextBox.Location = new System.Drawing.Point(102, 14);
+            this.DeepLApiKeyTextBox.Name = "DeepLApiKeyTextBox";
+            this.DeepLApiKeyTextBox.PasswordChar = '●';
+            this.DeepLApiKeyTextBox.Size = new System.Drawing.Size(646, 19);
+            this.DeepLApiKeyTextBox.TabIndex = 1;
             // 
-            // DeepLAPIProAuthKeyLabel
+            // DeepLApiKeyLabel
             // 
-            this.DeepLAPIProAuthKeyLabel.Location = new System.Drawing.Point(6, 15);
-            this.DeepLAPIProAuthKeyLabel.Name = "DeepLAPIProAuthKeyLabel";
-            this.DeepLAPIProAuthKeyLabel.Size = new System.Drawing.Size(53, 23);
-            this.DeepLAPIProAuthKeyLabel.TabIndex = 0;
-            this.DeepLAPIProAuthKeyLabel.Text = "Auth Key";
-            this.DeepLAPIProAuthKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DeepLApiKeyLabel.Location = new System.Drawing.Point(6, 12);
+            this.DeepLApiKeyLabel.Name = "DeepLApiKeyLabel";
+            this.DeepLApiKeyLabel.Size = new System.Drawing.Size(90, 23);
+            this.DeepLApiKeyLabel.TabIndex = 0;
+            this.DeepLApiKeyLabel.Text = "DeepL API Key";
+            this.DeepLApiKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // DeepLAPIFreeGroupBox
+            // DeepLUsageChart
             // 
-            this.DeepLAPIFreeGroupBox.Controls.Add(this.DeepLAPIFreeAuthKeyTextBox);
-            this.DeepLAPIFreeGroupBox.Controls.Add(this.DeepLAPIFreeAuthKeyLabel);
-            this.DeepLAPIFreeGroupBox.Location = new System.Drawing.Point(6, 6);
-            this.DeepLAPIFreeGroupBox.Name = "DeepLAPIFreeGroupBox";
-            this.DeepLAPIFreeGroupBox.Size = new System.Drawing.Size(348, 100);
-            this.DeepLAPIFreeGroupBox.TabIndex = 0;
-            this.DeepLAPIFreeGroupBox.TabStop = false;
-            this.DeepLAPIFreeGroupBox.Text = "DeepL Free";
-            // 
-            // DeepLAPIFreeAuthKeyTextBox
-            // 
-            this.DeepLAPIFreeAuthKeyTextBox.Location = new System.Drawing.Point(65, 17);
-            this.DeepLAPIFreeAuthKeyTextBox.Name = "DeepLAPIFreeAuthKeyTextBox";
-            this.DeepLAPIFreeAuthKeyTextBox.PasswordChar = '●';
-            this.DeepLAPIFreeAuthKeyTextBox.Size = new System.Drawing.Size(277, 19);
-            this.DeepLAPIFreeAuthKeyTextBox.TabIndex = 1;
-            // 
-            // DeepLAPIFreeAuthKeyLabel
-            // 
-            this.DeepLAPIFreeAuthKeyLabel.Location = new System.Drawing.Point(6, 15);
-            this.DeepLAPIFreeAuthKeyLabel.Name = "DeepLAPIFreeAuthKeyLabel";
-            this.DeepLAPIFreeAuthKeyLabel.Size = new System.Drawing.Size(53, 23);
-            this.DeepLAPIFreeAuthKeyLabel.TabIndex = 0;
-            this.DeepLAPIFreeAuthKeyLabel.Text = "Auth Key";
-            this.DeepLAPIFreeAuthKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            chartArea1.Name = "ChartArea1";
+            this.DeepLUsageChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.DeepLUsageChart.Legends.Add(legend1);
+            this.DeepLUsageChart.Location = new System.Drawing.Point(6, 70);
+            this.DeepLUsageChart.Name = "DeepLUsageChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.DeepLUsageChart.Series.Add(series1);
+            this.DeepLUsageChart.Size = new System.Drawing.Size(742, 515);
+            this.DeepLUsageChart.TabIndex = 2;
+            this.DeepLUsageChart.Text = "chart1";
             // 
             // TimerTab
             // 
@@ -786,7 +775,7 @@ namespace FaraBotModerator
             this.TimerTab.Location = new System.Drawing.Point(4, 22);
             this.TimerTab.Name = "TimerTab";
             this.TimerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TimerTab.Size = new System.Drawing.Size(754, 466);
+            this.TimerTab.Size = new System.Drawing.Size(754, 591);
             this.TimerTab.TabIndex = 1;
             this.TimerTab.Text = "Timer";
             this.TimerTab.ToolTipText = "一定時間毎のTwitchチャット通知設定を行います。";
@@ -1192,10 +1181,8 @@ namespace FaraBotModerator
             this.AutoBotTab.ResumeLayout(false);
             this.AutoBotChildTab.ResumeLayout(false);
             this.TranslateTab.ResumeLayout(false);
-            this.DeepLAPIProGroupBox.ResumeLayout(false);
-            this.DeepLAPIProGroupBox.PerformLayout();
-            this.DeepLAPIFreeGroupBox.ResumeLayout(false);
-            this.DeepLAPIFreeGroupBox.PerformLayout();
+            this.TranslateTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.DeepLUsageChart)).EndInit();
             this.TimerTab.ResumeLayout(false);
             this.FixedNotificationGroupBox.ResumeLayout(false);
             this.FixedNotificationGroupBox.PerformLayout();
@@ -1208,6 +1195,10 @@ namespace FaraBotModerator
             ((System.ComponentModel.ISupportInitialize) (this.Timer2NumericUpDown)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Label DeepLCautionLabel;
+
+        private System.Windows.Forms.DataVisualization.Charting.Chart DeepLUsageChart;
 
         private System.Windows.Forms.CheckBox ChannelPointCheckBox;
 
@@ -1304,24 +1295,18 @@ namespace FaraBotModerator
 
         private System.Windows.Forms.GroupBox FixedNotificationGroupBox;
 
-        private System.Windows.Forms.TextBox DeepLAPIFreeAuthKeyTextBox;
-        private System.Windows.Forms.TextBox DeepLAPIProAuthKeyTextBox;
+        private System.Windows.Forms.TextBox DeepLApiKeyTextBox;
 
-        private System.Windows.Forms.Label DeepLAPIFreeAuthKeyLabel;
-
-        private System.Windows.Forms.Label DeepLAPIProAuthKeyLabel;
-
-        private System.Windows.Forms.GroupBox DeepLAPIFreeGroupBox;
-        private System.Windows.Forms.GroupBox DeepLAPIProGroupBox;
+        private System.Windows.Forms.Label DeepLApiKeyLabel;
 
         private System.Windows.Forms.GroupBox TwitterTweetTextBox;
 
-        private System.Windows.Forms.TextBox TwitterAPIKeyTextBox;
-        private System.Windows.Forms.TextBox TwitterAPISecretTextBox;
+        private System.Windows.Forms.TextBox TwitterApiKeyTextBox;
+        private System.Windows.Forms.TextBox TwitterApiSecretTextBox;
 
-        private System.Windows.Forms.Label TwitterAPIKeyLabel;
+        private System.Windows.Forms.Label TwitterApiKeyLabel;
 
-        private System.Windows.Forms.Label TwitterAPISecretLabel;
+        private System.Windows.Forms.Label TwitterApiSecretLabel;
 
         private System.Windows.Forms.Button TwitchClientAccessTokenButton;
 

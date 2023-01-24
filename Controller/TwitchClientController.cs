@@ -7,6 +7,8 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DeepL;
+using DeepL.Model;
 using FaraBotModerator.Model;
 using FNF.Utility;
 using TwitchLib.Client;
@@ -25,8 +27,9 @@ namespace FaraBotModerator.Controller
     {
         private readonly SecretKeyModel _secretKeys;
         private readonly TwitchClient _twitchClient;
-        private readonly BouyomiChanController _bouyomiChanController;
-
+        private BouyomiChanController _bouyomiChanController;
+        private Translator _deepLTranslator;
+        
         public TwitchClientController(SecretKeyModel secretKeys)
         {
             _secretKeys = secretKeys;
@@ -50,18 +53,20 @@ namespace FaraBotModerator.Controller
             _twitchClient.OnRaidNotification += TwitchClientOnRaidNotification;
             _twitchClient.OnConnected += TwitchClientOnConnected;
             _twitchClient.OnDisconnected += TwitchClientOnDisconnected;
-            _bouyomiChanController = new BouyomiChanController();
         }
 
         public void Connect()
         {
+            _bouyomiChanController = new BouyomiChanController();
+            _deepLTranslator = new Translator(_secretKeys.DeepL.ApiKey);
             _twitchClient.Connect();
         }
 
         public void Disconnect()
         {
-            _twitchClient.Disconnect();
             _bouyomiChanController.Dispose();
+            _deepLTranslator.Dispose();
+            _twitchClient.Disconnect();
         }
 
         private void SendMessage(string message)
@@ -124,7 +129,8 @@ namespace FaraBotModerator.Controller
         {
             var raiderName = e.RaidNotification.MsgParamLogin;
             var raiderChannelUrl = $"https://twitch.tv/{raiderName}";
-            var message = _secretKeys.Event.Raid.Message.Replace("{raiderName}", raiderName).Replace("{raiderChannelUrl}", raiderChannelUrl);
+            var message = _secretKeys.Event.Raid.Message.Replace("{raiderName}", raiderName)
+                .Replace("{raiderChannelUrl}", raiderChannelUrl);
             SendMessage(message);
             LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}");
         }
@@ -137,7 +143,8 @@ namespace FaraBotModerator.Controller
         private void TwitchClientOnNewSubscriber(object sender, OnNewSubscriberArgs e)
         {
             var subscriberName = e.Subscriber.DisplayName;
-            var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName).Replace("{totalSubscriptionMonth}", "1");
+            var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
+                .Replace("{totalSubscriptionMonth}", "1");
             SendMessage(message);
             LogController.OutputLog($"<New Subscriber> Name: {subscriberName}");
         }
@@ -171,7 +178,8 @@ namespace FaraBotModerator.Controller
                 .Replace("{totalBitsAmount}", totalBitsAmount.ToString())
                 .Replace("{bitsSendUserName}", bitsSendUserName);
             SendMessage(message);
-            LogController.OutputLog($"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}");
+            LogController.OutputLog(
+                $"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}");
         }
 
         /// <summary>
@@ -220,12 +228,12 @@ namespace FaraBotModerator.Controller
             {
                 SendMessage(e.ChatMessage.Message);
                 LogController.OutputLog(e.ChatMessage.Message);
-                LogController.OutputLog(ex.Message);
+                LogController.OutputLog(ex.Message, true);
             }
             catch (Exception ex)
             {
                 LogController.OutputLog(e.ChatMessage.Message);
-                LogController.OutputLog(ex.Message);
+                LogController.OutputLog(ex.Message, true);
             }
         }
 
@@ -240,35 +248,31 @@ namespace FaraBotModerator.Controller
 
             try
             {
-                using (var httpClient = new HttpClient())
+                if (sourceMessage != beatSaberRegexMessage)
                 {
-                    if (sourceMessage != beatSaberRegexMessage)
-                    {
-                        _bouyomiChanController.AddTalkTask(displayName, beatSaberRegexMessage);
-                        return;
-                    }
+                    _bouyomiChanController.AddTalkTask(displayName, beatSaberRegexMessage);
+                    return;
+                }
 
-                    // 日本語以外は日本語に翻訳
-                    var targetLanguage = !IsJapaneseLanguage(sourceMessage) ? "JA" : "EN";
-                    var jsonString = await DeepLTranslationResult(sourceMessage, targetLanguage, httpClient);
-                    var sourceLanguage = jsonString?.Translations[0].Language;
-                    var translateMessage = jsonString?.Translations[0].Text;
-                    SendMessage($"[FaraBot {sourceLanguage}->{targetLanguage}] {translateMessage} (by {displayName})");
+                var targetLanguage = !IsJapaneseLanguage(sourceMessage) ? LanguageCode.Japanese : LanguageCode.English;
+                var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
+                var sourceLanguage = text.DetectedSourceLanguageCode;
+                var translateMessage = text.Text;
+                SendMessage($"[FaraBot {sourceLanguage}->{targetLanguage}] {translateMessage} (by {displayName})");
 
-                    if (_secretKeys.BouyomiChan.Checked)
-                    {
-                        // 母国語で読み上げ
-                        // Song Request Manager用の読み上げ変換をしたい
-                        var message = sourceLanguage == "JA" ? sourceMessage : translateMessage;
-                        _bouyomiChanController.AddTalkTask(displayName, message);
-                    }
+                if (_secretKeys.BouyomiChan.Checked)
+                {
+                    // 母国語で読み上げ
+                    // Song Request Manager用の読み上げ変換をしたい
+                    var message = sourceLanguage == LanguageCode.Japanese ? sourceMessage : translateMessage;
+                    _bouyomiChanController.AddTalkTask(displayName, message);
                 }
             }
             catch (RemotingException ex)
             {
                 var errorMessage = "棒読みちゃんとの通信エラーが起きています。棒読みちゃんを再起動してください。";
                 SendMessage($"[FaraBot] @{_twitchClient.TwitchUsername} {errorMessage}");
-                LogController.OutputLog(ex.Message);
+                LogController.OutputLog(ex.Message, true);
             }
             catch (Exception ex)
             {
@@ -278,27 +282,16 @@ namespace FaraBotModerator.Controller
                 {
                     _bouyomiChanController.AddTalkTask(_twitchClient.TwitchUsername, errorMessage);
                 }
-                LogController.OutputLog(ex.Message);
+
+                LogController.OutputLog(ex.Message, true);
             }
         }
 
-        private static async Task<DeepLTranslationModel> DeepLTranslationResult(string sourceMessage,
-            string targetLanguage, HttpClient httpClient)
+        public async Task<Usage> DeepLUsage()
         {
-            var deepLAuthKey = ConfigurationManager.AppSettings.Get("DeepLAuthKey");
-            var parameter = $"auth_key={deepLAuthKey}&text={sourceMessage}&target_lang={targetLanguage}";
-            var content = new StringContent(parameter, Encoding.Default, "application/x-www-form-urlencoded");
-            var response = await httpClient.PostAsync("https://api-free.deepl.com/v2/translate", content);
-            var responseBody = response.Content.ReadAsStringAsync().Result;
-
-            var option = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
-            var jsonString =
-                JsonSerializer.Deserialize<DeepLTranslationModel>(responseBody,
-                    option);
-            return jsonString;
+            // 定期的に文字数取得してグラフ表示
+            // https://blog.hiros-dot.net/?p=2123
+            return await _deepLTranslator.GetUsageAsync();
         }
 
         private bool IsJapaneseLanguage(string message)

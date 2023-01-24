@@ -33,6 +33,7 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="LiveCharts.WinForms"/>
         <Reference Include="Microsoft.VisualBasic" />
         <Reference Include="mscorlib" />
         <Reference Include="System" />
@@ -47,6 +48,7 @@
         <Reference Include="System.ServiceModel.Channels" />
         <Reference Include="System.ServiceProcess" />
         <Reference Include="System.Transactions" />
+        <Reference Include="System.Windows.Forms.DataVisualization" />
         <Reference Include="System.Xml.Linq" />
         <Reference Include="System.Data.DataSetExtensions" />
         <Reference Include="Microsoft.CSharp" />
@@ -111,6 +113,7 @@
     <ItemGroup>
       <PackageReference Include="CoreTweet" Version="1.0.0.483" />
       <PackageReference Include="DeepL.net" Version="1.5.0" />
+      <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
       <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
       <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />

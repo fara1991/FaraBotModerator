@@ -31,8 +31,7 @@ namespace FaraBotModerator.Model
 
     public class DeepLKeyModel
     {
-        [JsonPropertyName("freeAuthKey")] public string FreeAuthKey { get; set; }
-        [JsonPropertyName("proAuthKey")] public string ProAuthKey { get; set; }
+        [JsonPropertyName("apiKey")] public string ApiKey { get; set; }
     }
 
     public class TwitterKeyModel

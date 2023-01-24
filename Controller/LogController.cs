@@ -6,7 +6,7 @@ namespace FaraBotModerator.Controller
 {
     public static class LogController
     {
-        public static void OutputLog(string logText)
+        public static void OutputLog(string text, bool isError = false)
         {
             var date = DateTime.Now;
             string year = date.Year.ToString("00");
@@ -25,8 +25,9 @@ namespace FaraBotModerator.Controller
 
             using (var writer = new StreamWriter(filePath, true, Encoding.UTF8))
             {
-                var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}]";
-                writer.WriteLine($@"{logTime} {logText}");
+                var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}] ";
+                var logText = logTime + (isError ? "<Error> " : "") + text;
+                writer.WriteLine(logText);
             }
         }
     }

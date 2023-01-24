@@ -45,11 +45,10 @@ namespace FaraBotModerator
                 TwitchApiClientIdTextBox.Text = secretKeys.Twitch.Api.ClientId;
                 TwitchApiClientSecretTextBox.Text = secretKeys.Twitch.Api.Secret;
 
-                DeepLAPIFreeAuthKeyTextBox.Text = secretKeys.DeepL.FreeAuthKey;
-                DeepLAPIProAuthKeyTextBox.Text = secretKeys.DeepL.ProAuthKey;
+                DeepLApiKeyTextBox.Text = secretKeys.DeepL.ApiKey;
                 
-                TwitterAPIKeyTextBox.Text = secretKeys.Twitter.ApiKey;
-                TwitterAPISecretTextBox.Text = secretKeys.Twitter.ApiSecret;
+                TwitterApiKeyTextBox.Text = secretKeys.Twitter.ApiKey;
+                TwitterApiSecretTextBox.Text = secretKeys.Twitter.ApiSecret;
 
                 BouyomiChanConnectCheckBox.Checked = secretKeys.BouyomiChan.Checked;
                 
@@ -263,13 +262,12 @@ namespace FaraBotModerator
                 },
                 Twitter = new TwitterKeyModel
                 {
-                    ApiKey = TwitterAPIKeyTextBox.Text,
-                    ApiSecret = TwitterAPISecretTextBox.Text
+                    ApiKey = TwitterApiKeyTextBox.Text,
+                    ApiSecret = TwitterApiSecretTextBox.Text
                 },
                 DeepL = new DeepLKeyModel
                 {
-                    FreeAuthKey = DeepLAPIFreeAuthKeyTextBox.Text,
-                    ProAuthKey = DeepLAPIProAuthKeyTextBox.Text
+                    ApiKey = DeepLApiKeyTextBox.Text,
                 },
                 BouyomiChan = new BouyomiChanKeyModel
                 {

@@ -11,8 +11,8 @@ namespace FaraBotModerator.Controller
 
         public void SessionStart()
         {
-            string apiKey = ConfigurationManager.AppSettings.Get("TwitterAPIKey");
-            string apiSecret = ConfigurationManager.AppSettings.Get("TwitterAPISecret");
+            string apiKey = ConfigurationManager.AppSettings.Get("TwitterApiKey");
+            string apiSecret = ConfigurationManager.AppSettings.Get("TwitterApiSecret");
             var session = OAuth.Authorize(apiKey, apiSecret);
             Process.Start(session.AuthorizeUri.AbsoluteUri);
 
