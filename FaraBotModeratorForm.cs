@@ -9,10 +9,13 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using FaraBotModerator.Controller;
 using FaraBotModerator.Model;
 using FaraBotModerator.Properties;
+using LiveCharts.Defaults;
 using Microsoft.Web.WebView2.WinForms;
+using TwitchLib.Api.Core.Extensions.System;
 
 namespace FaraBotModerator
 {
@@ -32,6 +35,7 @@ namespace FaraBotModerator
             InitializeSecretValue();
             InitializeTokenForm();
             InitializeWebServer();
+            InitializeDeepLMonitoring();
         }
 
         private void InitializeSecretValue()
@@ -111,6 +115,32 @@ namespace FaraBotModerator
             // ReSharper disable once FunctionNeverReturns
         }
 
+        private async Task InitializeDeepLMonitoring()
+        {
+            DeepLUsageChart.ChartAreas.Clear();
+            DeepLUsageChart.Series.Clear();
+            var chartArea = new ChartArea();
+            var chartAreaAxes = new Axis();
+            chartAreaAxes.Interval = 1;
+            chartAreaAxes.IntervalAutoMode = IntervalAutoMode.FixedCount;
+            chartAreaAxes.IntervalOffset = 1;
+            chartAreaAxes.IntervalType = DateTimeIntervalType.Months;
+            chartAreaAxes.IntervalOffsetType = DateTimeIntervalType.Months;
+            var series = new Series();
+            series.ChartType = SeriesChartType.Spline;
+            series.Name = "Characters";
+            series.XValueType = ChartValueType.Date;
+            // chartArea.Axes.(chartAreaAxes);
+            DeepLUsageChart.ChartAreas.Add(chartArea);
+            DeepLUsageChart.Series.Add(series);
+            // DeepLUsageChart.Series.Add();
+
+            while (true)
+            {
+                await Task.Delay(3000);
+            }
+        }
+        
         /// <summary>
         /// Token期限切れの時に呼び出してTokenを更新します。
         /// </summary>

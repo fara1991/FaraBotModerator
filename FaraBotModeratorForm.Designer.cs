@@ -159,10 +159,10 @@ namespace FaraBotModerator
             this.MenuTab.Controls.Add(this.MainSettingTab);
             this.MenuTab.Controls.Add(this.ReactionEventTab);
             this.MenuTab.Controls.Add(this.AutoBotTab);
-            this.MenuTab.Location = new System.Drawing.Point(12, 12);
+            this.MenuTab.Location = new System.Drawing.Point(12, 13);
             this.MenuTab.Name = "MenuTab";
             this.MenuTab.SelectedIndex = 0;
-            this.MenuTab.Size = new System.Drawing.Size(776, 649);
+            this.MenuTab.Size = new System.Drawing.Size(776, 703);
             this.MenuTab.TabIndex = 0;
             // 
             // MainSettingTab
@@ -173,7 +173,7 @@ namespace FaraBotModerator
             this.MainSettingTab.Location = new System.Drawing.Point(4, 22);
             this.MainSettingTab.Name = "MainSettingTab";
             this.MainSettingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MainSettingTab.Size = new System.Drawing.Size(768, 623);
+            this.MainSettingTab.Size = new System.Drawing.Size(768, 677);
             this.MainSettingTab.TabIndex = 0;
             this.MainSettingTab.Text = "Main Settings";
             this.MainSettingTab.ToolTipText = "Twitch接続やTwitter送信の設定を行います。";
@@ -181,9 +181,9 @@ namespace FaraBotModerator
             // 
             // ChatBoxGroupBox
             // 
-            this.ChatBoxGroupBox.Location = new System.Drawing.Point(374, 6);
+            this.ChatBoxGroupBox.Location = new System.Drawing.Point(374, 7);
             this.ChatBoxGroupBox.Name = "ChatBoxGroupBox";
-            this.ChatBoxGroupBox.Size = new System.Drawing.Size(388, 614);
+            this.ChatBoxGroupBox.Size = new System.Drawing.Size(388, 665);
             this.ChatBoxGroupBox.TabIndex = 2;
             this.ChatBoxGroupBox.TabStop = false;
             this.ChatBoxGroupBox.Text = "ChatBox";
@@ -200,18 +200,18 @@ namespace FaraBotModerator
             this.TwitterGroupBox.Controls.Add(this.TwitterConnectionStateLabel);
             this.TwitterGroupBox.Controls.Add(this.TwitterConnectionButton);
             this.TwitterGroupBox.Controls.Add(this.TwitterDisconnectionButton);
-            this.TwitterGroupBox.Location = new System.Drawing.Point(6, 429);
+            this.TwitterGroupBox.Location = new System.Drawing.Point(6, 465);
             this.TwitterGroupBox.Name = "TwitterGroupBox";
-            this.TwitterGroupBox.Size = new System.Drawing.Size(353, 191);
+            this.TwitterGroupBox.Size = new System.Drawing.Size(353, 207);
             this.TwitterGroupBox.TabIndex = 1;
             this.TwitterGroupBox.TabStop = false;
             this.TwitterGroupBox.Text = "Twitter";
             // 
             // TwitterApiButton
             // 
-            this.TwitterApiButton.Location = new System.Drawing.Point(272, 61);
+            this.TwitterApiButton.Location = new System.Drawing.Point(272, 66);
             this.TwitterApiButton.Name = "TwitterApiButton";
-            this.TwitterApiButton.Size = new System.Drawing.Size(75, 21);
+            this.TwitterApiButton.Size = new System.Drawing.Size(75, 23);
             this.TwitterApiButton.TabIndex = 12;
             this.TwitterApiButton.Text = "Twitter API";
             this.TwitterApiButton.UseVisualStyleBackColor = true;
@@ -220,51 +220,51 @@ namespace FaraBotModerator
             // TwitterTweetTextBox
             // 
             this.TwitterTweetTextBox.Controls.Add(this.TwitterSendRichTextBox);
-            this.TwitterTweetTextBox.Location = new System.Drawing.Point(6, 82);
+            this.TwitterTweetTextBox.Location = new System.Drawing.Point(6, 89);
             this.TwitterTweetTextBox.Name = "TwitterTweetTextBox";
-            this.TwitterTweetTextBox.Size = new System.Drawing.Size(341, 75);
+            this.TwitterTweetTextBox.Size = new System.Drawing.Size(341, 81);
             this.TwitterTweetTextBox.TabIndex = 10;
             this.TwitterTweetTextBox.TabStop = false;
             this.TwitterTweetTextBox.Text = "Tweet";
             // 
             // TwitterSendRichTextBox
             // 
-            this.TwitterSendRichTextBox.Location = new System.Drawing.Point(6, 18);
+            this.TwitterSendRichTextBox.Location = new System.Drawing.Point(6, 20);
             this.TwitterSendRichTextBox.Name = "TwitterSendRichTextBox";
-            this.TwitterSendRichTextBox.Size = new System.Drawing.Size(329, 51);
+            this.TwitterSendRichTextBox.Size = new System.Drawing.Size(329, 55);
             this.TwitterSendRichTextBox.TabIndex = 4;
             this.TwitterSendRichTextBox.Text = "test\n\n@game_Fara";
             // 
             // TwitterApiSecretTextBox
             // 
-            this.TwitterApiSecretTextBox.Location = new System.Drawing.Point(112, 37);
+            this.TwitterApiSecretTextBox.Location = new System.Drawing.Point(112, 40);
             this.TwitterApiSecretTextBox.Name = "TwitterApiSecretTextBox";
             this.TwitterApiSecretTextBox.PasswordChar = '●';
-            this.TwitterApiSecretTextBox.Size = new System.Drawing.Size(235, 19);
+            this.TwitterApiSecretTextBox.Size = new System.Drawing.Size(235, 20);
             this.TwitterApiSecretTextBox.TabIndex = 9;
             // 
             // TwitterApiKeyTextBox
             // 
-            this.TwitterApiKeyTextBox.Location = new System.Drawing.Point(112, 12);
+            this.TwitterApiKeyTextBox.Location = new System.Drawing.Point(112, 13);
             this.TwitterApiKeyTextBox.Name = "TwitterApiKeyTextBox";
             this.TwitterApiKeyTextBox.PasswordChar = '●';
-            this.TwitterApiKeyTextBox.Size = new System.Drawing.Size(235, 19);
+            this.TwitterApiKeyTextBox.Size = new System.Drawing.Size(235, 20);
             this.TwitterApiKeyTextBox.TabIndex = 8;
             // 
             // TwitterApiSecretLabel
             // 
-            this.TwitterApiSecretLabel.Location = new System.Drawing.Point(6, 37);
+            this.TwitterApiSecretLabel.Location = new System.Drawing.Point(6, 40);
             this.TwitterApiSecretLabel.Name = "TwitterApiSecretLabel";
-            this.TwitterApiSecretLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitterApiSecretLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitterApiSecretLabel.TabIndex = 7;
             this.TwitterApiSecretLabel.Text = "API Secret";
             this.TwitterApiSecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitterApiKeyLabel
             // 
-            this.TwitterApiKeyLabel.Location = new System.Drawing.Point(6, 15);
+            this.TwitterApiKeyLabel.Location = new System.Drawing.Point(6, 16);
             this.TwitterApiKeyLabel.Name = "TwitterApiKeyLabel";
-            this.TwitterApiKeyLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitterApiKeyLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitterApiKeyLabel.TabIndex = 6;
             this.TwitterApiKeyLabel.Text = "API Key";
             this.TwitterApiKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -272,9 +272,9 @@ namespace FaraBotModerator
             // TwitterPushTweetButton
             // 
             this.TwitterPushTweetButton.Enabled = false;
-            this.TwitterPushTweetButton.Location = new System.Drawing.Point(112, 162);
+            this.TwitterPushTweetButton.Location = new System.Drawing.Point(112, 176);
             this.TwitterPushTweetButton.Name = "TwitterPushTweetButton";
-            this.TwitterPushTweetButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterPushTweetButton.Size = new System.Drawing.Size(75, 25);
             this.TwitterPushTweetButton.TabIndex = 5;
             this.TwitterPushTweetButton.Text = "Tweet";
             this.TwitterPushTweetButton.UseVisualStyleBackColor = true;
@@ -282,18 +282,18 @@ namespace FaraBotModerator
             // 
             // TwitterConnectionStateLabel
             // 
-            this.TwitterConnectionStateLabel.Location = new System.Drawing.Point(3, 167);
+            this.TwitterConnectionStateLabel.Location = new System.Drawing.Point(3, 181);
             this.TwitterConnectionStateLabel.Name = "TwitterConnectionStateLabel";
-            this.TwitterConnectionStateLabel.Size = new System.Drawing.Size(103, 15);
+            this.TwitterConnectionStateLabel.Size = new System.Drawing.Size(103, 16);
             this.TwitterConnectionStateLabel.TabIndex = 3;
             this.TwitterConnectionStateLabel.Text = "State: Disconnect";
             this.TwitterConnectionStateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitterConnectionButton
             // 
-            this.TwitterConnectionButton.Location = new System.Drawing.Point(193, 162);
+            this.TwitterConnectionButton.Location = new System.Drawing.Point(193, 176);
             this.TwitterConnectionButton.Name = "TwitterConnectionButton";
-            this.TwitterConnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterConnectionButton.Size = new System.Drawing.Size(75, 25);
             this.TwitterConnectionButton.TabIndex = 0;
             this.TwitterConnectionButton.Text = "Connect";
             this.TwitterConnectionButton.UseVisualStyleBackColor = true;
@@ -301,9 +301,9 @@ namespace FaraBotModerator
             // 
             // TwitterDisconnectionButton
             // 
-            this.TwitterDisconnectionButton.Location = new System.Drawing.Point(272, 162);
+            this.TwitterDisconnectionButton.Location = new System.Drawing.Point(272, 176);
             this.TwitterDisconnectionButton.Name = "TwitterDisconnectionButton";
-            this.TwitterDisconnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitterDisconnectionButton.Size = new System.Drawing.Size(75, 25);
             this.TwitterDisconnectionButton.TabIndex = 1;
             this.TwitterDisconnectionButton.Text = "Disconnect";
             this.TwitterDisconnectionButton.UseVisualStyleBackColor = true;
@@ -317,9 +317,9 @@ namespace FaraBotModerator
             this.TwitchGroupBox.Controls.Add(this.TwitchConnectionStateLabel);
             this.TwitchGroupBox.Controls.Add(this.TwitchDisconnectButton);
             this.TwitchGroupBox.Controls.Add(this.TwitchConnectionButton);
-            this.TwitchGroupBox.Location = new System.Drawing.Point(6, 6);
+            this.TwitchGroupBox.Location = new System.Drawing.Point(6, 7);
             this.TwitchGroupBox.Name = "TwitchGroupBox";
-            this.TwitchGroupBox.Size = new System.Drawing.Size(353, 330);
+            this.TwitchGroupBox.Size = new System.Drawing.Size(353, 358);
             this.TwitchGroupBox.TabIndex = 0;
             this.TwitchGroupBox.TabStop = false;
             this.TwitchGroupBox.Text = "Twitch";
@@ -331,18 +331,18 @@ namespace FaraBotModerator
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientSecretLabel);
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdTextBox);
             this.TwitchApiGroupBox.Controls.Add(this.TwitchApiClientIdLabel);
-            this.TwitchApiGroupBox.Location = new System.Drawing.Point(6, 116);
+            this.TwitchApiGroupBox.Location = new System.Drawing.Point(6, 126);
             this.TwitchApiGroupBox.Name = "TwitchApiGroupBox";
-            this.TwitchApiGroupBox.Size = new System.Drawing.Size(341, 94);
+            this.TwitchApiGroupBox.Size = new System.Drawing.Size(341, 102);
             this.TwitchApiGroupBox.TabIndex = 10;
             this.TwitchApiGroupBox.TabStop = false;
             this.TwitchApiGroupBox.Text = "API";
             // 
             // TwitchApiAuthorizeButton
             // 
-            this.TwitchApiAuthorizeButton.Location = new System.Drawing.Point(260, 66);
+            this.TwitchApiAuthorizeButton.Location = new System.Drawing.Point(260, 72);
             this.TwitchApiAuthorizeButton.Name = "TwitchApiAuthorizeButton";
-            this.TwitchApiAuthorizeButton.Size = new System.Drawing.Size(75, 21);
+            this.TwitchApiAuthorizeButton.Size = new System.Drawing.Size(75, 23);
             this.TwitchApiAuthorizeButton.TabIndex = 4;
             this.TwitchApiAuthorizeButton.Text = "Authorize";
             this.TwitchApiAuthorizeButton.UseVisualStyleBackColor = true;
@@ -350,34 +350,34 @@ namespace FaraBotModerator
             // 
             // TwitchApiClientSecretTextBox
             // 
-            this.TwitchApiClientSecretTextBox.Location = new System.Drawing.Point(112, 42);
+            this.TwitchApiClientSecretTextBox.Location = new System.Drawing.Point(112, 46);
             this.TwitchApiClientSecretTextBox.Name = "TwitchApiClientSecretTextBox";
             this.TwitchApiClientSecretTextBox.PasswordChar = '●';
-            this.TwitchApiClientSecretTextBox.Size = new System.Drawing.Size(223, 19);
+            this.TwitchApiClientSecretTextBox.Size = new System.Drawing.Size(223, 20);
             this.TwitchApiClientSecretTextBox.TabIndex = 3;
             // 
             // TwitchApiClientSecretLabel
             // 
-            this.TwitchApiClientSecretLabel.Location = new System.Drawing.Point(3, 44);
+            this.TwitchApiClientSecretLabel.Location = new System.Drawing.Point(3, 48);
             this.TwitchApiClientSecretLabel.Name = "TwitchApiClientSecretLabel";
-            this.TwitchApiClientSecretLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitchApiClientSecretLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitchApiClientSecretLabel.TabIndex = 2;
             this.TwitchApiClientSecretLabel.Text = "ClientSecret";
             this.TwitchApiClientSecretLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitchApiClientIdTextBox
             // 
-            this.TwitchApiClientIdTextBox.Location = new System.Drawing.Point(112, 18);
+            this.TwitchApiClientIdTextBox.Location = new System.Drawing.Point(112, 20);
             this.TwitchApiClientIdTextBox.Name = "TwitchApiClientIdTextBox";
             this.TwitchApiClientIdTextBox.PasswordChar = '●';
-            this.TwitchApiClientIdTextBox.Size = new System.Drawing.Size(223, 19);
+            this.TwitchApiClientIdTextBox.Size = new System.Drawing.Size(223, 20);
             this.TwitchApiClientIdTextBox.TabIndex = 1;
             // 
             // TwitchApiClientIdLabel
             // 
-            this.TwitchApiClientIdLabel.Location = new System.Drawing.Point(3, 20);
+            this.TwitchApiClientIdLabel.Location = new System.Drawing.Point(3, 22);
             this.TwitchApiClientIdLabel.Name = "TwitchApiClientIdLabel";
-            this.TwitchApiClientIdLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitchApiClientIdLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitchApiClientIdLabel.TabIndex = 0;
             this.TwitchApiClientIdLabel.Text = "ClientId";
             this.TwitchApiClientIdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -389,18 +389,18 @@ namespace FaraBotModerator
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenLabel);
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientUserNameTextBox);
             this.TwitchClientGroupBox.Controls.Add(this.TwitchClientAccessTokenTextBox);
-            this.TwitchClientGroupBox.Location = new System.Drawing.Point(6, 16);
+            this.TwitchClientGroupBox.Location = new System.Drawing.Point(6, 17);
             this.TwitchClientGroupBox.Name = "TwitchClientGroupBox";
-            this.TwitchClientGroupBox.Size = new System.Drawing.Size(341, 94);
+            this.TwitchClientGroupBox.Size = new System.Drawing.Size(341, 102);
             this.TwitchClientGroupBox.TabIndex = 0;
             this.TwitchClientGroupBox.TabStop = false;
             this.TwitchClientGroupBox.Text = "Client";
             // 
             // TwitchClientAccessTokenButton
             // 
-            this.TwitchClientAccessTokenButton.Location = new System.Drawing.Point(260, 63);
+            this.TwitchClientAccessTokenButton.Location = new System.Drawing.Point(260, 68);
             this.TwitchClientAccessTokenButton.Name = "TwitchClientAccessTokenButton";
-            this.TwitchClientAccessTokenButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchClientAccessTokenButton.Size = new System.Drawing.Size(75, 25);
             this.TwitchClientAccessTokenButton.TabIndex = 7;
             this.TwitchClientAccessTokenButton.Text = "Get Token";
             this.TwitchClientAccessTokenButton.UseVisualStyleBackColor = true;
@@ -408,62 +408,62 @@ namespace FaraBotModerator
             // 
             // TwitchClientUserNameLabel
             // 
-            this.TwitchClientUserNameLabel.Location = new System.Drawing.Point(3, 15);
+            this.TwitchClientUserNameLabel.Location = new System.Drawing.Point(3, 16);
             this.TwitchClientUserNameLabel.Name = "TwitchClientUserNameLabel";
-            this.TwitchClientUserNameLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitchClientUserNameLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitchClientUserNameLabel.TabIndex = 0;
             this.TwitchClientUserNameLabel.Text = "UserName";
             this.TwitchClientUserNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitchClientAccessTokenLabel
             // 
-            this.TwitchClientAccessTokenLabel.Location = new System.Drawing.Point(3, 39);
+            this.TwitchClientAccessTokenLabel.Location = new System.Drawing.Point(3, 42);
             this.TwitchClientAccessTokenLabel.Name = "TwitchClientAccessTokenLabel";
-            this.TwitchClientAccessTokenLabel.Size = new System.Drawing.Size(100, 16);
+            this.TwitchClientAccessTokenLabel.Size = new System.Drawing.Size(100, 17);
             this.TwitchClientAccessTokenLabel.TabIndex = 1;
             this.TwitchClientAccessTokenLabel.Text = "AccessToken";
             this.TwitchClientAccessTokenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TwitchClientUserNameTextBox
             // 
-            this.TwitchClientUserNameTextBox.Location = new System.Drawing.Point(112, 14);
+            this.TwitchClientUserNameTextBox.Location = new System.Drawing.Point(112, 15);
             this.TwitchClientUserNameTextBox.Name = "TwitchClientUserNameTextBox";
-            this.TwitchClientUserNameTextBox.Size = new System.Drawing.Size(223, 19);
+            this.TwitchClientUserNameTextBox.Size = new System.Drawing.Size(223, 20);
             this.TwitchClientUserNameTextBox.TabIndex = 2;
             // 
             // TwitchClientAccessTokenTextBox
             // 
-            this.TwitchClientAccessTokenTextBox.Location = new System.Drawing.Point(112, 38);
+            this.TwitchClientAccessTokenTextBox.Location = new System.Drawing.Point(112, 41);
             this.TwitchClientAccessTokenTextBox.Name = "TwitchClientAccessTokenTextBox";
             this.TwitchClientAccessTokenTextBox.PasswordChar = '●';
-            this.TwitchClientAccessTokenTextBox.Size = new System.Drawing.Size(223, 19);
+            this.TwitchClientAccessTokenTextBox.Size = new System.Drawing.Size(223, 20);
             this.TwitchClientAccessTokenTextBox.TabIndex = 3;
             // 
             // BouyomiChanConnectCheckBox
             // 
             this.BouyomiChanConnectCheckBox.Checked = true;
             this.BouyomiChanConnectCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.BouyomiChanConnectCheckBox.Location = new System.Drawing.Point(6, 280);
+            this.BouyomiChanConnectCheckBox.Location = new System.Drawing.Point(6, 303);
             this.BouyomiChanConnectCheckBox.Name = "BouyomiChanConnectCheckBox";
-            this.BouyomiChanConnectCheckBox.Size = new System.Drawing.Size(146, 25);
+            this.BouyomiChanConnectCheckBox.Size = new System.Drawing.Size(146, 27);
             this.BouyomiChanConnectCheckBox.TabIndex = 9;
             this.BouyomiChanConnectCheckBox.Text = "BouyomiChanConnect";
             this.BouyomiChanConnectCheckBox.UseVisualStyleBackColor = true;
             // 
             // TwitchConnectionStateLabel
             // 
-            this.TwitchConnectionStateLabel.Location = new System.Drawing.Point(3, 307);
+            this.TwitchConnectionStateLabel.Location = new System.Drawing.Point(3, 333);
             this.TwitchConnectionStateLabel.Name = "TwitchConnectionStateLabel";
-            this.TwitchConnectionStateLabel.Size = new System.Drawing.Size(100, 13);
+            this.TwitchConnectionStateLabel.Size = new System.Drawing.Size(100, 14);
             this.TwitchConnectionStateLabel.TabIndex = 6;
             this.TwitchConnectionStateLabel.Text = "State: Disconnect";
             // 
             // TwitchDisconnectButton
             // 
             this.TwitchDisconnectButton.Enabled = false;
-            this.TwitchDisconnectButton.Location = new System.Drawing.Point(272, 302);
+            this.TwitchDisconnectButton.Location = new System.Drawing.Point(272, 327);
             this.TwitchDisconnectButton.Name = "TwitchDisconnectButton";
-            this.TwitchDisconnectButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchDisconnectButton.Size = new System.Drawing.Size(75, 25);
             this.TwitchDisconnectButton.TabIndex = 5;
             this.TwitchDisconnectButton.Text = "Disconnect";
             this.TwitchDisconnectButton.UseVisualStyleBackColor = true;
@@ -472,9 +472,9 @@ namespace FaraBotModerator
             // TwitchConnectionButton
             // 
             this.TwitchConnectionButton.Enabled = false;
-            this.TwitchConnectionButton.Location = new System.Drawing.Point(191, 302);
+            this.TwitchConnectionButton.Location = new System.Drawing.Point(191, 327);
             this.TwitchConnectionButton.Name = "TwitchConnectionButton";
-            this.TwitchConnectionButton.Size = new System.Drawing.Size(75, 23);
+            this.TwitchConnectionButton.Size = new System.Drawing.Size(75, 25);
             this.TwitchConnectionButton.TabIndex = 4;
             this.TwitchConnectionButton.Text = "Connect";
             this.TwitchConnectionButton.UseVisualStyleBackColor = true;
@@ -504,7 +504,7 @@ namespace FaraBotModerator
             this.ReactionEventTab.Location = new System.Drawing.Point(4, 22);
             this.ReactionEventTab.Name = "ReactionEventTab";
             this.ReactionEventTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ReactionEventTab.Size = new System.Drawing.Size(768, 623);
+            this.ReactionEventTab.Size = new System.Drawing.Size(768, 677);
             this.ReactionEventTab.TabIndex = 1;
             this.ReactionEventTab.Text = "Reaction Event";
             this.ReactionEventTab.ToolTipText = "TwitchでFollowやRaid等のアクションに応じた設定を行います。";
@@ -514,9 +514,9 @@ namespace FaraBotModerator
             // 
             this.ChannelPointCheckBox.Checked = true;
             this.ChannelPointCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ChannelPointCheckBox.Location = new System.Drawing.Point(6, 131);
+            this.ChannelPointCheckBox.Location = new System.Drawing.Point(6, 142);
             this.ChannelPointCheckBox.Name = "ChannelPointCheckBox";
-            this.ChannelPointCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.ChannelPointCheckBox.Size = new System.Drawing.Size(93, 21);
             this.ChannelPointCheckBox.TabIndex = 39;
             this.ChannelPointCheckBox.Text = "ChannelPoint";
             this.ChannelPointCheckBox.UseVisualStyleBackColor = true;
@@ -525,9 +525,9 @@ namespace FaraBotModerator
             // 
             this.GiftCheckBox.Checked = true;
             this.GiftCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.GiftCheckBox.Location = new System.Drawing.Point(6, 106);
+            this.GiftCheckBox.Location = new System.Drawing.Point(6, 115);
             this.GiftCheckBox.Name = "GiftCheckBox";
-            this.GiftCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.GiftCheckBox.Size = new System.Drawing.Size(93, 21);
             this.GiftCheckBox.TabIndex = 38;
             this.GiftCheckBox.Text = "Gift";
             this.GiftCheckBox.UseVisualStyleBackColor = true;
@@ -536,9 +536,9 @@ namespace FaraBotModerator
             // 
             this.BitsCheckBox.Checked = true;
             this.BitsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.BitsCheckBox.Location = new System.Drawing.Point(6, 81);
+            this.BitsCheckBox.Location = new System.Drawing.Point(6, 88);
             this.BitsCheckBox.Name = "BitsCheckBox";
-            this.BitsCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.BitsCheckBox.Size = new System.Drawing.Size(93, 21);
             this.BitsCheckBox.TabIndex = 37;
             this.BitsCheckBox.Text = "Bits";
             this.BitsCheckBox.UseVisualStyleBackColor = true;
@@ -547,9 +547,9 @@ namespace FaraBotModerator
             // 
             this.SubscriptionCheckBox.Checked = true;
             this.SubscriptionCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.SubscriptionCheckBox.Location = new System.Drawing.Point(6, 56);
+            this.SubscriptionCheckBox.Location = new System.Drawing.Point(6, 61);
             this.SubscriptionCheckBox.Name = "SubscriptionCheckBox";
-            this.SubscriptionCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.SubscriptionCheckBox.Size = new System.Drawing.Size(93, 21);
             this.SubscriptionCheckBox.TabIndex = 36;
             this.SubscriptionCheckBox.Text = "Subscription";
             this.SubscriptionCheckBox.UseVisualStyleBackColor = true;
@@ -558,9 +558,9 @@ namespace FaraBotModerator
             // 
             this.RaidCheckBox.Checked = true;
             this.RaidCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.RaidCheckBox.Location = new System.Drawing.Point(6, 31);
+            this.RaidCheckBox.Location = new System.Drawing.Point(6, 34);
             this.RaidCheckBox.Name = "RaidCheckBox";
-            this.RaidCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.RaidCheckBox.Size = new System.Drawing.Size(93, 21);
             this.RaidCheckBox.TabIndex = 35;
             this.RaidCheckBox.Text = "Raid";
             this.RaidCheckBox.UseVisualStyleBackColor = true;
@@ -569,71 +569,71 @@ namespace FaraBotModerator
             // 
             this.FollowCheckBox.Checked = true;
             this.FollowCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.FollowCheckBox.Location = new System.Drawing.Point(6, 6);
+            this.FollowCheckBox.Location = new System.Drawing.Point(6, 7);
             this.FollowCheckBox.Name = "FollowCheckBox";
-            this.FollowCheckBox.Size = new System.Drawing.Size(93, 19);
+            this.FollowCheckBox.Size = new System.Drawing.Size(93, 21);
             this.FollowCheckBox.TabIndex = 34;
             this.FollowCheckBox.Text = "Follow";
             this.FollowCheckBox.UseVisualStyleBackColor = true;
             // 
             // ChannelPointTestButton
             // 
-            this.ChannelPointTestButton.Location = new System.Drawing.Point(711, 131);
+            this.ChannelPointTestButton.Location = new System.Drawing.Point(711, 142);
             this.ChannelPointTestButton.Name = "ChannelPointTestButton";
-            this.ChannelPointTestButton.Size = new System.Drawing.Size(51, 19);
+            this.ChannelPointTestButton.Size = new System.Drawing.Size(51, 21);
             this.ChannelPointTestButton.TabIndex = 30;
             this.ChannelPointTestButton.Text = "Test";
             this.ChannelPointTestButton.UseVisualStyleBackColor = true;
             // 
             // ChannelPointEventTextBox
             // 
-            this.ChannelPointEventTextBox.Location = new System.Drawing.Point(105, 131);
+            this.ChannelPointEventTextBox.Location = new System.Drawing.Point(105, 142);
             this.ChannelPointEventTextBox.Name = "ChannelPointEventTextBox";
-            this.ChannelPointEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.ChannelPointEventTextBox.Size = new System.Drawing.Size(600, 20);
             this.ChannelPointEventTextBox.TabIndex = 29;
             this.ChannelPointEventTextBox.Text = "{channelPointUserName} use channelPoint of {channelPointTitle} gamefa16Hi";
             // 
             // GiftTestButton
             // 
-            this.GiftTestButton.Location = new System.Drawing.Point(711, 106);
+            this.GiftTestButton.Location = new System.Drawing.Point(711, 115);
             this.GiftTestButton.Name = "GiftTestButton";
-            this.GiftTestButton.Size = new System.Drawing.Size(51, 19);
+            this.GiftTestButton.Size = new System.Drawing.Size(51, 21);
             this.GiftTestButton.TabIndex = 26;
             this.GiftTestButton.Text = "Test";
             this.GiftTestButton.UseVisualStyleBackColor = true;
             // 
             // BitsTestButton
             // 
-            this.BitsTestButton.Location = new System.Drawing.Point(711, 81);
+            this.BitsTestButton.Location = new System.Drawing.Point(711, 88);
             this.BitsTestButton.Name = "BitsTestButton";
-            this.BitsTestButton.Size = new System.Drawing.Size(51, 19);
+            this.BitsTestButton.Size = new System.Drawing.Size(51, 21);
             this.BitsTestButton.TabIndex = 25;
             this.BitsTestButton.Text = "Test";
             this.BitsTestButton.UseVisualStyleBackColor = true;
             // 
             // SubscriptionTestButton
             // 
-            this.SubscriptionTestButton.Location = new System.Drawing.Point(711, 56);
+            this.SubscriptionTestButton.Location = new System.Drawing.Point(711, 61);
             this.SubscriptionTestButton.Name = "SubscriptionTestButton";
-            this.SubscriptionTestButton.Size = new System.Drawing.Size(51, 19);
+            this.SubscriptionTestButton.Size = new System.Drawing.Size(51, 21);
             this.SubscriptionTestButton.TabIndex = 24;
             this.SubscriptionTestButton.Text = "Test";
             this.SubscriptionTestButton.UseVisualStyleBackColor = true;
             // 
             // RaidTestButton
             // 
-            this.RaidTestButton.Location = new System.Drawing.Point(711, 31);
+            this.RaidTestButton.Location = new System.Drawing.Point(711, 34);
             this.RaidTestButton.Name = "RaidTestButton";
-            this.RaidTestButton.Size = new System.Drawing.Size(51, 19);
+            this.RaidTestButton.Size = new System.Drawing.Size(51, 21);
             this.RaidTestButton.TabIndex = 23;
             this.RaidTestButton.Text = "Test";
             this.RaidTestButton.UseVisualStyleBackColor = true;
             // 
             // FollowTestButton
             // 
-            this.FollowTestButton.Location = new System.Drawing.Point(711, 6);
+            this.FollowTestButton.Location = new System.Drawing.Point(711, 7);
             this.FollowTestButton.Name = "FollowTestButton";
-            this.FollowTestButton.Size = new System.Drawing.Size(51, 19);
+            this.FollowTestButton.Size = new System.Drawing.Size(51, 21);
             this.FollowTestButton.TabIndex = 22;
             this.FollowTestButton.Text = "Test";
             this.FollowTestButton.UseVisualStyleBackColor = true;
@@ -641,51 +641,53 @@ namespace FaraBotModerator
             // 
             // GiftEventTextBox
             // 
-            this.GiftEventTextBox.Location = new System.Drawing.Point(105, 106);
+            this.GiftEventTextBox.Location = new System.Drawing.Point(105, 115);
             this.GiftEventTextBox.Name = "GiftEventTextBox";
-            this.GiftEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.GiftEventTextBox.Size = new System.Drawing.Size(600, 20);
             this.GiftEventTextBox.TabIndex = 21;
             this.GiftEventTextBox.Text = "{giftedUserName}, thanks gift present gamefa16Hi";
             // 
             // ReplaceNotificationTextBox
             // 
-            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 156);
+            this.ReplaceNotificationTextBox.Location = new System.Drawing.Point(6, 169);
             this.ReplaceNotificationTextBox.Multiline = true;
             this.ReplaceNotificationTextBox.Name = "ReplaceNotificationTextBox";
             this.ReplaceNotificationTextBox.ReadOnly = true;
-            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 436);
+            this.ReplaceNotificationTextBox.Size = new System.Drawing.Size(756, 472);
             this.ReplaceNotificationTextBox.TabIndex = 19;
             this.ReplaceNotificationTextBox.Text = resources.GetString("ReplaceNotificationTextBox.Text");
             // 
             // BitsEventTextBox
             // 
-            this.BitsEventTextBox.Location = new System.Drawing.Point(105, 81);
+            this.BitsEventTextBox.Location = new System.Drawing.Point(105, 88);
             this.BitsEventTextBox.Name = "BitsEventTextBox";
-            this.BitsEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.BitsEventTextBox.Size = new System.Drawing.Size(600, 20);
             this.BitsEventTextBox.TabIndex = 17;
-            this.BitsEventTextBox.Text = "{bitsSendUserName}, thanks {bitsAmount} bits (total {totalBitsAmount}) gamefa16Hi" + "";
+            this.BitsEventTextBox.Text = "{bitsSendUserName}, thanks {bitsAmount} bits (total {totalBitsAmount}) gamefa16Hi" +
+                                         "";
             // 
             // SubscriptionEventTextBox
             // 
-            this.SubscriptionEventTextBox.Location = new System.Drawing.Point(105, 56);
+            this.SubscriptionEventTextBox.Location = new System.Drawing.Point(105, 61);
             this.SubscriptionEventTextBox.Name = "SubscriptionEventTextBox";
-            this.SubscriptionEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.SubscriptionEventTextBox.Size = new System.Drawing.Size(600, 20);
             this.SubscriptionEventTextBox.TabIndex = 16;
             this.SubscriptionEventTextBox.Text = "{subscriberName}, thanks subscription {totalSubscriptionMonth} time gamefa16Hi";
             // 
             // RaidEventTextBox
             // 
-            this.RaidEventTextBox.Location = new System.Drawing.Point(105, 31);
+            this.RaidEventTextBox.Location = new System.Drawing.Point(105, 34);
             this.RaidEventTextBox.Name = "RaidEventTextBox";
-            this.RaidEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.RaidEventTextBox.Size = new System.Drawing.Size(600, 20);
             this.RaidEventTextBox.TabIndex = 14;
-            this.RaidEventTextBox.Text = "Welcome raiders, thanks raid {raiderName} gamefa16Hi. Channel URL: {raiderChannel" + "Url}";
+            this.RaidEventTextBox.Text = "Welcome raiders, thanks raid {raiderName} gamefa16Hi. Channel URL: {raiderChannel" +
+                                         "Url}";
             // 
             // FollowEventTextBox
             // 
-            this.FollowEventTextBox.Location = new System.Drawing.Point(105, 6);
+            this.FollowEventTextBox.Location = new System.Drawing.Point(105, 7);
             this.FollowEventTextBox.Name = "FollowEventTextBox";
-            this.FollowEventTextBox.Size = new System.Drawing.Size(600, 19);
+            this.FollowEventTextBox.Size = new System.Drawing.Size(600, 20);
             this.FollowEventTextBox.TabIndex = 12;
             this.FollowEventTextBox.Text = "{followerName}, thanks follow gamefa16Hi. Channel URL: {followerChannelUrl}";
             // 
@@ -694,7 +696,7 @@ namespace FaraBotModerator
             this.AutoBotTab.Controls.Add(this.AutoBotChildTab);
             this.AutoBotTab.Location = new System.Drawing.Point(4, 22);
             this.AutoBotTab.Name = "AutoBotTab";
-            this.AutoBotTab.Size = new System.Drawing.Size(768, 623);
+            this.AutoBotTab.Size = new System.Drawing.Size(768, 677);
             this.AutoBotTab.TabIndex = 2;
             this.AutoBotTab.Text = "Auto Bot";
             this.AutoBotTab.ToolTipText = "定期的なチャット通知や翻訳設定を行います。";
@@ -707,7 +709,7 @@ namespace FaraBotModerator
             this.AutoBotChildTab.Location = new System.Drawing.Point(3, 3);
             this.AutoBotChildTab.Name = "AutoBotChildTab";
             this.AutoBotChildTab.SelectedIndex = 0;
-            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 617);
+            this.AutoBotChildTab.Size = new System.Drawing.Size(762, 668);
             this.AutoBotChildTab.TabIndex = 0;
             // 
             // TranslateTab
@@ -719,7 +721,7 @@ namespace FaraBotModerator
             this.TranslateTab.Location = new System.Drawing.Point(4, 22);
             this.TranslateTab.Name = "TranslateTab";
             this.TranslateTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslateTab.Size = new System.Drawing.Size(754, 591);
+            this.TranslateTab.Size = new System.Drawing.Size(754, 642);
             this.TranslateTab.TabIndex = 0;
             this.TranslateTab.Text = "Translate";
             this.TranslateTab.ToolTipText = "チャット翻訳設定を行います。";
@@ -728,43 +730,46 @@ namespace FaraBotModerator
             // DeepLCautionLabel
             // 
             this.DeepLCautionLabel.ForeColor = System.Drawing.Color.Red;
-            this.DeepLCautionLabel.Location = new System.Drawing.Point(6, 47);
+            this.DeepLCautionLabel.Location = new System.Drawing.Point(6, 51);
             this.DeepLCautionLabel.Name = "DeepLCautionLabel";
-            this.DeepLCautionLabel.Size = new System.Drawing.Size(742, 20);
+            this.DeepLCautionLabel.Size = new System.Drawing.Size(742, 22);
             this.DeepLCautionLabel.TabIndex = 3;
             this.DeepLCautionLabel.Text = "※Enter a Key for either DeepL API Free or Pro";
             this.DeepLCautionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DeepLApiKeyTextBox
             // 
-            this.DeepLApiKeyTextBox.Location = new System.Drawing.Point(102, 14);
+            this.DeepLApiKeyTextBox.Location = new System.Drawing.Point(102, 15);
             this.DeepLApiKeyTextBox.Name = "DeepLApiKeyTextBox";
             this.DeepLApiKeyTextBox.PasswordChar = '●';
-            this.DeepLApiKeyTextBox.Size = new System.Drawing.Size(646, 19);
+            this.DeepLApiKeyTextBox.Size = new System.Drawing.Size(646, 20);
             this.DeepLApiKeyTextBox.TabIndex = 1;
             // 
             // DeepLApiKeyLabel
             // 
-            this.DeepLApiKeyLabel.Location = new System.Drawing.Point(6, 12);
+            this.DeepLApiKeyLabel.Location = new System.Drawing.Point(6, 13);
             this.DeepLApiKeyLabel.Name = "DeepLApiKeyLabel";
-            this.DeepLApiKeyLabel.Size = new System.Drawing.Size(90, 23);
+            this.DeepLApiKeyLabel.Size = new System.Drawing.Size(90, 25);
             this.DeepLApiKeyLabel.TabIndex = 0;
             this.DeepLApiKeyLabel.Text = "DeepL API Key";
             this.DeepLApiKeyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DeepLUsageChart
             // 
+            chartArea1.AxisX.Interval = 1D;
+            chartArea1.AxisX.IntervalOffset = 1D;
             chartArea1.Name = "ChartArea1";
             this.DeepLUsageChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.DeepLUsageChart.Legends.Add(legend1);
-            this.DeepLUsageChart.Location = new System.Drawing.Point(6, 70);
+            this.DeepLUsageChart.Location = new System.Drawing.Point(6, 76);
             this.DeepLUsageChart.Name = "DeepLUsageChart";
             series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Legend = "Legend1";
-            series1.Name = "Series1";
+            series1.Name = "Characters";
             this.DeepLUsageChart.Series.Add(series1);
-            this.DeepLUsageChart.Size = new System.Drawing.Size(742, 515);
+            this.DeepLUsageChart.Size = new System.Drawing.Size(742, 558);
             this.DeepLUsageChart.TabIndex = 2;
             this.DeepLUsageChart.Text = "chart1";
             // 
@@ -775,7 +780,7 @@ namespace FaraBotModerator
             this.TimerTab.Location = new System.Drawing.Point(4, 22);
             this.TimerTab.Name = "TimerTab";
             this.TimerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TimerTab.Size = new System.Drawing.Size(754, 591);
+            this.TimerTab.Size = new System.Drawing.Size(754, 642);
             this.TimerTab.TabIndex = 1;
             this.TimerTab.Text = "Timer";
             this.TimerTab.ToolTipText = "一定時間毎のTwitchチャット通知設定を行います。";
@@ -798,25 +803,25 @@ namespace FaraBotModerator
             this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer1TextBox);
             this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer1CheckBox);
             this.FixedNotificationGroupBox.Controls.Add(this.FixedTimer1DateTimePicker);
-            this.FixedNotificationGroupBox.Location = new System.Drawing.Point(6, 142);
+            this.FixedNotificationGroupBox.Location = new System.Drawing.Point(6, 154);
             this.FixedNotificationGroupBox.Name = "FixedNotificationGroupBox";
-            this.FixedNotificationGroupBox.Size = new System.Drawing.Size(742, 133);
+            this.FixedNotificationGroupBox.Size = new System.Drawing.Size(742, 144);
             this.FixedNotificationGroupBox.TabIndex = 1;
             this.FixedNotificationGroupBox.TabStop = false;
             this.FixedNotificationGroupBox.Text = "Fixed Notifications";
             // 
             // FixedTimer5TextBox
             // 
-            this.FixedTimer5TextBox.Location = new System.Drawing.Point(246, 109);
+            this.FixedTimer5TextBox.Location = new System.Drawing.Point(246, 118);
             this.FixedTimer5TextBox.Name = "FixedTimer5TextBox";
-            this.FixedTimer5TextBox.Size = new System.Drawing.Size(490, 19);
+            this.FixedTimer5TextBox.Size = new System.Drawing.Size(490, 20);
             this.FixedTimer5TextBox.TabIndex = 14;
             // 
             // FixedTimer5CheckBox
             // 
-            this.FixedTimer5CheckBox.Location = new System.Drawing.Point(6, 109);
+            this.FixedTimer5CheckBox.Location = new System.Drawing.Point(6, 118);
             this.FixedTimer5CheckBox.Name = "FixedTimer5CheckBox";
-            this.FixedTimer5CheckBox.Size = new System.Drawing.Size(86, 18);
+            this.FixedTimer5CheckBox.Size = new System.Drawing.Size(86, 20);
             this.FixedTimer5CheckBox.TabIndex = 13;
             this.FixedTimer5CheckBox.Text = "FixedTimer5";
             this.FixedTimer5CheckBox.UseVisualStyleBackColor = true;
@@ -825,24 +830,24 @@ namespace FaraBotModerator
             // 
             this.FixedTimer5DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.FixedTimer5DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.FixedTimer5DateTimePicker.Location = new System.Drawing.Point(98, 109);
+            this.FixedTimer5DateTimePicker.Location = new System.Drawing.Point(98, 118);
             this.FixedTimer5DateTimePicker.Name = "FixedTimer5DateTimePicker";
-            this.FixedTimer5DateTimePicker.Size = new System.Drawing.Size(142, 19);
+            this.FixedTimer5DateTimePicker.Size = new System.Drawing.Size(142, 20);
             this.FixedTimer5DateTimePicker.TabIndex = 12;
             this.FixedTimer5DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
             // 
             // FixedTimer4TextBox
             // 
-            this.FixedTimer4TextBox.Location = new System.Drawing.Point(246, 86);
+            this.FixedTimer4TextBox.Location = new System.Drawing.Point(246, 93);
             this.FixedTimer4TextBox.Name = "FixedTimer4TextBox";
-            this.FixedTimer4TextBox.Size = new System.Drawing.Size(490, 19);
+            this.FixedTimer4TextBox.Size = new System.Drawing.Size(490, 20);
             this.FixedTimer4TextBox.TabIndex = 11;
             // 
             // FixedTimer4CheckBox
             // 
-            this.FixedTimer4CheckBox.Location = new System.Drawing.Point(6, 86);
+            this.FixedTimer4CheckBox.Location = new System.Drawing.Point(6, 93);
             this.FixedTimer4CheckBox.Name = "FixedTimer4CheckBox";
-            this.FixedTimer4CheckBox.Size = new System.Drawing.Size(86, 18);
+            this.FixedTimer4CheckBox.Size = new System.Drawing.Size(86, 20);
             this.FixedTimer4CheckBox.TabIndex = 10;
             this.FixedTimer4CheckBox.Text = "FixedTimer4";
             this.FixedTimer4CheckBox.UseVisualStyleBackColor = true;
@@ -851,24 +856,24 @@ namespace FaraBotModerator
             // 
             this.FixedTimer4DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.FixedTimer4DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.FixedTimer4DateTimePicker.Location = new System.Drawing.Point(98, 86);
+            this.FixedTimer4DateTimePicker.Location = new System.Drawing.Point(98, 93);
             this.FixedTimer4DateTimePicker.Name = "FixedTimer4DateTimePicker";
-            this.FixedTimer4DateTimePicker.Size = new System.Drawing.Size(142, 19);
+            this.FixedTimer4DateTimePicker.Size = new System.Drawing.Size(142, 20);
             this.FixedTimer4DateTimePicker.TabIndex = 9;
             this.FixedTimer4DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
             // 
             // FixedTimer3TextBox
             // 
-            this.FixedTimer3TextBox.Location = new System.Drawing.Point(246, 63);
+            this.FixedTimer3TextBox.Location = new System.Drawing.Point(246, 68);
             this.FixedTimer3TextBox.Name = "FixedTimer3TextBox";
-            this.FixedTimer3TextBox.Size = new System.Drawing.Size(490, 19);
+            this.FixedTimer3TextBox.Size = new System.Drawing.Size(490, 20);
             this.FixedTimer3TextBox.TabIndex = 8;
             // 
             // FixedTimer3CheckBox
             // 
-            this.FixedTimer3CheckBox.Location = new System.Drawing.Point(6, 63);
+            this.FixedTimer3CheckBox.Location = new System.Drawing.Point(6, 68);
             this.FixedTimer3CheckBox.Name = "FixedTimer3CheckBox";
-            this.FixedTimer3CheckBox.Size = new System.Drawing.Size(86, 18);
+            this.FixedTimer3CheckBox.Size = new System.Drawing.Size(86, 20);
             this.FixedTimer3CheckBox.TabIndex = 7;
             this.FixedTimer3CheckBox.Text = "FixedTimer3";
             this.FixedTimer3CheckBox.UseVisualStyleBackColor = true;
@@ -877,24 +882,24 @@ namespace FaraBotModerator
             // 
             this.FixedTimer3DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.FixedTimer3DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.FixedTimer3DateTimePicker.Location = new System.Drawing.Point(98, 63);
+            this.FixedTimer3DateTimePicker.Location = new System.Drawing.Point(98, 68);
             this.FixedTimer3DateTimePicker.Name = "FixedTimer3DateTimePicker";
-            this.FixedTimer3DateTimePicker.Size = new System.Drawing.Size(142, 19);
+            this.FixedTimer3DateTimePicker.Size = new System.Drawing.Size(142, 20);
             this.FixedTimer3DateTimePicker.TabIndex = 6;
             this.FixedTimer3DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
             // 
             // FixedTimer2TextBox
             // 
-            this.FixedTimer2TextBox.Location = new System.Drawing.Point(246, 40);
+            this.FixedTimer2TextBox.Location = new System.Drawing.Point(246, 43);
             this.FixedTimer2TextBox.Name = "FixedTimer2TextBox";
-            this.FixedTimer2TextBox.Size = new System.Drawing.Size(490, 19);
+            this.FixedTimer2TextBox.Size = new System.Drawing.Size(490, 20);
             this.FixedTimer2TextBox.TabIndex = 5;
             // 
             // FixedTimer2CheckBox
             // 
-            this.FixedTimer2CheckBox.Location = new System.Drawing.Point(6, 40);
+            this.FixedTimer2CheckBox.Location = new System.Drawing.Point(6, 43);
             this.FixedTimer2CheckBox.Name = "FixedTimer2CheckBox";
-            this.FixedTimer2CheckBox.Size = new System.Drawing.Size(86, 18);
+            this.FixedTimer2CheckBox.Size = new System.Drawing.Size(86, 20);
             this.FixedTimer2CheckBox.TabIndex = 4;
             this.FixedTimer2CheckBox.Text = "FixedTimer2";
             this.FixedTimer2CheckBox.UseVisualStyleBackColor = true;
@@ -903,24 +908,24 @@ namespace FaraBotModerator
             // 
             this.FixedTimer2DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.FixedTimer2DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.FixedTimer2DateTimePicker.Location = new System.Drawing.Point(98, 40);
+            this.FixedTimer2DateTimePicker.Location = new System.Drawing.Point(98, 43);
             this.FixedTimer2DateTimePicker.Name = "FixedTimer2DateTimePicker";
-            this.FixedTimer2DateTimePicker.Size = new System.Drawing.Size(142, 19);
+            this.FixedTimer2DateTimePicker.Size = new System.Drawing.Size(142, 20);
             this.FixedTimer2DateTimePicker.TabIndex = 3;
             this.FixedTimer2DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
             // 
             // FixedTimer1TextBox
             // 
-            this.FixedTimer1TextBox.Location = new System.Drawing.Point(246, 17);
+            this.FixedTimer1TextBox.Location = new System.Drawing.Point(246, 18);
             this.FixedTimer1TextBox.Name = "FixedTimer1TextBox";
-            this.FixedTimer1TextBox.Size = new System.Drawing.Size(490, 19);
+            this.FixedTimer1TextBox.Size = new System.Drawing.Size(490, 20);
             this.FixedTimer1TextBox.TabIndex = 2;
             // 
             // FixedTimer1CheckBox
             // 
-            this.FixedTimer1CheckBox.Location = new System.Drawing.Point(6, 18);
+            this.FixedTimer1CheckBox.Location = new System.Drawing.Point(6, 20);
             this.FixedTimer1CheckBox.Name = "FixedTimer1CheckBox";
-            this.FixedTimer1CheckBox.Size = new System.Drawing.Size(86, 18);
+            this.FixedTimer1CheckBox.Size = new System.Drawing.Size(86, 20);
             this.FixedTimer1CheckBox.TabIndex = 1;
             this.FixedTimer1CheckBox.Text = "FixedTimer1";
             this.FixedTimer1CheckBox.UseVisualStyleBackColor = true;
@@ -929,9 +934,9 @@ namespace FaraBotModerator
             // 
             this.FixedTimer1DateTimePicker.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.FixedTimer1DateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.FixedTimer1DateTimePicker.Location = new System.Drawing.Point(98, 17);
+            this.FixedTimer1DateTimePicker.Location = new System.Drawing.Point(98, 18);
             this.FixedTimer1DateTimePicker.Name = "FixedTimer1DateTimePicker";
-            this.FixedTimer1DateTimePicker.Size = new System.Drawing.Size(142, 19);
+            this.FixedTimer1DateTimePicker.Size = new System.Drawing.Size(142, 20);
             this.FixedTimer1DateTimePicker.TabIndex = 0;
             this.FixedTimer1DateTimePicker.Value = new System.DateTime(2023, 1, 1, 0, 0, 0, 0);
             // 
@@ -959,207 +964,267 @@ namespace FaraBotModerator
             this.CycleNotificationGroupBox.Controls.Add(this.Timer1Label);
             this.CycleNotificationGroupBox.Location = new System.Drawing.Point(6, 3);
             this.CycleNotificationGroupBox.Name = "CycleNotificationGroupBox";
-            this.CycleNotificationGroupBox.Size = new System.Drawing.Size(742, 134);
+            this.CycleNotificationGroupBox.Size = new System.Drawing.Size(742, 145);
             this.CycleNotificationGroupBox.TabIndex = 0;
             this.CycleNotificationGroupBox.TabStop = false;
             this.CycleNotificationGroupBox.Text = "Cycle Notifications";
             // 
             // checkBox1
             // 
-            this.checkBox1.Location = new System.Drawing.Point(6, 109);
+            this.checkBox1.Location = new System.Drawing.Point(6, 118);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(62, 18);
+            this.checkBox1.Size = new System.Drawing.Size(62, 20);
             this.checkBox1.TabIndex = 16;
             this.checkBox1.Text = "Timer5";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(246, 109);
+            this.textBox2.Location = new System.Drawing.Point(246, 118);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(490, 19);
+            this.textBox2.Size = new System.Drawing.Size(490, 20);
             this.textBox2.TabIndex = 19;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(161, 109);
+            this.label1.Location = new System.Drawing.Point(161, 118);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 18);
+            this.label1.Size = new System.Drawing.Size(79, 20);
             this.label1.TabIndex = 18;
             this.label1.Text = "seconds/times";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.numericUpDown1.Location = new System.Drawing.Point(98, 109);
-            this.numericUpDown1.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.numericUpDown1.Increment = new decimal(new int[]
+            {
+                5, 0, 0, 0
+            });
+            this.numericUpDown1.Location = new System.Drawing.Point(98, 118);
+            this.numericUpDown1.Maximum = new decimal(new int[]
+            {
+                120, 0, 0, 0
+            });
+            this.numericUpDown1.Minimum = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(57, 19);
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown1.TabIndex = 17;
             this.numericUpDown1.Tag = "";
             this.numericUpDown1.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.numericUpDown1.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.numericUpDown1.Value = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             // 
             // Timer4CheckBox
             // 
-            this.Timer4CheckBox.Location = new System.Drawing.Point(6, 86);
+            this.Timer4CheckBox.Location = new System.Drawing.Point(6, 93);
             this.Timer4CheckBox.Name = "Timer4CheckBox";
-            this.Timer4CheckBox.Size = new System.Drawing.Size(62, 18);
+            this.Timer4CheckBox.Size = new System.Drawing.Size(62, 20);
             this.Timer4CheckBox.TabIndex = 12;
             this.Timer4CheckBox.Text = "Timer4";
             this.Timer4CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer4TextBox
             // 
-            this.Timer4TextBox.Location = new System.Drawing.Point(246, 86);
+            this.Timer4TextBox.Location = new System.Drawing.Point(246, 93);
             this.Timer4TextBox.Name = "Timer4TextBox";
-            this.Timer4TextBox.Size = new System.Drawing.Size(490, 19);
+            this.Timer4TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer4TextBox.TabIndex = 15;
             // 
             // Timer4Label
             // 
-            this.Timer4Label.Location = new System.Drawing.Point(161, 86);
+            this.Timer4Label.Location = new System.Drawing.Point(161, 93);
             this.Timer4Label.Name = "Timer4Label";
-            this.Timer4Label.Size = new System.Drawing.Size(79, 18);
+            this.Timer4Label.Size = new System.Drawing.Size(79, 20);
             this.Timer4Label.TabIndex = 14;
             this.Timer4Label.Text = "seconds/times";
             this.Timer4Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Timer4NumericUpDown
             // 
-            this.Timer4NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer4NumericUpDown.Location = new System.Drawing.Point(98, 86);
-            this.Timer4NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.Timer4NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer4NumericUpDown.Increment = new decimal(new int[]
+            {
+                5, 0, 0, 0
+            });
+            this.Timer4NumericUpDown.Location = new System.Drawing.Point(98, 93);
+            this.Timer4NumericUpDown.Maximum = new decimal(new int[]
+            {
+                120, 0, 0, 0
+            });
+            this.Timer4NumericUpDown.Minimum = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             this.Timer4NumericUpDown.Name = "Timer4NumericUpDown";
-            this.Timer4NumericUpDown.Size = new System.Drawing.Size(57, 19);
+            this.Timer4NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer4NumericUpDown.TabIndex = 13;
             this.Timer4NumericUpDown.Tag = "";
             this.Timer4NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.Timer4NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer4NumericUpDown.Value = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             // 
             // Timer3CheckBox
             // 
-            this.Timer3CheckBox.Location = new System.Drawing.Point(6, 63);
+            this.Timer3CheckBox.Location = new System.Drawing.Point(6, 68);
             this.Timer3CheckBox.Name = "Timer3CheckBox";
-            this.Timer3CheckBox.Size = new System.Drawing.Size(62, 18);
+            this.Timer3CheckBox.Size = new System.Drawing.Size(62, 20);
             this.Timer3CheckBox.TabIndex = 8;
             this.Timer3CheckBox.Text = "Timer3";
             this.Timer3CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer3TextBox
             // 
-            this.Timer3TextBox.Location = new System.Drawing.Point(246, 63);
+            this.Timer3TextBox.Location = new System.Drawing.Point(246, 68);
             this.Timer3TextBox.Name = "Timer3TextBox";
-            this.Timer3TextBox.Size = new System.Drawing.Size(490, 19);
+            this.Timer3TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer3TextBox.TabIndex = 11;
             // 
             // Timer3Label
             // 
-            this.Timer3Label.Location = new System.Drawing.Point(161, 63);
+            this.Timer3Label.Location = new System.Drawing.Point(161, 68);
             this.Timer3Label.Name = "Timer3Label";
-            this.Timer3Label.Size = new System.Drawing.Size(79, 18);
+            this.Timer3Label.Size = new System.Drawing.Size(79, 20);
             this.Timer3Label.TabIndex = 10;
             this.Timer3Label.Text = "seconds/times";
             this.Timer3Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Timer3NumericUpDown
             // 
-            this.Timer3NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer3NumericUpDown.Location = new System.Drawing.Point(98, 63);
-            this.Timer3NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.Timer3NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer3NumericUpDown.Increment = new decimal(new int[]
+            {
+                5, 0, 0, 0
+            });
+            this.Timer3NumericUpDown.Location = new System.Drawing.Point(98, 68);
+            this.Timer3NumericUpDown.Maximum = new decimal(new int[]
+            {
+                120, 0, 0, 0
+            });
+            this.Timer3NumericUpDown.Minimum = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             this.Timer3NumericUpDown.Name = "Timer3NumericUpDown";
-            this.Timer3NumericUpDown.Size = new System.Drawing.Size(57, 19);
+            this.Timer3NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer3NumericUpDown.TabIndex = 9;
             this.Timer3NumericUpDown.Tag = "";
             this.Timer3NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.Timer3NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer3NumericUpDown.Value = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             // 
             // Timer2CheckBox
             // 
-            this.Timer2CheckBox.Location = new System.Drawing.Point(6, 40);
+            this.Timer2CheckBox.Location = new System.Drawing.Point(6, 43);
             this.Timer2CheckBox.Name = "Timer2CheckBox";
-            this.Timer2CheckBox.Size = new System.Drawing.Size(62, 18);
+            this.Timer2CheckBox.Size = new System.Drawing.Size(62, 20);
             this.Timer2CheckBox.TabIndex = 4;
             this.Timer2CheckBox.Text = "Timer2";
             this.Timer2CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer1NumericUpDown
             // 
-            this.Timer1NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer1NumericUpDown.Location = new System.Drawing.Point(98, 17);
-            this.Timer1NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.Timer1NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer1NumericUpDown.Increment = new decimal(new int[]
+            {
+                5, 0, 0, 0
+            });
+            this.Timer1NumericUpDown.Location = new System.Drawing.Point(98, 18);
+            this.Timer1NumericUpDown.Maximum = new decimal(new int[]
+            {
+                120, 0, 0, 0
+            });
+            this.Timer1NumericUpDown.Minimum = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             this.Timer1NumericUpDown.Name = "Timer1NumericUpDown";
-            this.Timer1NumericUpDown.Size = new System.Drawing.Size(57, 19);
+            this.Timer1NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer1NumericUpDown.TabIndex = 1;
             this.Timer1NumericUpDown.Tag = "";
             this.Timer1NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.Timer1NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer1NumericUpDown.Value = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             // 
             // Timer2NumericUpDown
             // 
-            this.Timer2NumericUpDown.Increment = new decimal(new int[] {5, 0, 0, 0});
-            this.Timer2NumericUpDown.Location = new System.Drawing.Point(98, 40);
-            this.Timer2NumericUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.Timer2NumericUpDown.Minimum = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer2NumericUpDown.Increment = new decimal(new int[]
+            {
+                5, 0, 0, 0
+            });
+            this.Timer2NumericUpDown.Location = new System.Drawing.Point(98, 43);
+            this.Timer2NumericUpDown.Maximum = new decimal(new int[]
+            {
+                120, 0, 0, 0
+            });
+            this.Timer2NumericUpDown.Minimum = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             this.Timer2NumericUpDown.Name = "Timer2NumericUpDown";
-            this.Timer2NumericUpDown.Size = new System.Drawing.Size(57, 19);
+            this.Timer2NumericUpDown.Size = new System.Drawing.Size(57, 20);
             this.Timer2NumericUpDown.TabIndex = 5;
             this.Timer2NumericUpDown.Tag = "";
             this.Timer2NumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
-            this.Timer2NumericUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.Timer2NumericUpDown.Value = new decimal(new int[]
+            {
+                15, 0, 0, 0
+            });
             // 
             // Timer2TextBox
             // 
-            this.Timer2TextBox.Location = new System.Drawing.Point(246, 40);
+            this.Timer2TextBox.Location = new System.Drawing.Point(246, 43);
             this.Timer2TextBox.Name = "Timer2TextBox";
-            this.Timer2TextBox.Size = new System.Drawing.Size(490, 19);
+            this.Timer2TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer2TextBox.TabIndex = 7;
             // 
             // Timer2Label
             // 
-            this.Timer2Label.Location = new System.Drawing.Point(161, 40);
+            this.Timer2Label.Location = new System.Drawing.Point(161, 43);
             this.Timer2Label.Name = "Timer2Label";
-            this.Timer2Label.Size = new System.Drawing.Size(79, 18);
+            this.Timer2Label.Size = new System.Drawing.Size(79, 20);
             this.Timer2Label.TabIndex = 6;
             this.Timer2Label.Text = "seconds/times";
             this.Timer2Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Timer1CheckBox
             // 
-            this.Timer1CheckBox.Location = new System.Drawing.Point(6, 17);
+            this.Timer1CheckBox.Location = new System.Drawing.Point(6, 18);
             this.Timer1CheckBox.Name = "Timer1CheckBox";
-            this.Timer1CheckBox.Size = new System.Drawing.Size(62, 18);
+            this.Timer1CheckBox.Size = new System.Drawing.Size(62, 20);
             this.Timer1CheckBox.TabIndex = 0;
             this.Timer1CheckBox.Text = "Timer1";
             this.Timer1CheckBox.UseVisualStyleBackColor = true;
             // 
             // Timer1TextBox
             // 
-            this.Timer1TextBox.Location = new System.Drawing.Point(246, 17);
+            this.Timer1TextBox.Location = new System.Drawing.Point(246, 18);
             this.Timer1TextBox.Name = "Timer1TextBox";
-            this.Timer1TextBox.Size = new System.Drawing.Size(490, 19);
+            this.Timer1TextBox.Size = new System.Drawing.Size(490, 20);
             this.Timer1TextBox.TabIndex = 3;
             // 
             // Timer1Label
             // 
-            this.Timer1Label.Location = new System.Drawing.Point(161, 17);
+            this.Timer1Label.Location = new System.Drawing.Point(161, 18);
             this.Timer1Label.Name = "Timer1Label";
-            this.Timer1Label.Size = new System.Drawing.Size(79, 18);
+            this.Timer1Label.Size = new System.Drawing.Size(79, 20);
             this.Timer1Label.TabIndex = 2;
             this.Timer1Label.Text = "seconds/times";
             this.Timer1Label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FaraBotModeratorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(800, 673);
+            this.ClientSize = new System.Drawing.Size(800, 729);
             this.Controls.Add(this.MenuTab);
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(15, 15);
