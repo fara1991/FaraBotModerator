@@ -254,7 +254,7 @@ namespace FaraBotModerator.Controller
                     return;
                 }
 
-                var targetLanguage = !IsJapaneseLanguage(sourceMessage) ? LanguageCode.Japanese : LanguageCode.English;
+                var targetLanguage = !IsJapaneseLanguage(sourceMessage) ? LanguageCode.Japanese : LanguageCode.EnglishAmerican;
                 var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
                 var sourceLanguage = text.DetectedSourceLanguageCode;
                 var translateMessage = text.Text;
