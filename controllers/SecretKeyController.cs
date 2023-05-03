@@ -1,40 +1,63 @@
 ﻿using System.IO;
 using System.Text.Json;
-using FaraBotModerator.Model;
 
-namespace FaraBotModerator.Controller
+namespace FaraBotModerator
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class SecretKeyController
     {
         private const string SecretFile = "secrets.json";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static SecretKeyModel LoadKeys()
         {
-            SecretKeyModel secretKeys;
-            if (!File.Exists(SecretFile))
-            {
-                CreateKeys();
-            }
+            SecretKeyModel? secretKeys;
+            if (!File.Exists(SecretFile)) CreateKeys();
 
-            using (var file = File.OpenText(SecretFile))
+            try
             {
-                var jsonData = file.ReadToEnd();
-                secretKeys = JsonSerializer.Deserialize<SecretKeyModel>(jsonData);
+                using (var file = File.OpenText(SecretFile))
+                {
+                    var jsonData = file.ReadToEnd();
+                    secretKeys = JsonSerializer.Deserialize<SecretKeyModel>(jsonData);
+                }
+                if (secretKeys is null)
+                {
+                    var message = "Secret Keys don't initialize.";
+                    LogController.OutputLog(message);
+                    throw new FileFormatException(message);
+                }
+            }
+            catch
+            {
+                throw;
             }
 
             return secretKeys;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="secretKeys"></param>
         public static void SaveKeys(SecretKeyModel secretKeys)
         {
             using (var writer = new StreamWriter(SecretFile))
             {
-                var option = new JsonSerializerOptions {WriteIndented = true};
+                var option = new JsonSerializerOptions { WriteIndented = true };
                 var jsonData = JsonSerializer.Serialize(secretKeys, option);
                 writer.WriteLine(jsonData);
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static void CreateKeys()
         {
             var secretKeys = new SecretKeyModel
@@ -52,16 +75,11 @@ namespace FaraBotModerator.Controller
                         Secret = ""
                     }
                 },
-                Twitter = new TwitterKeyModel
-                {
-                    ApiKey = "",
-                    ApiSecret = ""
-                },
                 DeepL = new DeepLKeyModel
                 {
                     ApiKey = "",
                 },
-                BouyomiChan = new BouyomiChanKeyModel
+                BouyomiChan = new BouyomiChanModel
                 {
                     Checked = true
                 },
@@ -102,7 +120,7 @@ namespace FaraBotModerator.Controller
 
             using (var writer = new StreamWriter(SecretFile))
             {
-                var option = new JsonSerializerOptions {WriteIndented = true};
+                var option = new JsonSerializerOptions { WriteIndented = true };
                 var jsonData = JsonSerializer.Serialize(secretKeys, option);
                 writer.WriteLine(jsonData);
             }
