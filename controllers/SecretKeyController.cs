@@ -1,7 +1,11 @@
 ﻿using System.IO;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
+using FaraBotModerator.models;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.controllers
 {
     /// <summary>
     /// 
@@ -47,12 +51,15 @@ namespace FaraBotModerator
         /// <param name="secretKeys"></param>
         public static void SaveKeys(SecretKeyModel secretKeys)
         {
-            using (var writer = new StreamWriter(SecretFile))
+            using var writer = new StreamWriter(SecretFile, false, Encoding.UTF8);
+            var options = new JsonSerializerOptions
             {
-                var option = new JsonSerializerOptions { WriteIndented = true };
-                var jsonData = JsonSerializer.Serialize(secretKeys, option);
-                writer.WriteLine(jsonData);
-            }
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                WriteIndented = true
+            };
+            var jsonData = JsonSerializer.Serialize(secretKeys, options);
+            // \003Cだけ変換できないので手動で変換
+            writer.WriteLine(jsonData.Replace("\\u003C", "<"));
         }
 
         /// <summary>
@@ -118,12 +125,7 @@ namespace FaraBotModerator
                 }
             };
 
-            using (var writer = new StreamWriter(SecretFile))
-            {
-                var option = new JsonSerializerOptions { WriteIndented = true };
-                var jsonData = JsonSerializer.Serialize(secretKeys, option);
-                writer.WriteLine(jsonData);
-            }
+            SaveKeys(secretKeys);
         }
     }
 }

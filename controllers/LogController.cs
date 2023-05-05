@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.controllers
 {
     /// <summary>
     /// 
