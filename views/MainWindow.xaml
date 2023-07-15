@@ -66,8 +66,10 @@
             <Canvas x:Name="ReactionEventSettingsCanvas" Background="#FFE5E5E5">
                 <Grid x:Name="FollowGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10" Canvas.Top="10" VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="FollowEventCheckBox" Content="Follow" Height="30" Width="117" RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBox x:Name="FollowEventTextBox" TextWrapping="Wrap" Width="833" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{}{followerName}, thanks follow. Channel URL: {followerChannelUrl}"/>
-                    <Button x:Name="FollowEventTestButton" Content="Test" Width="105" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="960,0,0,0"/>
+                    <TextBox x:Name="FollowEventTextBox" TextWrapping="Wrap" Width="569" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{}{followerName}, thanks follow. Channel URL: {followerChannelUrl}" Margin="122,0,0,0"/>
+                    <TextBox x:Name="FollowWebSocketTextBox" TextWrapping="Wrap" Width="215" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="696,0,0,0" Text="filePath"/>
+                    <Button x:Name="FollowWebSocketButton" Content="Select" Width="72" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="916,0,0,0"/>
+                    <Button x:Name="FollowEventTestButton" Content="Test" Width="72" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="993,0,0,0"/>
                 </Grid>
                 <Grid x:Name="RaidGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10" Canvas.Top="45" VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="RaidEventCheckBox" Content="Raid" Height="30" Width="117" RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center"/>
