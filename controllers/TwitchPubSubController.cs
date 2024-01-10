@@ -2,7 +2,7 @@
 using TwitchLib.PubSub;
 using TwitchLib.PubSub.Events;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.controllers
 {
     /// <summary>
     /// Twitch PubSub経由の操作をするController

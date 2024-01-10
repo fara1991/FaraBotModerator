@@ -1,5 +1,5 @@
-﻿using FaraBotModerator.Properties;
-using System;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -11,29 +11,31 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
+using FaraBotModerator.controllers;
+using FaraBotModerator.models;
+using FaraBotModerator.Properties;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         /// <summary>
         /// 
         /// </summary>
-        public TwitchClientController? _twitchClientController;
+        private TwitchClientController? _twitchClientController;
 
         /// <summary>
         /// 
         /// </summary>
-        public TwitchApiController? _twitchApiController;
+        private TwitchApiController? _twitchApiController;
 
         /// <summary>
         /// 
         /// </summary>
-        public TwitchPubSubController? _twitchPubSubController;
+        private TwitchPubSubController? _twitchPubSubController;
 
         /// <summary>
         /// 
@@ -48,80 +50,78 @@ namespace FaraBotModerator
             InitializeComponent();
             InitializeSecretValue();
             InitializeChatWindow();
-            var timerTask = StartTimer();
-            var webServerTask = StartWebServer();
-            var monitoringTask = StartMonitoring();
+            // Task
+            StartTimer();
+            StartWebServer();
+            StartMonitoring();
         }
 
         private void InitializeSecretValue()
         {
             var secretKeys = SecretKeyController.LoadKeys();
-            if (secretKeys != null)
-            {
-                TwitchClientUserNameTextBox.Text = secretKeys.Twitch.Client.UserName;
-                TwitchClientAccessTokenPasswordBox.Password = secretKeys.Twitch.Client.AccessToken;
+            TwitchClientUserNameTextBox.Text = secretKeys.Twitch.Client.UserName;
+            TwitchClientAccessTokenPasswordBox.Password = secretKeys.Twitch.Client.AccessToken;
 
-                TwitchApiClientIdPasswordBox.Password = secretKeys.Twitch.Api.ClientId;
-                TwitchApiClientSecretPasswordBox.Password = secretKeys.Twitch.Api.Secret;
+            TwitchApiClientIdPasswordBox.Password = secretKeys.Twitch.Api.ClientId;
+            TwitchApiClientSecretPasswordBox.Password = secretKeys.Twitch.Api.Secret;
 
-                DeepLApiKeyPasswordBox.Password = secretKeys.DeepL.ApiKey;
+            DeepLApiKeyPasswordBox.Password = secretKeys.DeepL.ApiKey;
 
-                BouyomiChanConnectCheckBox.IsChecked = secretKeys.BouyomiChan.Checked;
+            BouyomiChanConnectCheckBox.IsChecked = secretKeys.BouyomiChan.Checked;
 
-                FollowEventCheckBox.IsChecked = secretKeys.Event.Follow.Checked;
-                FollowEventTextBox.Text = secretKeys.Event.Follow.Message;
+            FollowEventCheckBox.IsChecked = secretKeys.Event.Follow.Checked;
+            FollowEventTextBox.Text = secretKeys.Event.Follow.Message;
 
-                RaidEventCheckBox.IsChecked = secretKeys.Event.Raid.Checked;
-                RaidEventTextBox.Text = secretKeys.Event.Raid.Message;
+            RaidEventCheckBox.IsChecked = secretKeys.Event.Raid.Checked;
+            RaidEventTextBox.Text = secretKeys.Event.Raid.Message;
 
-                SubscriptionEventCheckBox.IsChecked = secretKeys.Event.Subscription.Checked;
-                SubscriptionEventTextBox.Text = secretKeys.Event.Subscription.Message;
+            SubscriptionEventCheckBox.IsChecked = secretKeys.Event.Subscription.Checked;
+            SubscriptionEventTextBox.Text = secretKeys.Event.Subscription.Message;
 
-                BitsEventCheckBox.IsChecked = secretKeys.Event.Bits.Checked;
-                BitsEventTextBox.Text = secretKeys.Event.Bits.Message;
+            BitsEventCheckBox.IsChecked = secretKeys.Event.Bits.Checked;
+            BitsEventTextBox.Text = secretKeys.Event.Bits.Message;
 
-                GiftEventCheckBox.IsChecked = secretKeys.Event.Gift.Checked;
-                GiftEventTextBox.Text = secretKeys.Event.Gift.Message;
+            GiftEventCheckBox.IsChecked = secretKeys.Event.Gift.Checked;
+            GiftEventTextBox.Text = secretKeys.Event.Gift.Message;
 
-                ChannelPointEventCheckBox.IsChecked = secretKeys.Event.ChannelPoint.Checked;
-                ChannelPointEventTextBox.Text = secretKeys.Event.ChannelPoint.Message;
+            ChannelPointEventCheckBox.IsChecked = secretKeys.Event.ChannelPoint.Checked;
+            ChannelPointEventTextBox.Text = secretKeys.Event.ChannelPoint.Message;
 
-                CycleTimer1CheckBox.IsChecked = secretKeys.CycleMessage.Timer1.Checked;
-                CycleTimer1Slider.Value = secretKeys.CycleMessage.Timer1.Interval;
-                CycleTimer1TextBox.Text = secretKeys.CycleMessage.Timer1.Message;
+            CycleTimer1CheckBox.IsChecked = secretKeys.CycleMessage.Timer1.Checked;
+            CycleTimer1Slider.Value = secretKeys.CycleMessage.Timer1.Interval;
+            CycleTimer1TextBox.Text = secretKeys.CycleMessage.Timer1.Message;
 
-                CycleTimer2CheckBox.IsChecked = secretKeys.CycleMessage.Timer2.Checked;
-                CycleTimer2Slider.Value = secretKeys.CycleMessage.Timer2.Interval;
-                CycleTimer2TextBox.Text = secretKeys.CycleMessage.Timer2.Message;
+            CycleTimer2CheckBox.IsChecked = secretKeys.CycleMessage.Timer2.Checked;
+            CycleTimer2Slider.Value = secretKeys.CycleMessage.Timer2.Interval;
+            CycleTimer2TextBox.Text = secretKeys.CycleMessage.Timer2.Message;
 
-                CycleTimer3CheckBox.IsChecked = secretKeys.CycleMessage.Timer3.Checked;
-                CycleTimer3Slider.Value = secretKeys.CycleMessage.Timer3.Interval;
-                CycleTimer3TextBox.Text = secretKeys.CycleMessage.Timer3.Message;
+            CycleTimer3CheckBox.IsChecked = secretKeys.CycleMessage.Timer3.Checked;
+            CycleTimer3Slider.Value = secretKeys.CycleMessage.Timer3.Interval;
+            CycleTimer3TextBox.Text = secretKeys.CycleMessage.Timer3.Message;
 
-                CycleTimer4CheckBox.IsChecked = secretKeys.CycleMessage.Timer4.Checked;
-                CycleTimer4Slider.Value = secretKeys.CycleMessage.Timer4.Interval;
-                CycleTimer4TextBox.Text = secretKeys.CycleMessage.Timer4.Message;
+            CycleTimer4CheckBox.IsChecked = secretKeys.CycleMessage.Timer4.Checked;
+            CycleTimer4Slider.Value = secretKeys.CycleMessage.Timer4.Interval;
+            CycleTimer4TextBox.Text = secretKeys.CycleMessage.Timer4.Message;
 
-                FixedTimer1CheckBox.IsChecked = secretKeys.FixedMessage.Timer1.Checked;
-                FixedTimer1DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer1.DatetimeString);
-                FixedTimer1TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer1.DatetimeString);
-                FixedTimer1TextBox.Text = secretKeys.FixedMessage.Timer1.Message;
+            FixedTimer1CheckBox.IsChecked = secretKeys.FixedMessage.Timer1.Checked;
+            FixedTimer1DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer1.DatetimeString);
+            FixedTimer1TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer1.DatetimeString);
+            FixedTimer1TextBox.Text = secretKeys.FixedMessage.Timer1.Message;
 
-                FixedTimer2CheckBox.IsChecked = secretKeys.FixedMessage.Timer2.Checked;
-                FixedTimer2DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer2.DatetimeString);
-                FixedTimer2TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer2.DatetimeString);
-                FixedTimer2TextBox.Text = secretKeys.FixedMessage.Timer2.Message;
+            FixedTimer2CheckBox.IsChecked = secretKeys.FixedMessage.Timer2.Checked;
+            FixedTimer2DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer2.DatetimeString);
+            FixedTimer2TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer2.DatetimeString);
+            FixedTimer2TextBox.Text = secretKeys.FixedMessage.Timer2.Message;
 
-                FixedTimer3CheckBox.IsChecked = secretKeys.FixedMessage.Timer3.Checked;
-                FixedTimer3DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer3.DatetimeString);
-                FixedTimer3TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer3.DatetimeString);
-                FixedTimer3TextBox.Text = secretKeys.FixedMessage.Timer3.Message;
+            FixedTimer3CheckBox.IsChecked = secretKeys.FixedMessage.Timer3.Checked;
+            FixedTimer3DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer3.DatetimeString);
+            FixedTimer3TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer3.DatetimeString);
+            FixedTimer3TextBox.Text = secretKeys.FixedMessage.Timer3.Message;
 
-                FixedTimer4CheckBox.IsChecked = secretKeys.FixedMessage.Timer4.Checked;
-                FixedTimer4DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer4.DatetimeString);
-                FixedTimer4TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer4.DatetimeString);
-                FixedTimer4TextBox.Text = secretKeys.FixedMessage.Timer4.Message;
-            }
+            FixedTimer4CheckBox.IsChecked = secretKeys.FixedMessage.Timer4.Checked;
+            FixedTimer4DatePicker.SelectedDate = DateTime.Parse(secretKeys.FixedMessage.Timer4.DatetimeString);
+            FixedTimer4TimePicker.SelectedTime = DateTime.Parse(secretKeys.FixedMessage.Timer4.DatetimeString);
+            FixedTimer4TextBox.Text = secretKeys.FixedMessage.Timer4.Message;
         }
 
         /// <summary>
@@ -181,25 +181,25 @@ namespace FaraBotModerator
                 }
 
                 // FixedTimer
-                if (FixedTimer1CheckBox.IsChecked ?? false && !string.IsNullOrEmpty(FixedTimer1TextBox.Text))
+                if (FixedTimer1CheckBox.IsChecked ?? false)
                 {
                     var date = FixedTimer1DatePicker.SelectedDate;
                     var time = FixedTimer1TimePicker.SelectedTime;
                     FixedTimerMessage(date, time, FixedTimer1TextBox.Text);
                 }
-                if (FixedTimer2CheckBox.IsChecked ?? false && !string.IsNullOrEmpty(FixedTimer2TextBox.Text))
+                if (FixedTimer2CheckBox.IsChecked ?? false)
                 {
                     var date = FixedTimer2DatePicker.SelectedDate;
                     var time = FixedTimer2TimePicker.SelectedTime;
                     FixedTimerMessage(date, time, FixedTimer2TextBox.Text);
                 }
-                if (FixedTimer3CheckBox.IsChecked ?? false && !string.IsNullOrEmpty(FixedTimer3TextBox.Text))
+                if (FixedTimer3CheckBox.IsChecked ?? false)
                 {
                     var date = FixedTimer3DatePicker.SelectedDate;
                     var time = FixedTimer3TimePicker.SelectedTime;
                     FixedTimerMessage(date, time, FixedTimer3TextBox.Text);
                 }
-                if (FixedTimer4CheckBox.IsChecked ?? false && !string.IsNullOrEmpty(FixedTimer4TextBox.Text))
+                if (FixedTimer4CheckBox.IsChecked ?? false)
                 {
                     var date = FixedTimer4DatePicker.SelectedDate;
                     var time = FixedTimer4TimePicker.SelectedTime;
@@ -228,11 +228,12 @@ namespace FaraBotModerator
         /// <returns></returns>
         private async Task StartWebServer()
         {
-            var accessTokenQuery = new string[] { $"http://localhost:{Settings.Default.Port}", "code=", "scope=", "state=" };
+            var accessTokenQuery = new[] { $"http://localhost:{Settings.Default.Port}", "code=", "scope=", "state=" };
             while (true)
             {
                 await Task.Delay(1);
-                if (FaraBotModeratorWebView.Source is null) continue;
+                if (FaraBotModeratorWebView.Source is null)
+                    continue;
 
                 var url = FaraBotModeratorWebView.Source.ToString();
                 // URL毎に処理を追加
@@ -245,6 +246,33 @@ namespace FaraBotModerator
         /// </summary>
         /// <returns></returns>
         private async Task StartMonitoring()
+        {
+            InitializeDeepLChart();
+
+            while (true)
+            {
+                await Task.Delay(1);
+                // Token期限
+                if (DateTime.Now > Settings.Default.expiresDateTime)
+                {
+                    TwitchApiNotificationCanvas.Visibility = Visibility.Visible;
+                    if (!string.IsNullOrEmpty(Settings.Default.RefreshToken)) await Task.Run(UpdateRefreshToken);
+                }
+                else
+                {
+                    TwitchApiNotificationCanvas.Visibility = Visibility.Hidden;
+                }
+                TwitchApiExpireDateTimeTextBlock.Text = $"Token expiration: {Settings.Default.expiresDateTime}";
+
+                // Button無効
+                TwitchApiAuthorizeButton.IsEnabled = !string.IsNullOrEmpty(TwitchApiClientIdPasswordBox.Password) &&
+                                                     !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password);
+
+                if (_twitchClientController is not null) AddGridViewChatData();
+            }
+        }
+
+        private void InitializeDeepLChart()
         {
             /*
             LiveChartGraph.ChartAreas.Clear();
@@ -265,31 +293,8 @@ namespace FaraBotModerator
             LiveChartGraph.Series.Add(series);
             // LiveChartGraph.Series.Add();
             */
-            while (true)
-            {
-                await Task.Delay(1);
-                // Token期限
-                if (DateTime.Now > Settings.Default.expiresDateTime)
-                {
-                    TwitchApiNotificationCanvas.Visibility = Visibility.Visible;
-                    if (!string.IsNullOrEmpty(Settings.Default.RefreshToken)) await Task.Run(UpdateRefreshToken);
-                }
-                else
-                {
-                    TwitchApiNotificationCanvas.Visibility = Visibility.Hidden;
-                }
-                TwitchApiExpireDateTimeTextBlock.Text = $"Token expiration: {Settings.Default.expiresDateTime}";
-
-                // Button無効
-                TwitchApiAuthorizeButton.IsEnabled = (
-                    !string.IsNullOrEmpty(TwitchApiClientIdPasswordBox.Password) &&
-                    !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password)
-                );
-
-                if (_twitchClientController is not null) AddGridViewChatData();
-            }
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -303,12 +308,11 @@ namespace FaraBotModerator
             var beforeScrollBottom = true;
 
             var beforeScrollViewer = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(_chatWindow.TwitchChatDataGrid, 0), 0);
-            if (beforeScrollViewer is ScrollViewer)
+            if (beforeScrollViewer is ScrollViewer viewer)
             {
-                var a = (ScrollViewer) beforeScrollViewer;
-                var offset = a.VerticalOffset;
-                var extent = a.ScrollableHeight;
-                var viewport = a.ViewportHeight;
+                var offset = viewer.VerticalOffset;
+                var extent = viewer.ScrollableHeight;
+                var viewport = viewer.ViewportHeight;
 
                 beforeScrollBottom = offset + viewport >= extent;
             }
@@ -367,29 +371,20 @@ namespace FaraBotModerator
                 $"&code={code}" +
                 "&grant_type=authorization_code" +
                 $"&redirect_uri=http://localhost:{Settings.Default.Port}";
-            try
-            {
-                var response = Task.Run(() => PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")).Result;
-                if (response.responseBody.Contains("Invalid authorization code"))
-                {
-                    var message = "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.";
-                    throw new HttpRequestException(message);
-                }
+            var response = Task.Run(() => PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")).Result;
 
-                var jsonString =
-                    JsonSerializer.Deserialize<TwitchOAuthTokenModel>(response.responseBody, response.option);
-                Settings.Default.AccessToken = jsonString?.AccessToken;
-                Settings.Default.RefreshToken = jsonString?.RefreshToken;
-                if (jsonString?.ExpiresIn != null)
-                {
-                    Settings.Default.expiresDateTime = DateTime.Now.AddSeconds(jsonString.ExpiresIn);
-                }
-                Settings.Default.Save();
-            }
-            catch (Exception ex)
+            // Token取得失敗は何もしない
+            if (response.responseBody.Contains("Invalid authorization code")) return;
+
+            var jsonString =
+                JsonSerializer.Deserialize<TwitchOAuthTokenModel>(response.responseBody, response.option);
+            Settings.Default.AccessToken = jsonString?.AccessToken;
+            Settings.Default.RefreshToken = jsonString?.RefreshToken;
+            if (jsonString?.ExpiresIn != null)
             {
-                LogController.OutputLog(ex.Message);
+                Settings.Default.expiresDateTime = DateTime.Now.AddSeconds(jsonString.ExpiresIn);
             }
+            Settings.Default.Save();
 
             UnlockWindowControl();
         }
@@ -466,19 +461,17 @@ namespace FaraBotModerator
         private async Task<(string responseBody, JsonSerializerOptions option)> PostResponseBodyAsync(string parameter,
             string url)
         {
-            using (var httpClient = new HttpClient())
+            using var httpClient = new HttpClient();
+            var content = new StringContent(parameter, Encoding.Default, "application/x-www-form-urlencoded");
+            var response = await httpClient.PostAsync(url, content);
+
+            var responseBody = response.Content.ReadAsStringAsync().Result;
+            var option = new JsonSerializerOptions
             {
-                var content = new StringContent(parameter, Encoding.Default, "application/x-www-form-urlencoded");
-                var response = await httpClient.PostAsync(url, content);
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
 
-                var responseBody = response.Content.ReadAsStringAsync().Result;
-                var option = new JsonSerializerOptions
-                {
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-                };
-
-                return (responseBody, option);
-            }
+            return (responseBody, option);
         }
 
         /// <summary>
@@ -528,16 +521,16 @@ namespace FaraBotModerator
         /// </summary>
         private void SaveSecretValue()
         {
-            string timer1 =
+            var timer1 =
                 (FixedTimer1DatePicker.SelectedDate is not null ? FixedTimer1DatePicker.SelectedDate.Value.ToShortDateString() : "2023/1/1") + " " +
                 (FixedTimer1TimePicker.SelectedTime is not null ? FixedTimer1TimePicker.SelectedTime.Value.ToLongTimeString() : "00:00:00");
-            string timer2 =
+            var timer2 =
                 (FixedTimer2DatePicker.SelectedDate is not null ? FixedTimer2DatePicker.SelectedDate.Value.ToShortDateString() : "2023/1/1") + " " +
                 (FixedTimer2TimePicker.SelectedTime is not null ? FixedTimer2TimePicker.SelectedTime.Value.ToLongTimeString() : "00:00:00");
-            string timer3 =
+            var timer3 =
                 (FixedTimer3DatePicker.SelectedDate is not null ? FixedTimer3DatePicker.SelectedDate.Value.ToShortDateString() : "2023/1/1") + " " +
                 (FixedTimer3TimePicker.SelectedTime is not null ? FixedTimer3TimePicker.SelectedTime.Value.ToLongTimeString() : "00:00:00");
-            string timer4 =
+            var timer4 =
                 (FixedTimer4DatePicker.SelectedDate is not null ? FixedTimer4DatePicker.SelectedDate.Value.ToShortDateString() : "2023/1/1") + " " +
                 (FixedTimer4TimePicker.SelectedTime is not null ? FixedTimer4TimePicker.SelectedTime.Value.ToLongTimeString() : "00:00:00");
 
@@ -822,12 +815,12 @@ namespace FaraBotModerator
 
         private void CycleTimerSlider_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
         {
-            ((Slider) sender).ToolTip = ((Slider) sender).Value.ToString();
+            ((Slider) sender).ToolTip = ((Slider) sender).Value.ToString(CultureInfo.CurrentCulture);
         }
 
         private void CycleTimerSlider_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {
-            ((Slider) sender).ToolTip = ((Slider) sender).Value.ToString();
+            ((Slider) sender).ToolTip = ((Slider) sender).Value.ToString(CultureInfo.CurrentCulture);
         }
     }
 }

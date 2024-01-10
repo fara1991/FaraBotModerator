@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.controllers
 {
 
     /// <summary>
@@ -14,18 +14,18 @@ namespace FaraBotModerator
         /// </summary>
         /// <param name="talkName">喋らせたい名前</param>
         /// <param name="talkText">喋らせたい文章</param>
-        public void AddTalkTask(string talkName, string talkText)
+        public void AddTalkTask(string talkName, string talkText, bool bouyomiChanCall)
         {
-            CreateTalk($"{talkName}さん {talkText}");
+            if (bouyomiChanCall) CreateTalk($"{talkName}さん {talkText}");
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="talkText"></param>
-        public void AddEventTalkTask(string talkText)
+        public void AddEventTalkTask(string talkText, bool bouyomiChanCall)
         {
-            CreateTalk(talkText);
+            if (bouyomiChanCall) CreateTalk(talkText);
         }
 
         private void CreateTalk(string talkText)

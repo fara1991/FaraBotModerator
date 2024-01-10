@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-using System.Threading;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.models
 {
     /// <summary>
     /// 
@@ -24,6 +20,17 @@ namespace FaraBotModerator
     /// </summary>
     public class BeatSaberChatModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public BeatSaberChatModel(string key, string value)
+        {
+            Key = key;
+            Value = value;
+        }
+
         /// <summary>
         /// 
         /// </summary>

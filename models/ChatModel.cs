@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.models
 {
     /// <summary>
     /// 

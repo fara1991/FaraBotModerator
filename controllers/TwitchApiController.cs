@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FaraBotModerator.models;
 using TwitchLib.Api;
 using TwitchLib.Api.Helix.Models.Users.GetUsers;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.controllers
 {
     /// <summary>
     /// 

@@ -1,10 +1,11 @@
-﻿using DeepL;
-using DeepL.Model;
-using FaraBotModerator.controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DeepL;
+using DeepL.Model;
+using FaraBotModerator.Enum;
+using FaraBotModerator.models;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
@@ -15,7 +16,7 @@ using TwitchLib.Communication.Models;
 using TwitchLib.PubSub.Events;
 using OnLogArgs = TwitchLib.Client.Events.OnLogArgs;
 
-namespace FaraBotModerator
+namespace FaraBotModerator.controllers
 {
     /// <summary>
     /// Twitch Client経由の操作をするController
@@ -26,8 +27,8 @@ namespace FaraBotModerator
         private readonly TwitchClient _twitchClient;
         private readonly TwitchApiController _twitchApiController;
         private readonly string _twitchUserName;
-        private BouyomiChanController _bouyomiChanController = new BouyomiChanController();
-        private Queue<ChatModel> _chatDataQueue = new Queue<ChatModel>();
+        private BouyomiChanController _bouyomiChanController = new();
+        private Queue<ChatModel> _chatDataQueue = new();
         private Translator _deepLTranslator;
         private bool _pubsubFailure = false;
 
@@ -197,8 +198,8 @@ namespace FaraBotModerator
                 .Replace("{followerChannelUrl}", followerChannelUrl);
             SendMessage(followerName, message);
             // 棒読みちゃん用の読み上げの言語設定あってもいいかも
-            _bouyomiChanController.AddEventTalkTask($"{followerName}さんがFollowしました");
-            LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}");
+            _bouyomiChanController.AddEventTalkTask($"{followerName}さんがFollowしました", _secretKeys.BouyomiChan.Checked);
+            LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}", TwitchEventEnum.Follow);
         }
 
         /// <summary>
@@ -213,13 +214,13 @@ namespace FaraBotModerator
             var message = _secretKeys.Event.Raid.Message.Replace("{raiderName}", raiderName)
                 .Replace("{raiderChannelUrl}", raiderChannelUrl);
             SendMessage(raiderName, message);
-            _bouyomiChanController.AddEventTalkTask($"{raiderName}さんにRaidされました");
+            _bouyomiChanController.AddEventTalkTask($"{raiderName}さんにRaidされました", _secretKeys.BouyomiChan.Checked);
             Task.Run(async () =>
             {
-                await Task.Delay(10000);
+                await Task.Delay(100);
                 SendMessage(_twitchUserName, $"/shoutout {raiderName}");
             });
-            LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}");
+            LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}", TwitchEventEnum.Raid);
         }
 
         /// <summary>
@@ -233,8 +234,8 @@ namespace FaraBotModerator
             var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
                 .Replace("{totalSubscriptionMonth}", "1");
             SendMessage(subscriberName, message);
-            _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん新規サブスクありがとうございます");
-            LogController.OutputLog($"<New Subscriber> Name: {subscriberName}");
+            _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん新規サブスクありがとうございます", _secretKeys.BouyomiChan.Checked);
+            LogController.OutputLog($"<New Subscriber> Name: {subscriberName}", TwitchEventEnum.Subscriber);
         }
 
         /// <summary>
@@ -249,8 +250,8 @@ namespace FaraBotModerator
             var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
                 .Replace("{totalSubscriptionMonth}", totalSubscriptionMonth.ToString());
             SendMessage(subscriberName, message);
-            _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん{totalSubscriptionMonth}か月目のサブスクありがとうございます");
-            LogController.OutputLog($"<Subscriber> Name: {subscriberName}, total: {totalSubscriptionMonth} time.");
+            _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん{totalSubscriptionMonth}か月目のサブスクありがとうございます", _secretKeys.BouyomiChan.Checked);
+            LogController.OutputLog($"<Subscriber> Name: {subscriberName}, total: {totalSubscriptionMonth} time.", TwitchEventEnum.Subscriber);
         }
 
         /// <summary>
@@ -267,9 +268,9 @@ namespace FaraBotModerator
                 .Replace("{totalBitsAmount}", totalBitsAmount.ToString())
                 .Replace("{bitsSendUserName}", bitsSendUserName);
             SendMessage(bitsSendUserName, message);
-            _bouyomiChanController.AddEventTalkTask($"{bitsSendUserName}さん{bitsAmount}bitsありがとうございます");
+            _bouyomiChanController.AddEventTalkTask($"{bitsSendUserName}さん{bitsAmount}bitsありがとうございます", _secretKeys.BouyomiChan.Checked);
             LogController.OutputLog(
-                $"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}");
+                $"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}", TwitchEventEnum.Bits);
         }
 
         /// <summary>
@@ -283,8 +284,8 @@ namespace FaraBotModerator
             var url = $"https://twitch.tv/{giftedUserName}";
             var message = _secretKeys.Event.Gift.Message.Replace("{giftedUserName}", giftedUserName);
             SendMessage(giftedUserName, message);
-            _bouyomiChanController.AddEventTalkTask($"{giftedUserName}さんGiftありがとうございます");
-            LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}");
+            _bouyomiChanController.AddEventTalkTask($"{giftedUserName}さんGiftありがとうございます", _secretKeys.BouyomiChan.Checked);
+            LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}", TwitchEventEnum.Gift);
         }
 
         /// <summary>
@@ -301,8 +302,8 @@ namespace FaraBotModerator
                 .Replace("{channelPointTitle}", channelPointTitle)
                 .Replace("{channelPointUserName}", channelPointUserName);
             SendMessage(channelPointUserName, message);
-            _bouyomiChanController.AddEventTalkTask($"{channelPointUserName}さんが{channelPointCost}ChannelPointで{channelPointTitle}を使用しました");
-            LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserName}, Title: {channelPointTitle}");
+            _bouyomiChanController.AddEventTalkTask($"{channelPointUserName}さんが{channelPointCost}ChannelPointで{channelPointTitle}を使用しました", _secretKeys.BouyomiChan.Checked);
+            LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserName}, Title: {channelPointTitle}", TwitchEventEnum.ChannelPoint);
         }
 
         /// <summary>
@@ -332,7 +333,7 @@ namespace FaraBotModerator
             catch (Exception ex)
             {
                 LogController.OutputLog(e.ChatMessage.Message);
-                LogController.OutputLog(ex.Message, true);
+                LogController.OutputLog($"<Error> {ex.Message}");
             }
         }
 
@@ -348,18 +349,18 @@ namespace FaraBotModerator
             // 翻訳済み文字は再翻訳しない
             if (sourceMessage.Contains("[FaraBot]")) return;
 
-            // !bsr のような特殊な文章は翻訳しないで棒読みちゃんだけ読み上げたい
-            var textRegexModel = new TextRegexController(sourceMessage);
-            var beatSaberRegexMessage = textRegexModel.BeatSaberRegex();
+            var beatSaberRegexMessage = TextRegexController.LoadBsrChat(sourceMessage);
+            if (sourceMessage != beatSaberRegexMessage)
+            {
+                // bsrリクエストの時は読み上げ
+                if (sourceMessage.Contains("!bsr")) 
+                    _bouyomiChanController.AddTalkTask(userName, beatSaberRegexMessage, _secretKeys.BouyomiChan.Checked);
+
+                return;
+            }
 
             try
             {
-                if (sourceMessage != beatSaberRegexMessage)
-                {
-                    _bouyomiChanController.AddTalkTask(displayName, beatSaberRegexMessage);
-                    return;
-                }
-
                 var targetLanguage = !IsJapaneseLanguage(sourceMessage) ? LanguageCode.Japanese : LanguageCode.EnglishAmerican;
                 var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
                 var sourceLanguage = text.DetectedSourceLanguageCode;
@@ -371,7 +372,7 @@ namespace FaraBotModerator
                     // 母国語で読み上げ
                     // Song Request Manager用の読み上げ変換をしたい
                     var message = sourceLanguage == LanguageCode.Japanese ? sourceMessage : translateMessage;
-                    _bouyomiChanController.AddTalkTask(displayName, message);
+                    _bouyomiChanController.AddTalkTask(displayName, message, _secretKeys.BouyomiChan.Checked);
                 }
             }
             catch (Exception ex)
@@ -380,10 +381,10 @@ namespace FaraBotModerator
                 SendMessage(displayName, $"[FaraBot] @{_twitchClient.TwitchUsername} {errorMessage}");
                 if (_secretKeys.BouyomiChan.Checked)
                 {
-                    _bouyomiChanController.AddTalkTask(_twitchClient.TwitchUsername, errorMessage);
+                    _bouyomiChanController.AddTalkTask(_twitchClient.TwitchUsername, errorMessage, _secretKeys.BouyomiChan.Checked);
                 }
 
-                LogController.OutputLog(ex.Message, true);
+                LogController.OutputLog($"<Error> {ex.Message}");
             }
         }
 
