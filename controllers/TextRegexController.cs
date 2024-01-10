@@ -59,7 +59,7 @@ namespace FaraBotModerator.controllers
             }
             catch (Exception e)
             {
-                LogController.OutputLog(e.Message, true);
+                LogController.OutputLog($"<Error> {e.Message}");
                 var fileInfo = new FileInfo(BeatSaberFile);
                 fileInfo.Delete();
                 CreateBsrChatFile();

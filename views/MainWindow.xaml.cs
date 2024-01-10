@@ -247,6 +247,33 @@ namespace FaraBotModerator.views
         /// <returns></returns>
         private async Task StartMonitoring()
         {
+            InitializeDeepLChart();
+
+            while (true)
+            {
+                await Task.Delay(1);
+                // Token期限
+                if (DateTime.Now > Settings.Default.expiresDateTime)
+                {
+                    TwitchApiNotificationCanvas.Visibility = Visibility.Visible;
+                    if (!string.IsNullOrEmpty(Settings.Default.RefreshToken)) await Task.Run(UpdateRefreshToken);
+                }
+                else
+                {
+                    TwitchApiNotificationCanvas.Visibility = Visibility.Hidden;
+                }
+                TwitchApiExpireDateTimeTextBlock.Text = $"Token expiration: {Settings.Default.expiresDateTime}";
+
+                // Button無効
+                TwitchApiAuthorizeButton.IsEnabled = !string.IsNullOrEmpty(TwitchApiClientIdPasswordBox.Password) &&
+                                                     !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password);
+
+                if (_twitchClientController is not null) AddGridViewChatData();
+            }
+        }
+
+        private void InitializeDeepLChart()
+        {
             /*
             LiveChartGraph.ChartAreas.Clear();
             LiveChartGraph.Series.Clear();
@@ -266,31 +293,8 @@ namespace FaraBotModerator.views
             LiveChartGraph.Series.Add(series);
             // LiveChartGraph.Series.Add();
             */
-            while (true)
-            {
-                await Task.Delay(1);
-                // Token期限
-                if (DateTime.Now > Settings.Default.expiresDateTime)
-                {
-                    TwitchApiNotificationCanvas.Visibility = Visibility.Visible;
-                    if (!string.IsNullOrEmpty(Settings.Default.RefreshToken)) await Task.Run(UpdateRefreshToken);
-                }
-                else
-                {
-                    TwitchApiNotificationCanvas.Visibility = Visibility.Hidden;
-                }
-                TwitchApiExpireDateTimeTextBlock.Text = $"Token expiration: {Settings.Default.expiresDateTime}";
-
-                // Button無効
-                TwitchApiAuthorizeButton.IsEnabled = (
-                    !string.IsNullOrEmpty(TwitchApiClientIdPasswordBox.Password) &&
-                    !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password)
-                );
-
-                if (_twitchClientController is not null) AddGridViewChatData();
-            }
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -304,12 +308,11 @@ namespace FaraBotModerator.views
             var beforeScrollBottom = true;
 
             var beforeScrollViewer = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(_chatWindow.TwitchChatDataGrid, 0), 0);
-            if (beforeScrollViewer is ScrollViewer)
+            if (beforeScrollViewer is ScrollViewer viewer)
             {
-                var a = (ScrollViewer) beforeScrollViewer;
-                var offset = a.VerticalOffset;
-                var extent = a.ScrollableHeight;
-                var viewport = a.ViewportHeight;
+                var offset = viewer.VerticalOffset;
+                var extent = viewer.ScrollableHeight;
+                var viewport = viewer.ViewportHeight;
 
                 beforeScrollBottom = offset + viewport >= extent;
             }
@@ -368,29 +371,20 @@ namespace FaraBotModerator.views
                 $"&code={code}" +
                 "&grant_type=authorization_code" +
                 $"&redirect_uri=http://localhost:{Settings.Default.Port}";
-            try
-            {
-                var response = Task.Run(() => PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")).Result;
-                if (response.responseBody.Contains("Invalid authorization code"))
-                {
-                    var message = "Unauthenticated. Please check [https://dev.twitch.tv/console] Application redirectURL, clientID, and secret.";
-                    throw new HttpRequestException(message);
-                }
+            var response = Task.Run(() => PostResponseBodyAsync(parameter, "https://id.twitch.tv/oauth2/token")).Result;
 
-                var jsonString =
-                    JsonSerializer.Deserialize<TwitchOAuthTokenModel>(response.responseBody, response.option);
-                Settings.Default.AccessToken = jsonString?.AccessToken;
-                Settings.Default.RefreshToken = jsonString?.RefreshToken;
-                if (jsonString?.ExpiresIn != null)
-                {
-                    Settings.Default.expiresDateTime = DateTime.Now.AddSeconds(jsonString.ExpiresIn);
-                }
-                Settings.Default.Save();
-            }
-            catch (Exception ex)
+            // Token取得失敗は何もしない
+            if (response.responseBody.Contains("Invalid authorization code")) return;
+
+            var jsonString =
+                JsonSerializer.Deserialize<TwitchOAuthTokenModel>(response.responseBody, response.option);
+            Settings.Default.AccessToken = jsonString?.AccessToken;
+            Settings.Default.RefreshToken = jsonString?.RefreshToken;
+            if (jsonString?.ExpiresIn != null)
             {
-                LogController.OutputLog(ex.Message);
+                Settings.Default.expiresDateTime = DateTime.Now.AddSeconds(jsonString.ExpiresIn);
             }
+            Settings.Default.Save();
 
             UnlockWindowControl();
         }

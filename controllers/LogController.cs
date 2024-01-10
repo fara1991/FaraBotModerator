@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Threading;
+using FaraBotModerator.Enum;
 
 namespace FaraBotModerator.controllers
 {
@@ -14,8 +15,8 @@ namespace FaraBotModerator.controllers
         /// 
         /// </summary>
         /// <param name="text"></param>
-        /// <param name="isError"></param>
-        public static void OutputLog(string text, bool isError = false)
+        /// <param name="eventEnum"></param>
+        public static void OutputLog(string text, TwitchEventEnum eventEnum = TwitchEventEnum.None)
         {
             var date = DateTime.Now;
             string year = date.Year.ToString("00");
@@ -32,20 +33,34 @@ namespace FaraBotModerator.controllers
             {
                 Directory.CreateDirectory(directoryName);
             }
+            
+            // 排他制御
+            using var mutex = new Mutex(false, fileName);
+            mutex.WaitOne();
+            using (var writer = new StreamWriter(filePath, true, Encoding.UTF8))
+            {
+                var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}] ";
+                var logText = logTime +  text;
+                writer.WriteLine(logText);
+            }
+
+            mutex.ReleaseMutex();
+
+            if (eventEnum == TwitchEventEnum.None) return;
+            
+            // Follow等のTwitchEventログは配信終了画像に自動で追加
+            var eventFileName = $"{System.Enum.GetName(typeof(TwitchEventEnum), eventEnum)}_{year}.{month}.{day}.log";
+            var eventFilePath = $@"{directoryName}\{eventFileName}";
 
             // 排他制御
-            using (var mutex = new Mutex(false, fileName))
+            using var eventMutex = new Mutex(false, fileName);
+            eventMutex.WaitOne();
+            using (var writer = new StreamWriter(eventFilePath, true, Encoding.UTF8))
             {
-                mutex.WaitOne();
-                using (var writer = new StreamWriter(filePath, true, Encoding.UTF8))
-                {
-                    var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}] ";
-                    var logText = logTime + (isError ? "<Error> " : "") + text;
-                    writer.WriteLine(logText);
-                }
-
-                mutex.ReleaseMutex();
+                writer.WriteLine(text);
             }
+
+            eventMutex.ReleaseMutex();
         }
     }
 }

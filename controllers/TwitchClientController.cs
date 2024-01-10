@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DeepL;
 using DeepL.Model;
+using FaraBotModerator.Enum;
 using FaraBotModerator.models;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
@@ -198,7 +199,7 @@ namespace FaraBotModerator.controllers
             SendMessage(followerName, message);
             // 棒読みちゃん用の読み上げの言語設定あってもいいかも
             _bouyomiChanController.AddEventTalkTask($"{followerName}さんがFollowしました", _secretKeys.BouyomiChan.Checked);
-            LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}");
+            LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}", TwitchEventEnum.Follow);
         }
 
         /// <summary>
@@ -216,10 +217,10 @@ namespace FaraBotModerator.controllers
             _bouyomiChanController.AddEventTalkTask($"{raiderName}さんにRaidされました", _secretKeys.BouyomiChan.Checked);
             Task.Run(async () =>
             {
-                await Task.Delay(10000);
+                await Task.Delay(100);
                 SendMessage(_twitchUserName, $"/shoutout {raiderName}");
             });
-            LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}");
+            LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}", TwitchEventEnum.Raid);
         }
 
         /// <summary>
@@ -234,7 +235,7 @@ namespace FaraBotModerator.controllers
                 .Replace("{totalSubscriptionMonth}", "1");
             SendMessage(subscriberName, message);
             _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん新規サブスクありがとうございます", _secretKeys.BouyomiChan.Checked);
-            LogController.OutputLog($"<New Subscriber> Name: {subscriberName}");
+            LogController.OutputLog($"<New Subscriber> Name: {subscriberName}", TwitchEventEnum.Subscriber);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace FaraBotModerator.controllers
                 .Replace("{totalSubscriptionMonth}", totalSubscriptionMonth.ToString());
             SendMessage(subscriberName, message);
             _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん{totalSubscriptionMonth}か月目のサブスクありがとうございます", _secretKeys.BouyomiChan.Checked);
-            LogController.OutputLog($"<Subscriber> Name: {subscriberName}, total: {totalSubscriptionMonth} time.");
+            LogController.OutputLog($"<Subscriber> Name: {subscriberName}, total: {totalSubscriptionMonth} time.", TwitchEventEnum.Subscriber);
         }
 
         /// <summary>
@@ -269,7 +270,7 @@ namespace FaraBotModerator.controllers
             SendMessage(bitsSendUserName, message);
             _bouyomiChanController.AddEventTalkTask($"{bitsSendUserName}さん{bitsAmount}bitsありがとうございます", _secretKeys.BouyomiChan.Checked);
             LogController.OutputLog(
-                $"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}");
+                $"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}", TwitchEventEnum.Bits);
         }
 
         /// <summary>
@@ -284,7 +285,7 @@ namespace FaraBotModerator.controllers
             var message = _secretKeys.Event.Gift.Message.Replace("{giftedUserName}", giftedUserName);
             SendMessage(giftedUserName, message);
             _bouyomiChanController.AddEventTalkTask($"{giftedUserName}さんGiftありがとうございます", _secretKeys.BouyomiChan.Checked);
-            LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}");
+            LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}", TwitchEventEnum.Gift);
         }
 
         /// <summary>
@@ -302,7 +303,7 @@ namespace FaraBotModerator.controllers
                 .Replace("{channelPointUserName}", channelPointUserName);
             SendMessage(channelPointUserName, message);
             _bouyomiChanController.AddEventTalkTask($"{channelPointUserName}さんが{channelPointCost}ChannelPointで{channelPointTitle}を使用しました", _secretKeys.BouyomiChan.Checked);
-            LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserName}, Title: {channelPointTitle}");
+            LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserName}, Title: {channelPointTitle}", TwitchEventEnum.ChannelPoint);
         }
 
         /// <summary>
@@ -332,7 +333,7 @@ namespace FaraBotModerator.controllers
             catch (Exception ex)
             {
                 LogController.OutputLog(e.ChatMessage.Message);
-                LogController.OutputLog(ex.Message, true);
+                LogController.OutputLog($"<Error> {ex.Message}");
             }
         }
 
@@ -383,7 +384,7 @@ namespace FaraBotModerator.controllers
                     _bouyomiChanController.AddTalkTask(_twitchClient.TwitchUsername, errorMessage, _secretKeys.BouyomiChan.Checked);
                 }
 
-                LogController.OutputLog(ex.Message, true);
+                LogController.OutputLog($"<Error> {ex.Message}");
             }
         }
 
