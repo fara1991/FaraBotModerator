@@ -2,7 +2,8 @@
 
 Twitch用BOTです。まだ開発中なのでいろいろ動かない箇所があります。
 
-画面はWPFで作成しています。使用するAPIは[Twitch Developers](https://dev.twitch.tv/), [TwitchLib](https://github.com/TwitchLib/TwitchLib)を使用しています。
+画面はWPFで作成しています。使用するAPIは[Twitch Developers](https://dev.twitch.tv/), [TwitchLib](https://github.com/TwitchLib/TwitchLib)
+を使用しています。
 
 ## メイン機能
 
@@ -10,7 +11,8 @@ Twitch用BOTです。まだ開発中なのでいろいろ動かない箇所が�
 
 * ### Client
 
-Get Tokenボタンを押すとWebView画面にToken取得用の画面になるので、そこでTwitchのログイン情報を入れ、Connectを押すとoauth tokenを取得できます。
+Get Tokenボタンを押すとWebView画面にToken取得用の画面になるので、そこでTwitchのログイン情報を入れ、Connectを押すとoauth
+tokenを取得できます。
 
 取得したtokenをAccessTokenに入力します。
 
@@ -36,7 +38,8 @@ clientSecret: 画像の赤枠内のSecret
 
 Authorizeボタンを押すとAPI Tokenを取得します。有効期限は短く設定しており、有効期限切れ状態では赤文字の警告を表示します。
 
-警告中は再度Authorizeボタンを押すことで再度token取得を行います。(いずれrefresh tokenを使うようにし、自動で更新できるように実装します。)
+警告中は再度Authorizeボタンを押すことで再度token取得を行います。(いずれrefresh
+tokenを使うようにし、自動で更新できるように実装します。)
 
 * ### PubSub
 
@@ -58,7 +61,8 @@ BouyomiChanConnectにチェックを入れている場合、Connectボタンで�
 
 ![image](https://github.com/fara1991/FaraBotModerator/assets/69506848/662bdbba-ff93-42be-b3da-c7584e793f5f)
 
-TwitchのFoolow, Raid, Subscription, Bits, Gift, ChannelPointのそれぞれのイベントが発火したときにTwitch接続中であれば、設定したチャットをTwitchのチャットに表示できるようになります。
+TwitchのFoolow, Raid, Subscription, Bits, Gift,
+ChannelPointのそれぞれのイベントが発火したときにTwitch接続中であれば、設定したチャットをTwitchのチャットに表示できるようになります。
 
 name等`{}`で囲った文字については、下の内容でそれぞれ置き換わります。
 

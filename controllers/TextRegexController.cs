@@ -8,111 +8,102 @@ using System.Text.RegularExpressions;
 using System.Text.Unicode;
 using FaraBotModerator.models;
 
-namespace FaraBotModerator.controllers
+namespace FaraBotModerator.controllers;
+
+internal static class TextRegexController
 {
-    // Interfaceでもいい？
-    internal static class TextRegexController
+    private const string BeatSaberDirectory = "ChatSetting/BeatSaber";
+    private const string BeatSaberFile = BeatSaberDirectory + "/bsr.json";
+
+    /// <summary>
+    /// </summary>
+    /// <returns></returns>
+    public static string LoadBsrChat(string bsrText)
     {
-        private const string BeatSaberDirectory = "ChatSetting/BeatSaber";
-        private const string BeatSaberFile = BeatSaberDirectory + "/bsr.json";
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string LoadBsrChat(string bsrText)
+        // BeatSaber
+        if (!Directory.Exists(BeatSaberDirectory)) Directory.CreateDirectory(BeatSaberDirectory);
+        if (!File.Exists(BeatSaberFile)) CreateBsrChatFile();
+        try
         {
-            // BeatSaber
-            if (!Directory.Exists(BeatSaberDirectory)) Directory.CreateDirectory(BeatSaberDirectory);
-            if (!File.Exists(BeatSaberFile)) CreateBsrChatFile();
-            try
+            TextRegexModel? textRegex;
+            using (var file = File.OpenText(BeatSaberFile))
             {
-                TextRegexModel? textRegex;
-                using (var file = File.OpenText(BeatSaberFile))
-                {
-                    var jsonData = file.ReadToEnd();
-                    textRegex = JsonSerializer.Deserialize<TextRegexModel>(jsonData);
-                }
-
-                if (textRegex is null)
-                {
-                    var message = "Text conversion not possible.";
-                    LogController.OutputLog(message);
-                    throw new FileFormatException(message);
-                }
-
-                foreach (var textKeyValues in textRegex.BeatSaberChat)
-                {
-                    if (Regex.IsMatch(bsrText, textKeyValues.Key))
-                    {
-                        // !bsr xxxx
-                        // Request Dope /Krouton_06 68.1% (xxxx) added to queue.
-                        // ↑をチャット表示用にデータ取得でもいい
-                        // https://api.beatsaver.com/maps/id/xxxx
-                        var matches = Regex.Matches(bsrText, textKeyValues.Key);
-                        for (var i = 0; i < matches.Count; i++)
-                            textKeyValues.Value = textKeyValues.Value.Replace("{" + i + "}", matches[i].Value);
-
-                        return textKeyValues.Value;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogController.OutputLog($"<Error> {e.Message}");
-                var fileInfo = new FileInfo(BeatSaberFile);
-                fileInfo.Delete();
-                CreateBsrChatFile();
+                var jsonData = file.ReadToEnd();
+                textRegex = JsonSerializer.Deserialize<TextRegexModel>(jsonData);
             }
 
-            return bsrText;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bsrChats"></param>
-        private static void SaveBsrChatFile(TextRegexModel bsrChats)
-        {
-            using var writer = new StreamWriter(BeatSaberFile, false, Encoding.UTF8);
-            var options = new JsonSerializerOptions
+            if (textRegex is null)
             {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                WriteIndented = true
-            };
-            var jsonData = JsonSerializer.Serialize(bsrChats, options);
+                var message = "<Error> Text conversion not possible.";
+                LogController.OutputLog(message);
+                throw new FileFormatException(message);
+            }
 
-            // \003Cだけ変換できないので手動で変換
-            writer.WriteLine(jsonData.Replace("\\u003C", "<"));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private static void CreateBsrChatFile()
-        {
-            var bsrChats = new TextRegexModel
-            {
-                BeatSaberChat = new List<BeatSaberChatModel>
+            foreach (var textKeyValues in textRegex.BeatSaberChat)
+                if (Regex.IsMatch(bsrText, textKeyValues.Key))
                 {
-                    new(key: "(?<=!bsr ).*", value: "から、ソングリクエスト{0}を頂きました。"),
-                    new(key: "(?<=Request).*(?=)", value: "リクエスト曲 {0} が登録されました。"),
-                    new(key: "[A-z].*(?=requested by)|(?<=by ).*(?=is next)",
-                        value: "次の曲は、{1}さんがリクエストした{0}です。"),
-                    new(key: "(?<=Thank you for following).*(?=!)",
-                        value: "{0}さん、フォローありがとうございます。"),
-                    new(key: "(?=Queue is closed).*", value: "ソングリクエストを終了します。皆さんありがとう！"),
-                    new(key: "(?=Queue is open).*", value: "ソングリクエストを開始しました。リクエストお待ちしてます。"),
-                    new(key: "[0-9].*(?=raiders from)|(?<=from ).*(?=have joined)",
-                        value: "{1}さんが、{0}名の仲間と見に来てくれました。"),
-                    new(key: "[A-z0-9].*(?=just raided the channel with)|(?<=with ).*(?=viewers!)",
-                        value: "{0}さんが、{1}名の仲間と見に来てくれました。"),
-                    new(key: "(?<=No results found for request ).*", value: "{0}はリクエストにないよ。"),
-                    new(key: "(?<=Request for).*(?=produces)|(?<=produces).*(?=results)",
-                        value: "{0} で検索したら {1}曲あったよ。絞り込んでみてね。"),
+                    // !bsr xxxx
+                    // Request Dope /Krouton_06 68.1% (xxxx) added to queue.
+                    // ↑をチャット表示用にデータ取得でもいい
+                    // https://api.beatsaver.com/maps/id/xxxx
+                    var matches = Regex.Matches(bsrText, textKeyValues.Key);
+                    for (var i = 0; i < matches.Count; i++)
+                        textKeyValues.Value = textKeyValues.Value.Replace("{" + i + "}", matches[i].Value);
+
+                    return textKeyValues.Value;
                 }
-            };
-            SaveBsrChatFile(bsrChats);
         }
+        catch (Exception e)
+        {
+            LogController.OutputLog($"<Error> {e.Message}");
+            var fileInfo = new FileInfo(BeatSaberFile);
+            fileInfo.Delete();
+            CreateBsrChatFile();
+        }
+
+        return bsrText;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="textRegex"></param>
+    private static void SaveBsrChatFile(TextRegexModel textRegex)
+    {
+        using var writer = new StreamWriter(BeatSaberFile, false, Encoding.UTF8);
+        var options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true
+        };
+        var jsonData = JsonSerializer.Serialize(textRegex, options);
+
+        // \003Cだけ変換できないので手動で変換
+        writer.WriteLine(jsonData.Replace("\\u003C", "<"));
+    }
+
+    /// <summary>
+    /// </summary>
+    private static void CreateBsrChatFile()
+    {
+        var textRegex = new TextRegexModel
+        {
+            BeatSaberChat = new List<BeatSaberChatModel>
+            {
+                new("(?<=!bsr ).*", "から、ソングリクエスト{0}を頂きました。"),
+                new("(?<=Request).*(?=)", "リクエスト曲 {0} が登録されました。"),
+                // SongSubNameに()が付く場合
+                new(".*(?= \\(.*?\\)\\/.*requested by )|(?<=by ).*(?= is next)",
+                    "次の曲は、{1}さんがリクエストした{0}です。"),
+                // SongSubNameに()が付かない場合
+                new(".*(?= .*\\/.*requested by )|(?<=by ).*(?= is next)",
+                    "次の曲は、{1}さんがリクエストした{0}です。"),
+                new("(?=Queue is closed).*", "ソングリクエストを終了します。皆さんありがとう！"),
+                new("(?=Queue is open).*", "ソングリクエストを開始しました。リクエストお待ちしてます。"),
+                new("(?<=No results found for request ).*", "{0}はリクエストにないよ。"),
+                new("(?<=Request for).*(?=produces)|(?<=produces).*(?=results)",
+                    "{0} で検索したら {1}曲あったよ。絞り込んでみてね。")
+            }
+        };
+        SaveBsrChatFile(textRegex);
     }
 }
