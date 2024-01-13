@@ -21,8 +21,8 @@ public class TwitchPubSubController
     {
         _twitchClientController = twitchClientController;
         _twitchPubSub = new TwitchPubSub();
-        _twitchPubSub.OnPubSubServiceConnected += PubSub_ServiceConnected;
         _twitchPubSub.OnListenResponse += PubSub_ListenResponse;
+        _twitchPubSub.OnPubSubServiceConnected += PubSub_ServiceConnected;
 
         // Follow
         _twitchPubSub.OnFollow += PubSub_Followed;
@@ -44,13 +44,14 @@ public class TwitchPubSubController
         // Prediction
         _twitchPubSub.OnPrediction += PubSub_Prediction;
         _twitchPubSub.ListenToPredictions(twitchChannelId);
+        _twitchPubSub?.Connect();
     }
 
     /// <summary>
     /// </summary>
     public void Connect()
     {
-        _twitchPubSub?.Connect();
+        // _twitchPubSub?.Connect();
     }
 
     /// <summary>
@@ -78,13 +79,12 @@ public class TwitchPubSubController
     {
         _twitchClientController.TwitchPubSubOnListen(e);
     }
-
-
+    
     /// <summary>
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    public void PubSub_Followed(object? sender, OnFollowArgs e)
+    private void PubSub_Followed(object? sender, OnFollowArgs e)
     {
         _twitchClientController.TwitchPubSubOnFollow(e);
     }

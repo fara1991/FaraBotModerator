@@ -6,15 +6,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="FaraBotModeratorChat"
-    Height="550"
-    Width="700"
+    Height="800"
+    Width="450"
     Icon="/resources/App.ico"
     ResizeMode="NoResize">
-    <GroupBox Height="505" Header="TwitchChat" Width="680" HorizontalAlignment="Center" VerticalAlignment="Top">
-        <Canvas Width="670">
+    <GroupBox Height="800" Header="FaraBotTwitchChat" Width="450" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Canvas Width="420">
             <DataGrid x:Name="TwitchChatDataGrid"
-                      Height="412"
-                      Width="660"
+                      Height="650"
+                      Width="420"
                       HeadersVisibility="Column"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
@@ -35,14 +35,14 @@
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Icon" IsReadOnly="True" Width="81">
+                    <DataGridTemplateColumn Header="Icon" IsReadOnly="True" Width="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Icon}" Width="32" Height="32" VerticalAlignment="Center" />
+                                <Image Source="{Binding Icon}" Width="48" Height="48" VerticalAlignment="Center" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Name" IsReadOnly="True" Width="121" Binding="{Binding Name}"
+                    <DataGridTextColumn Header="Name" IsReadOnly="True" Width="96" Binding="{Binding Name}"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
@@ -62,11 +62,11 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBox x:Name="TwitchRequestChatTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="417"
-                     HorizontalAlignment="Center" Width="561" Height="34" ToolTip=""
+            <TextBox x:Name="TwitchRequestChatTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="670"
+                     HorizontalAlignment="Center" Width="320" Height="34" ToolTip=""
                      KeyDown="TwitchRequestChatTextBox_KeyDown" />
-            <Button x:Name="TwitchRequestChatButton" Content="Chat" VerticalAlignment="Top" Canvas.Left="566"
-                    Canvas.Top="417" HorizontalAlignment="Left" Width="94" Height="34"
+            <Button x:Name="TwitchRequestChatButton" Content="Chat" VerticalAlignment="Top" Canvas.Left="340"
+                    Canvas.Top="670" HorizontalAlignment="Left" Width="80" Height="34"
                     Click="TwitchRequestChatButton_Click" />
         </Canvas>
     </GroupBox>

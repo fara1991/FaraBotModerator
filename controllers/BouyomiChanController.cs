@@ -20,6 +20,7 @@ public class BouyomiChanController
     /// <summary>
     /// </summary>
     /// <param name="talkText"></param>
+    /// <param name="bouyomiChanCall"></param>
     public void AddEventTalkTask(string talkText, bool bouyomiChanCall)
     {
         if (bouyomiChanCall) CreateTalk(talkText);

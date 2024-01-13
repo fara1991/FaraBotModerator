@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DeepL;
@@ -56,6 +57,7 @@ public class TwitchClientController
 
         _twitchClient.OnLog += TwitchClientOnLog;
         _twitchClient.OnJoinedChannel += TwitchClientOnJoinedChannel;
+        _twitchClient.OnUserJoined += TwitchClientOnUserJoined;
         _twitchClient.OnMessageReceived += TwitchClientOnMessageReceived;
         _twitchClient.OnNewSubscriber += TwitchClientOnNewSubscriber;
         _twitchClient.OnReSubscriber += TwitchClientOnReSubscriber;
@@ -159,10 +161,17 @@ public class TwitchClientController
         SendMessage(e.Channel, $"Login {Settings.Default.BotName}.");
         LogController.OutputLog($"Login {Settings.Default.BotName}.");
 
-        if (_secretKeys.BouyomiChan.Checked) SendMessage(e.Channel, "Connecting BouyomiChan.");
-        else SendMessage(e.Channel, "Not connecting BouyomiChan.");
+        SendMessage(e.Channel,
+            _secretKeys.BouyomiChan.Checked
+                ? $"[{Settings.Default.BotName}] Connecting BouyomiChan."
+                : $"[{Settings.Default.BotName}] Not connecting BouyomiChan.");
     }
 
+    private void TwitchClientOnUserJoined(object? sender, OnUserJoinedArgs e)
+    {
+        LogController.OutputLog($"<Join> {e.Username}", TwitchEventEnum.Join);
+    }
+    
     /// <summary>
     /// </summary>
     /// <param name="e"></param>
@@ -172,7 +181,7 @@ public class TwitchClientController
         {
             _pubsubFailure = true;
             var message = "Failed to connect to Twitch PubSub. Please renew your token and reconnect.";
-            SendMessage(_twitchUserName, message);
+            SendMessage(_twitchUserName, $"[{Settings.Default.BotName}] {message}");
             LogController.OutputLog($"{message} Exception: {e}");
         }
     }
@@ -187,7 +196,7 @@ public class TwitchClientController
         var followerName = e.DisplayName;
         var message = _secretKeys.Event.Follow.Message.Replace("{followerName}", followerName)
             .Replace("{followerChannelUrl}", followerChannelUrl);
-        SendMessage(followerName, message);
+        SendMessage(followerName, $"[{Settings.Default.BotName}] {message}");
         // 棒読みちゃん用の読み上げの言語設定あってもいいかも
         _bouyomiChanController.AddEventTalkTask($"{followerName}さんがFollowしました", _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}",
@@ -205,7 +214,7 @@ public class TwitchClientController
         var raiderChannelUrl = $"https://twitch.tv/{raiderName}";
         var message = _secretKeys.Event.Raid.Message.Replace("{raiderName}", raiderName)
             .Replace("{raiderChannelUrl}", raiderChannelUrl);
-        SendMessage(raiderName, message);
+        SendMessage(raiderName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{raiderName}さんにRaidされました", _secretKeys.BouyomiChan.Checked);
         Task.Run(async () =>
         {
@@ -225,7 +234,7 @@ public class TwitchClientController
         var subscriberName = e.Subscriber.DisplayName;
         var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
             .Replace("{totalSubscriptionMonth}", "1");
-        SendMessage(subscriberName, message);
+        SendMessage(subscriberName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん新規サブスクありがとうございます",
             _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<New Subscriber> Name: {subscriberName}", TwitchEventEnum.Subscriber);
@@ -242,7 +251,7 @@ public class TwitchClientController
         var totalSubscriptionMonth = e.ReSubscriber.Months;
         var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
             .Replace("{totalSubscriptionMonth}", totalSubscriptionMonth.ToString());
-        SendMessage(subscriberName, message);
+        SendMessage(subscriberName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん{totalSubscriptionMonth}か月目のサブスクありがとうございます",
             _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Subscriber> Name: {subscriberName}, total: {totalSubscriptionMonth} time.",
@@ -261,7 +270,7 @@ public class TwitchClientController
         var message = _secretKeys.Event.Bits.Message.Replace("{bitsAmount}", bitsAmount.ToString())
             .Replace("{totalBitsAmount}", totalBitsAmount.ToString())
             .Replace("{bitsSendUserName}", bitsSendUserName);
-        SendMessage(bitsSendUserName, message);
+        SendMessage(bitsSendUserName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{bitsSendUserName}さん{bitsAmount}bitsありがとうございます",
             _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog(
@@ -279,7 +288,7 @@ public class TwitchClientController
         var giftedUserName = e.GiftedSubscription.DisplayName;
         var url = $"https://twitch.tv/{giftedUserName}";
         var message = _secretKeys.Event.Gift.Message.Replace("{giftedUserName}", giftedUserName);
-        SendMessage(giftedUserName, message);
+        SendMessage(giftedUserName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{giftedUserName}さんGiftありがとうございます",
             _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}", TwitchEventEnum.Gift);
@@ -291,17 +300,17 @@ public class TwitchClientController
     public void SendChannelPointPubSubMessage(OnChannelPointsRewardRedeemedArgs e)
     {
         var channelPointTitle = e.RewardRedeemed.Redemption.Reward.Title;
-        var channelPointUserName = e.RewardRedeemed.Redemption.User.DisplayName;
         var channelPointCost = e.RewardRedeemed.Redemption.Reward.Cost;
+        var channelPointUserId = e.RewardRedeemed.Redemption.User.Login;
         var message = _secretKeys.Event.ChannelPoint.Message
             .Replace("{channelPointCost}", channelPointCost.ToString())
             .Replace("{channelPointTitle}", channelPointTitle)
-            .Replace("{channelPointUserName}", channelPointUserName);
-        SendMessage(channelPointUserName, message);
+            .Replace("{channelPointUserName}", channelPointUserId);
+        SendMessage(channelPointUserId, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask(
-            $"{channelPointUserName}さんが{channelPointCost}ChannelPointで{channelPointTitle}を使用しました",
+            $"{channelPointUserId}さんが{channelPointCost}ChannelPointで{channelPointTitle}を使用しました",
             _secretKeys.BouyomiChan.Checked);
-        LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserName}, Title: {channelPointTitle}",
+        LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserId}, Title: {channelPointTitle}",
             TwitchEventEnum.ChannelPoint);
     }
 
@@ -342,8 +351,8 @@ public class TwitchClientController
         var userName = e.ChatMessage.Username;
         var displayName = e.ChatMessage.DisplayName;
         var sourceMessage = e.ChatMessage.Message;
-        // 翻訳済み文字は再翻訳しない
-        if (sourceMessage.Contains($"[{Settings.Default.BotName}]")) return;
+
+        if (!TargetTranslationWord(sourceMessage)) return;
 
         var beatSaberRegexMessage = TextRegexController.LoadBsrChat(sourceMessage);
         if (sourceMessage != beatSaberRegexMessage)
@@ -383,6 +392,18 @@ public class TwitchClientController
 
             LogController.OutputLog($"<Error> {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sourceMessage"></param>
+    /// <returns></returns>
+    private static bool TargetTranslationWord(string sourceMessage)
+    {
+        if (sourceMessage.Contains(Settings.Default.BotName)) return false;
+        if (sourceMessage.Contains("cheer")) return false;
+        return true;
     }
 
     /// <summary>

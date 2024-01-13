@@ -52,7 +52,9 @@ public static class LogController
         eventMutex.WaitOne();
         using (var writer = new StreamWriter(eventFilePath, true, Encoding.UTF8))
         {
-            writer.WriteLine(text);
+            var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}] ";
+            var logText = logTime + text;
+            writer.WriteLine(logText);
         }
 
         eventMutex.ReleaseMutex();
