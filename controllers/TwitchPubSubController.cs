@@ -51,7 +51,7 @@ public class TwitchPubSubController
     /// </summary>
     public void Connect()
     {
-        // _twitchPubSub?.Connect();
+        _twitchPubSub?.Connect();
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class TwitchPubSubController
     {
         _twitchClientController.TwitchPubSubOnListen(e);
     }
-    
+
     /// <summary>
     /// </summary>
     /// <param name="sender"></param>
@@ -104,7 +104,7 @@ public class TwitchPubSubController
     /// <param name="e"></param>
     private void PubSub_StreamUp(object? sender, OnStreamUpArgs e)
     {
-        Console.WriteLine($"Stream just went up! Play delay: {e.PlayDelay}, server time: {e.ServerTime}");
+        LogController.OutputLog($"Stream just went up! Play delay: {e.PlayDelay}, server time: {e.ServerTime}");
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class TwitchPubSubController
     /// <param name="e"></param>
     private void PubSub_StreamDown(object? sender, OnStreamDownArgs e)
     {
-        Console.WriteLine($"Stream just went down! Server time: {e.ServerTime}");
+        LogController.OutputLog($"Stream just went down! Server time: {e.ServerTime}");
     }
 
     /// <summary>

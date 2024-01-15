@@ -6,8 +6,8 @@ namespace FaraBotModerator.controllers;
 // Twitchである程度制御できるからもう不要かもしれない
 internal class OBSController
 {
-    private readonly OBSWebsocket _obsWebSocket;
     private readonly string _ip;
+    private readonly OBSWebsocket _obsWebSocket;
     private readonly string _password;
     private readonly int _port;
 

@@ -12,6 +12,7 @@ public class BouyomiChanController
     /// </summary>
     /// <param name="talkName">喋らせたい名前</param>
     /// <param name="talkText">喋らせたい文章</param>
+    /// <param name="bouyomiChanCall"></param>
     public void AddTalkTask(string talkName, string talkText, bool bouyomiChanCall)
     {
         if (bouyomiChanCall) CreateTalk($"{talkName}さん {talkText}");

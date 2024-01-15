@@ -38,7 +38,7 @@ public enum TwitchEventEnum
     ///     チャンネルポイントイベント
     /// </summary>
     ChannelPoint,
-    
+
     /// <summary>
     ///     ユーザーアクセス
     /// </summary>

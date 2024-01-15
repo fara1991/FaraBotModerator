@@ -6,14 +6,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="FaraBotModeratorChat"
-    Height="800"
+    Height="600"
     Width="450"
     Icon="/resources/App.ico"
     ResizeMode="NoResize">
-    <GroupBox Height="800" Header="FaraBotTwitchChat" Width="450" HorizontalAlignment="Center" VerticalAlignment="Top">
+    <GroupBox Height="600" Header="FaraBotTwitchChat" Width="450" HorizontalAlignment="Center" VerticalAlignment="Top">
         <Canvas Width="420">
             <DataGrid x:Name="TwitchChatDataGrid"
-                      Height="650"
+                      Height="450"
                       Width="420"
                       HeadersVisibility="Column"
                       HorizontalAlignment="Left"
@@ -62,11 +62,11 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBox x:Name="TwitchRequestChatTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="670"
+            <TextBox x:Name="TwitchRequestChatTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="470"
                      HorizontalAlignment="Center" Width="320" Height="34" ToolTip=""
                      KeyDown="TwitchRequestChatTextBox_KeyDown" />
             <Button x:Name="TwitchRequestChatButton" Content="Chat" VerticalAlignment="Top" Canvas.Left="340"
-                    Canvas.Top="670" HorizontalAlignment="Left" Width="80" Height="34"
+                    Canvas.Top="470" HorizontalAlignment="Left" Width="80" Height="34"
                     Click="TwitchRequestChatButton_Click" />
         </Canvas>
     </GroupBox>

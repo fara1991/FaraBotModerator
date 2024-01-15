@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DeepL;
@@ -25,13 +24,13 @@ namespace FaraBotModerator.controllers;
 /// </summary>
 public class TwitchClientController
 {
+    private readonly BouyomiChanController _bouyomiChanController = new();
+    private readonly Queue<ChatModel> _chatDataQueue = new();
+    private readonly Translator _deepLTranslator;
     private readonly SecretKeyModel _secretKeys;
     private readonly TwitchApiController _twitchApiController;
     private readonly TwitchClient _twitchClient;
     private readonly string _twitchUserName;
-    private readonly BouyomiChanController _bouyomiChanController = new();
-    private readonly Queue<ChatModel> _chatDataQueue = new();
-    private readonly Translator _deepLTranslator;
     private bool _pubsubFailure;
 
     /// <summary>
@@ -163,15 +162,15 @@ public class TwitchClientController
 
         SendMessage(e.Channel,
             _secretKeys.BouyomiChan.Checked
-                ? $"[{Settings.Default.BotName}] Connecting BouyomiChan."
-                : $"[{Settings.Default.BotName}] Not connecting BouyomiChan.");
+                ? $"{Settings.Default.BotName} Connecting BouyomiChan."
+                : $"{Settings.Default.BotName} Not connecting BouyomiChan.");
     }
 
     private void TwitchClientOnUserJoined(object? sender, OnUserJoinedArgs e)
     {
         LogController.OutputLog($"<Join> {e.Username}", TwitchEventEnum.Join);
     }
-    
+
     /// <summary>
     /// </summary>
     /// <param name="e"></param>
@@ -395,7 +394,6 @@ public class TwitchClientController
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="sourceMessage"></param>
     /// <returns></returns>
