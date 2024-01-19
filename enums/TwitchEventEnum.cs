@@ -1,42 +1,46 @@
 ﻿namespace FaraBotModerator.Enum;
 
 /// <summary>
-/// 
 /// </summary>
 public enum TwitchEventEnum
 {
     /// <summary>
-    /// イベント無し
+    ///     イベント無し
     /// </summary>
     None,
-    
+
     /// <summary>
-    /// フォローイベント
+    ///     フォローイベント
     /// </summary>
     Follow,
-    
+
     /// <summary>
-    /// レイドイベント
+    ///     レイドイベント
     /// </summary>
     Raid,
 
     /// <summary>
-    /// サブスクライブイベント
+    ///     サブスクライブイベント
     /// </summary>
     Subscriber,
-    
+
     /// <summary>
-    /// ビッツイベント
+    ///     ビッツイベント
     /// </summary>
     Bits,
 
     /// <summary>
-    /// ギフトイベント
+    ///     ギフトイベント
     /// </summary>
     Gift,
 
     /// <summary>
-    /// チャンネルポイントイベント
+    ///     チャンネルポイントイベント
     /// </summary>
-    ChannelPoint
+    ChannelPoint,
+
+    /// <summary>
+    ///     ユーザーアクセス
+    /// </summary>
+    Join
 }
