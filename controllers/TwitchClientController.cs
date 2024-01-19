@@ -363,22 +363,25 @@ public class TwitchClientController
 
         try
         {
-            var targetLanguage = !IsJapaneseLanguage(sourceMessage)
-                ? LanguageCode.Japanese
-                : LanguageCode.EnglishAmerican;
-            var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
-            var sourceLanguage = text.DetectedSourceLanguageCode;
-            var translateMessage = text.Text;
-            SendMessage(userName,
-                $"[{Settings.Default.BotName} {sourceLanguage}->{targetLanguage}] {translateMessage} (by {displayName})");
-
-            if (_secretKeys.BouyomiChan.Checked)
+            // URLのみは翻訳しない
+            var message = sourceMessage;
+            if (!IsOnlyURLMessage(message))
             {
-                // 母国語で読み上げ
-                // Song Request Manager用の読み上げ変換をしたい
-                var message = sourceLanguage == LanguageCode.Japanese ? sourceMessage : translateMessage;
-                _bouyomiChanController.AddTalkTask(displayName, message, _secretKeys.BouyomiChan.Checked);
+                var targetLanguage = !IsJapaneseLanguage(sourceMessage)
+                    ? LanguageCode.Japanese
+                    : LanguageCode.EnglishAmerican;
+                var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
+                var sourceLanguage = text.DetectedSourceLanguageCode;
+                var translateMessage = text.Text;
+                SendMessage(userName,
+                    $"[{Settings.Default.BotName} {sourceLanguage}->{targetLanguage}] {translateMessage} (by {displayName})");
+
+                message = sourceLanguage == LanguageCode.Japanese ? sourceMessage : translateMessage;
             }
+
+            // 母国語で読み上げ
+            if (_secretKeys.BouyomiChan.Checked)
+                _bouyomiChanController.AddTalkTask(displayName, message, _secretKeys.BouyomiChan.Checked);
         }
         catch (Exception ex)
         {
@@ -391,6 +394,21 @@ public class TwitchClientController
 
             LogController.OutputLog($"<Error> {ex.Message}");
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sourceMessage"></param>
+    /// <returns></returns>
+    private static bool IsOnlyURLMessage(string sourceMessage)
+    {
+        return
+            sourceMessage.Split(" ").Length == 1 &&
+            Regex.IsMatch(
+                sourceMessage,
+                "^(http|https):\\/\\/[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\/[^\\s]*)?$"
+            );
     }
 
     /// <summary>
