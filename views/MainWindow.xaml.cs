@@ -45,12 +45,21 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
+        InitializeEncodeRegister();
         InitializeSecretValue();
         InitializeChatWindow();
         // Task
         StartTimer();
         StartWebServer();
         StartMonitoring();
+    }
+
+    /// <summary>
+    ///     Windowsが提供するEncodingを利用できるようにする。SHIFT-JIS等も使用可能になる。
+    /// </summary>
+    private void InitializeEncodeRegister()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     }
 
     private void InitializeSecretValue()
