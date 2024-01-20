@@ -298,7 +298,6 @@ public class TwitchClientController
         var channelPointTitle = e.RewardRedeemed.Redemption.Reward.Title;
         var channelPointCost = e.RewardRedeemed.Redemption.Reward.Cost;
         var channelPointUserId = e.RewardRedeemed.Redemption.User.Login;
-        var channelPointUserName = e.RewardRedeemed.Redemption.User.DisplayName;
         var message = _secretKeys.Event.ChannelPoint.Message
             .Replace("{channelPointCost}", channelPointCost.ToString())
             .Replace("{channelPointTitle}", channelPointTitle)
@@ -312,7 +311,7 @@ public class TwitchClientController
             TwitchEventEnum.ChannelPoint);
 
         // チャンネルポイント固有の処理は別で行う
-        SendModeratorMessage(_uniqueChannelPointController.Exec(channelPointUserName, channelPointTitle));
+        SendModeratorMessage(_uniqueChannelPointController.Exec(channelPointUserId, channelPointTitle));
     }
 
     /// <summary>

@@ -38,15 +38,16 @@ public class UniqueChannelPointController
     private static string ExecRandomTailor(string userName)
     {
         // PosX, PosY, PosZ, RotX, RotY, RotZ
-        // pos -100~100mm  rot -450~450mm
+        // pos -100~100mm  rot -45~45deg
         var r = new Random();
         var pos = new[]
             {r.Next(-100, 100), r.Next(-100, 100), r.Next(-100, 100)};
         var rot = new[]
-            {r.Next(-450, 450), r.Next(-450, 450), r.Next(-450, 450)};
+            {r.Next(-45, 45), r.Next(-45, 45), r.Next(-45, 45)};
 
         var beatSaberUserPath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Beat Saber\\UserData";
         var d = DateTime.Now;
+        // userNameは日本語が入るとSaber Tailorが認識しないらしい
         var fileName =
             $"SaberTailor.{userName}-{d.Year:0000}{d.Month:00}{d.Day:00}{d.Hour:00}{d.Minute:00}{d.Second:00}.json";
         var newRandomTailorFile =
@@ -70,6 +71,6 @@ public class UniqueChannelPointController
         writer.WriteLine(jsonData);
 
         return
-            $"New Tailor {fileName}. RandomTailor detail: Pos(x: {pos[0]}mm, y: {pos[1]}mm, z: {pos[2]}mm), Rot(x: {rot[0]}mm, y: {rot[1]}mm, z: {rot[2]}mm)";
+            $"New Tailor {fileName}. RandomTailor detail: Pos(x: {pos[0]}mm, y: {pos[1]}mm, z: {pos[2]}mm), Rot(x: {rot[0]}deg, y: {rot[1]}deg, z: {rot[2]}deg)";
     }
 }
