@@ -52,6 +52,7 @@ public partial class MainWindow
         StartTimer();
         StartWebServer();
         StartMonitoring();
+        StartTwitchLibPubSub();
     }
 
     /// <summary>
@@ -67,6 +68,7 @@ public partial class MainWindow
         var secretKeys = SecretKeyController.LoadKeys();
         TwitchClientUserNameTextBox.Text = secretKeys.Twitch.Client.UserName;
         TwitchClientAccessTokenPasswordBox.Password = secretKeys.Twitch.Client.AccessToken;
+        TwitchClientDisplayNameTextBox.Text = secretKeys.Twitch.Client.DisplayName;
 
         TwitchApiClientIdPasswordBox.Password = secretKeys.Twitch.Api.ClientId;
         TwitchApiClientSecretPasswordBox.Password = secretKeys.Twitch.Api.Secret;
@@ -286,6 +288,17 @@ public partial class MainWindow
         }
     }
 
+    private async Task StartTwitchLibPubSub()
+    {
+        while (true)
+        {
+            while (_twitchClientController is null) await Task.Delay(1);
+
+            await Task.Delay(1);
+            TwitchConnectionStateLabel.Content = _twitchClientController.IsConnectTwitchPubSub() ? @"State: Connect" : @"State: Disconnect";
+        }
+    }
+    
     private void InitializeDeepLChart()
     {
         /*
@@ -524,7 +537,7 @@ public partial class MainWindow
     /// </summary>
     private void ShowChatWindow()
     {
-        _chatWindow ??= new ChatWindow(this);
+        _chatWindow ??= new ChatWindow();
         _chatWindow.Show();
         _chatWindow.OnTwitchRequestChatButtonClick += ChatWindow_OnTwitchRequestChatButtonClick;
     }
@@ -693,7 +706,6 @@ public partial class MainWindow
 
         _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
         _twitchPubSubController.Connect();
-        TwitchConnectionStateLabel.Content = @"State: Connect";
     }
 
     /// <summary>
@@ -706,16 +718,15 @@ public partial class MainWindow
         _twitchClientController = null;
         _twitchApiController = null;
         _twitchPubSubController = null;
-
-        TwitchConnectionStateLabel.Content = @"State: Disconnect";
     }
 
     /// <summary>
     /// </summary>
-    /// <param name="text"></param>
-    private void ChatWindow_OnTwitchRequestChatButtonClick(string text)
+    /// <param name="message"></param>
+    private void ChatWindow_OnTwitchRequestChatButtonClick(string message)
     {
-        _twitchClientController?.SendModeratorMessage(text);
+        _twitchClientController?.MessageTranslationProcess(message, TwitchClientUserNameTextBox.Text,
+            TwitchClientDisplayNameTextBox.Text);
         if (_chatWindow != null) _chatWindow.TwitchRequestChatTextBox.Text = "";
     }
 
@@ -844,17 +855,5 @@ public partial class MainWindow
     private void CycleTimerSlider_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
     {
         ((Slider) sender).ToolTip = ((Slider) sender).Value.ToString(CultureInfo.CurrentCulture);
-    }
-
-    // ### ChatWindowから呼び出し
-
-    /// <summary>
-    ///     ChatWindow経由でチャットを送信
-    /// </summary>
-    /// <param name="message"></param>
-    public void ChatWindowSendMessage(string message)
-    {
-        _twitchClientController?.MessageTranslationProcess(message, TwitchClientUserNameTextBox.Text,
-            TwitchClientDisplayNameTextBox.Text);
     }
 }

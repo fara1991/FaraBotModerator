@@ -184,7 +184,17 @@ public class TwitchClientController
             var message = "Failed to connect to Twitch PubSub. Please renew your token and reconnect.";
             SendModeratorMessage($"[{Settings.Default.BotName}] {message}");
             LogController.OutputLog($"{message} Exception: {e}");
+            Disconnect();
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public bool IsConnectTwitchPubSub()
+    {
+        return _pubsubFailure;
     }
 
     /// <summary>
