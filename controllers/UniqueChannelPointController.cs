@@ -56,9 +56,9 @@ public class UniqueChannelPointController
         using var writer = new StreamWriter(newRandomTailorFile, false, Encoding.GetEncoding("SHIFT-JIS"));
         var saberTailorModel = new SaberTailorModel
         {
-            GripLeftPosition = {x = pos[0], y = pos[1], z = pos[2]},
+            GripLeftPosition = {x = -pos[0], y = -pos[1], z = -pos[2]},
             GripRightPosition = {x = pos[0], y = pos[1], z = pos[2]},
-            GripLeftRotation = {x = rot[0], y = rot[1], z = rot[2]},
+            GripLeftRotation = {x = -rot[0], y = -rot[1], z = -rot[2]},
             GripRightRotation = {x = rot[0], y = rot[1], z = rot[2]}
         };
 
