@@ -524,7 +524,7 @@ public partial class MainWindow
     /// </summary>
     private void ShowChatWindow()
     {
-        _chatWindow ??= new ChatWindow();
+        _chatWindow ??= new ChatWindow(this);
         _chatWindow.Show();
         _chatWindow.OnTwitchRequestChatButtonClick += ChatWindow_OnTwitchRequestChatButtonClick;
     }
@@ -570,7 +570,8 @@ public partial class MainWindow
                 Client = new TwitchClientKeyModel
                 {
                     UserName = TwitchClientUserNameTextBox.Text, // TwitchのURLの末尾の名前
-                    AccessToken = TwitchClientAccessTokenPasswordBox.Password
+                    AccessToken = TwitchClientAccessTokenPasswordBox.Password,
+                    DisplayName = TwitchClientDisplayNameTextBox.Text
                 },
                 Api = new TwitchApiKeyModel
                 {
@@ -843,5 +844,17 @@ public partial class MainWindow
     private void CycleTimerSlider_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
     {
         ((Slider) sender).ToolTip = ((Slider) sender).Value.ToString(CultureInfo.CurrentCulture);
+    }
+
+    // ### ChatWindowから呼び出し
+
+    /// <summary>
+    ///     ChatWindow経由でチャットを送信
+    /// </summary>
+    /// <param name="message"></param>
+    public void ChatWindowSendMessage(string message)
+    {
+        _twitchClientController?.MessageTranslationProcess(message, TwitchClientUserNameTextBox.Text,
+            TwitchClientDisplayNameTextBox.Text);
     }
 }

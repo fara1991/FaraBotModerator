@@ -362,6 +362,16 @@ public class TwitchClientController
             return;
         }
 
+        await MessageTranslationProcess(sourceMessage, userName, displayName);
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="sourceMessage"></param>
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    public async Task MessageTranslationProcess(string sourceMessage, string userName, string displayName)
+    {
         try
         {
             // URLのみは翻訳しない
