@@ -16,16 +16,9 @@ public static class LogController
     /// <param name="eventEnum"></param>
     public static void OutputLog(string text, TwitchEventEnum eventEnum = TwitchEventEnum.None)
     {
-        var date = DateTime.Now;
-        var year = date.Year.ToString("00");
-        var month = date.Month.ToString("00");
-        var day = date.Day.ToString("00");
-        var hour = date.Hour.ToString("00");
-        var minute = date.Minute.ToString("00");
-        var second = date.Second.ToString("00");
-
+        var d = DateTime.Now;
         var directoryName = $@"{Directory.GetCurrentDirectory()}\Log";
-        var fileName = $"{year}.{month}.{day}.log";
+        var fileName = $"{d.Year:0000}.{d.Month:00}.{d.Day:00}.log";
         var filePath = $@"{directoryName}\{fileName}";
         if (!Directory.Exists(directoryName)) Directory.CreateDirectory(directoryName);
 
@@ -34,7 +27,7 @@ public static class LogController
         mutex.WaitOne();
         using (var writer = new StreamWriter(filePath, true, Encoding.UTF8))
         {
-            var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}] ";
+            var logTime = $"[{d.Year:0000}/{d.Month:00}/{d.Day:00} {d.Hour:00}:{d.Minute:00}:{d.Second:00}] ";
             var logText = logTime + text;
             writer.WriteLine(logText);
         }
@@ -44,7 +37,8 @@ public static class LogController
         if (eventEnum == TwitchEventEnum.None) return;
 
         // Follow等のTwitchEventログは配信終了画像に自動で追加
-        var eventFileName = $"{System.Enum.GetName(typeof(TwitchEventEnum), eventEnum)}_{year}.{month}.{day}.log";
+        var eventFileName =
+            $"{System.Enum.GetName(typeof(TwitchEventEnum), eventEnum)}_{d.Year:0000}.{d.Month:00}.{d.Day:00}.log";
         var eventFilePath = $@"{directoryName}\{eventFileName}";
 
         // 排他制御
@@ -52,7 +46,7 @@ public static class LogController
         eventMutex.WaitOne();
         using (var writer = new StreamWriter(eventFilePath, true, Encoding.UTF8))
         {
-            var logTime = $"[{year}/{month}/{day} {hour}:{minute}:{second}] ";
+            var logTime = $"[{d.Year:0000}/{d.Month:00}/{d.Day:00} {d.Hour:00}:{d.Minute:00}:{d.Second:00}] ";
             var logText = logTime + text;
             writer.WriteLine(logText);
         }
