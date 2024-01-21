@@ -51,6 +51,12 @@
                                 <PasswordBox x:Name="TwitchClientAccessTokenPasswordBox" Width="345" Height="25"
                                              HorizontalAlignment="Center" Canvas.Left="83" Canvas.Top="32"
                                              VerticalAlignment="Top" />
+                                <Label x:Name="TwitchClientDisplayNameLabel" Content="DisplayName" Height="24"
+                                       Background="{x:Null}" Width="83" HorizontalAlignment="Center"
+                                       VerticalAlignment="Top" Canvas.Top="72" />
+                                <TextBox x:Name="TwitchClientDisplayNameTextBox" TextWrapping="Wrap" Width="230"
+                                         Height="25" HorizontalAlignment="Left" Canvas.Left="83" Canvas.Top="70"
+                                         VerticalAlignment="Top" />
                                 <Button x:Name="TwitchClientAccessTokenButton" Content="Get Token" Height="30"
                                         Canvas.Left="323" Canvas.Top="62" VerticalAlignment="Center" Width="105"
                                         HorizontalAlignment="Center" Click="TwitchClientAccessTokenButton_Click" />
