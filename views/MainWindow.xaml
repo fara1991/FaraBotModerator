@@ -17,7 +17,7 @@
     Top="0"
     Closed="MainWindow_Closed"
     Icon="/resources/App.ico"
-    ResizeMode="NoResize">
+    ResizeMode="CanMinimize">
     <TabControl x:Name="MenuTabControl">
         <TabItem x:Name="MainSettingsTabItem" Header="Main Settings">
             <Canvas x:Name="MainSettingsCanvas" Background="#FFE5E5E5">

@@ -303,10 +303,8 @@ public class TwitchClientController
             .Replace("{channelPointTitle}", channelPointTitle)
             .Replace("{channelPointUserName}", channelPointUserId);
 
+        // ChannelPointは読み上げしない
         SendMessage(channelPointUserId, $"[{Settings.Default.BotName}] {message}");
-        _bouyomiChanController.AddEventTalkTask(
-            $"{channelPointUserId}さんが{channelPointCost}ChannelPointで{channelPointTitle}を使用しました",
-            _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserId}, Title: {channelPointTitle}",
             TwitchEventEnum.ChannelPoint);
 
