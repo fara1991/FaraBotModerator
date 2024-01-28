@@ -15,15 +15,15 @@ public class TwitchApiController
     /// <summary>
     ///     Twitch API経由の操作をするController
     /// </summary>
-    /// <param name="secretKeys"></param>
-    public TwitchApiController(SecretKeyModel secretKeys)
+    /// <param name="secretKeyModel"></param>
+    public TwitchApiController(SecretKeyModel secretKeyModel)
     {
         _twitchApi = new TwitchAPI
         {
             Settings =
             {
-                ClientId = secretKeys.Twitch.Api.ClientId,
-                Secret = secretKeys.Twitch.Api.Secret
+                ClientId = secretKeyModel.Twitch.Api.ClientId,
+                Secret = secretKeyModel.Twitch.Api.Secret
             }
         };
     }
@@ -60,5 +60,21 @@ public class TwitchApiController
         var userLoginNames = new List<string> {userName};
         var findUserList = await _twitchApi.Helix.Users.GetUsersAsync(userIds, userLoginNames);
         return findUserList.Users[0];
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="myUserName"></param>
+    /// <param name="raiderUserName"></param>
+    /// <param name="accessToken"></param>
+    /// <returns></returns>
+    public async Task SendShoutoutAsync(string myUserName, string raiderUserName, string accessToken)
+    {
+        // 配信中に動くか検証
+        var users =
+            await _twitchApi.Helix.Users.GetUsersAsync(new List<string>(),
+                new List<string> {myUserName, raiderUserName});
+        await _twitchApi.Helix.Chat.SendShoutoutAsync(users.Users[0].Id, users.Users[1].Id,
+            users.Users[0].Id, accessToken);
     }
 }

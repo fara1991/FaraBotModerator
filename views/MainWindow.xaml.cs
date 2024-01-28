@@ -295,10 +295,12 @@ public partial class MainWindow
             while (_twitchClientController is null) await Task.Delay(1);
 
             await Task.Delay(1);
-            TwitchConnectionStateLabel.Content = _twitchClientController.IsConnectTwitchPubSub() ? @"State: Connect" : @"State: Disconnect";
+            TwitchConnectionStateLabel.Content = _twitchClientController.IsConnectTwitchPubSub()
+                ? @"State: Connect"
+                : @"State: Disconnect";
         }
     }
-    
+
     private void InitializeDeepLChart()
     {
         /*
@@ -464,7 +466,10 @@ public partial class MainWindow
             "channel%3Amoderate " + // Moderator権限実行
             "chat%3Aedit " + // Chat送信
             "chat%3Aread " + // Chat受信
-            "whispers:read" + // Whisper受信
+            "whispers%3Aread " + // Whisper受信
+            "channel%3Amanage%3Araids " + // raid管理
+            "moderator%3Aread%3Ashoutouts " + // shoutout取得
+            "moderator%3Amanage%3Ashoutouts" + // shoutout権限
             $"&state={state}"; // ランダムなUID
         try
         {

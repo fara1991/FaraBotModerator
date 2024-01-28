@@ -33,10 +33,7 @@ public partial class ChatWindow : Window
     /// <param name="e"></param>
     private void TwitchRequestChatTextBox_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key == Key.Enter)
-        {
-            OnTwitchRequestChatButtonClick?.Invoke(TwitchRequestChatTextBox.Text);
-        }
+        if (e.Key == Key.Enter) OnTwitchRequestChatButtonClick?.Invoke(TwitchRequestChatTextBox.Text);
     }
 
     /// <summary>

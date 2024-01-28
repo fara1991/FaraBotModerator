@@ -12,6 +12,7 @@ using TwitchLib.Client.Events;
 using TwitchLib.Client.Extensions;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
+using TwitchLib.Communication.Enums;
 using TwitchLib.Communication.Events;
 using TwitchLib.Communication.Models;
 using TwitchLib.PubSub.Events;
@@ -49,7 +50,8 @@ public class TwitchClientController
         var clientOptions = new ClientOptions
         {
             MessagesAllowedInPeriod = 750,
-            ThrottlingPeriod = TimeSpan.FromSeconds(30)
+            ThrottlingPeriod = TimeSpan.FromSeconds(30),
+            ClientType = ClientType.Chat
         };
         var customClient = new WebSocketClient(clientOptions);
         _twitchClient = new TwitchClient(customClient);
@@ -65,6 +67,7 @@ public class TwitchClientController
         _twitchClient.OnRaidNotification += TwitchClientOnRaidNotification;
         _twitchClient.OnConnected += TwitchClientOnConnected;
         _twitchClient.OnDisconnected += TwitchClientOnDisconnected;
+        _twitchClient.OnAnnouncement += TwitchClientOnAnnouncement;
         // OnDisconnectedはタイムラグの関係で実装しない
 
         _twitchUserName = _twitchClient.TwitchUsername;
@@ -153,6 +156,27 @@ public class TwitchClientController
     }
 
     /// <summary>
+    ///     /announcement を実行したときの処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void TwitchClientOnAnnouncement(object? sender, OnAnnouncementArgs e)
+    {
+        try
+        {
+            var userName = e.Channel;
+            var displayName = _secretKeys.Twitch.Client.DisplayName;
+            var sourceMessage = e.Announcement.Message;
+            SendMessageTranslation(userName, displayName, sourceMessage, true);
+        }
+        catch (Exception ex)
+        {
+            LogController.OutputLog(e.Announcement.Message);
+            LogController.OutputLog($"<Error> {ex.Message}");
+        }
+    }
+
+    /// <summary>
     ///     Botを起動します。
     /// </summary>
     /// <param name="sender"></param>
@@ -163,9 +187,7 @@ public class TwitchClientController
         LogController.OutputLog($"Login {Settings.Default.BotName}.");
 
         SendMessage(e.Channel,
-            _secretKeys.BouyomiChan.Checked
-                ? $"{Settings.Default.BotName} Connecting BouyomiChan."
-                : $"{Settings.Default.BotName} Not connecting BouyomiChan.");
+            Settings.Default.BotName + (_secretKeys.BouyomiChan.Checked ? " " : " Not ") + "Connectiong BouyomiChan.");
     }
 
     private void TwitchClientOnUserJoined(object? sender, OnUserJoinedArgs e)
@@ -189,12 +211,11 @@ public class TwitchClientController
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <returns></returns>
     public bool IsConnectTwitchPubSub()
     {
-        return _pubsubFailure;
+        return !_pubsubFailure;
     }
 
     /// <summary>
@@ -228,6 +249,9 @@ public class TwitchClientController
         SendMessage(raiderName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{raiderName}さんにRaidされました", _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}", TwitchEventEnum.Raid);
+
+        Task.Run(
+            () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, Settings.Default.AccessToken));
     }
 
     /// <summary>
@@ -342,7 +366,10 @@ public class TwitchClientController
                 "Bad word! 30 minute timeout!");
         try
         {
-            SendMessageTranslation(e);
+            var userName = e.ChatMessage.Username;
+            var displayName = e.ChatMessage.DisplayName;
+            var sourceMessage = e.ChatMessage.Message;
+            SendMessageTranslation(userName, displayName, sourceMessage);
         }
         catch (Exception ex)
         {
@@ -353,24 +380,24 @@ public class TwitchClientController
 
     /// <summary>
     /// </summary>
-    /// <param name="e"></param>
-    private async void SendMessageTranslation(OnMessageReceivedArgs e)
+    /// <param name="userName"></param>
+    /// <param name="displayName"></param>
+    /// <param name="sourceMessage"></param>
+    /// <param name="isAnnouncement"></param>
+    private async void SendMessageTranslation(string userName, string displayName, string sourceMessage,
+        bool isAnnouncement = false)
     {
-        var userName = e.ChatMessage.Username;
-        var displayName = e.ChatMessage.DisplayName;
-        var sourceMessage = e.ChatMessage.Message;
-
         if (!TargetTranslationWord(sourceMessage)) return;
 
         var beatSaberRegexMessage = TextRegexController.LoadBsrChat(sourceMessage);
-        if (sourceMessage != beatSaberRegexMessage)
+        if (sourceMessage != beatSaberRegexMessage && !isAnnouncement)
         {
             // BeatSaber関連は読み上げだけ行う
             _bouyomiChanController.AddTalkTask(userName, beatSaberRegexMessage, _secretKeys.BouyomiChan.Checked);
             return;
         }
 
-        await MessageTranslationProcess(sourceMessage, userName, displayName);
+        await MessageTranslationProcess(sourceMessage, userName, displayName, isAnnouncement);
     }
 
     /// <summary>
@@ -378,7 +405,9 @@ public class TwitchClientController
     /// <param name="sourceMessage"></param>
     /// <param name="userName"></param>
     /// <param name="displayName"></param>
-    public async Task MessageTranslationProcess(string sourceMessage, string userName, string displayName)
+    /// <param name="isAnnouncement"></param>
+    public async Task MessageTranslationProcess(string sourceMessage, string userName, string displayName,
+        bool isAnnouncement = false)
     {
         try
         {
@@ -389,9 +418,18 @@ public class TwitchClientController
                 var targetLanguage = !IsJapaneseLanguage(sourceMessage)
                     ? LanguageCode.Japanese
                     : LanguageCode.EnglishAmerican;
+
+                // Emote文字列は翻訳と読み上げで使わないので削除する
+                sourceMessage = ReplaceEmoteToEmpty(sourceMessage);
+                if (sourceMessage == "")
+                {
+                    _bouyomiChanController.AddTalkTask(displayName, "", _secretKeys.BouyomiChan.Checked);
+                    return;
+                }
+
                 var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
                 var sourceLanguage = text.DetectedSourceLanguageCode;
-                var translateMessage = text.Text;
+                var translateMessage = (isAnnouncement ? "☆☆☆Announcement☆☆☆ " : "") + text.Text;
                 SendMessage(userName,
                     $"[{Settings.Default.BotName} {sourceLanguage}->{targetLanguage}] {translateMessage} (by {displayName})");
 
@@ -399,19 +437,33 @@ public class TwitchClientController
             }
 
             // 母国語で読み上げ
-            _bouyomiChanController.AddTalkTask(displayName, message, _secretKeys.BouyomiChan.Checked);
+            if (!isAnnouncement)
+                _bouyomiChanController.AddTalkTask(displayName, message, _secretKeys.BouyomiChan.Checked);
         }
         catch (Exception ex)
         {
             var errorMessage = "DeepL翻訳に失敗しています。詳しくはログを確認してください。";
             SendMessage(displayName,
                 $"[{Settings.Default.BotName}] @{_twitchClient.TwitchUsername} {errorMessage}");
-            if (_secretKeys.BouyomiChan.Checked)
+            if (_secretKeys.BouyomiChan.Checked && !isAnnouncement)
                 _bouyomiChanController.AddTalkTask(_twitchClient.TwitchUsername, errorMessage,
                     _secretKeys.BouyomiChan.Checked);
 
             LogController.OutputLog($"<Error> {ex.Message}");
         }
+    }
+
+    /// <summary>
+    ///     Emoteを空文字に変換します。
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    private string ReplaceEmoteToEmpty(string message)
+    {
+        var replaceEmoteMessage = _twitchClient.ChannelEmotes.ReplaceEmotes(message);
+        var deleteEmoteMessage =
+            Regex.Replace(replaceEmoteMessage, "https://static-cdn.jtvnw.net/emoticons/v1/.*?/[0-9].0", "");
+        return deleteEmoteMessage.Trim();
     }
 
     /// <summary>
