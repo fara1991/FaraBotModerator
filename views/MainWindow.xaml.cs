@@ -30,6 +30,10 @@ public partial class MainWindow
 
     /// <summary>
     /// </summary>
+    private RaidListWindow? _raidListWindow;
+
+    /// <summary>
+    /// </summary>
     private TwitchApiController? _twitchApiController;
 
     /// <summary>
@@ -49,10 +53,10 @@ public partial class MainWindow
         InitializeSecretValue();
         InitializeChatWindow();
         // Task
-        StartTimer();
-        StartWebServer();
-        StartMonitoring();
-        StartTwitchLibPubSub();
+        _ = RunWithExceptionHandlingAsync(StartTimerAsync, "Timer");
+        _ = RunWithExceptionHandlingAsync(StartWebServerAsync, "WebServer");
+        _ = RunWithExceptionHandlingAsync(StartMonitoringAsync, "Monitoring");
+        _ = RunWithExceptionHandlingAsync(StartTwitchLibPubSubAsync, "TwitchPubSub");
     }
 
     /// <summary>
@@ -139,10 +143,20 @@ public partial class MainWindow
         ShowChatWindow();
     }
 
+    private async Task RunWithExceptionHandlingAsync(Func<Task> taskFunc, string taskName) {
+        try {
+            await taskFunc();
+        }
+        catch (Exception ex) {
+            // ログ出力や通知など
+            LogController.OutputLog($"Error in {taskName}: {ex.Message}");
+        }
+    }
+    
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    private async Task StartTimer()
+    private async Task StartTimerAsync()
     {
         var timer1Count = 0;
         var timer2Count = 0;
@@ -242,7 +256,7 @@ public partial class MainWindow
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    private async Task StartWebServer()
+    private async Task StartWebServerAsync()
     {
         var accessTokenQuery = new[] {$"http://localhost:{Settings.Default.Port}", "code=", "scope=", "state="};
         while (true)
@@ -260,7 +274,7 @@ public partial class MainWindow
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    private async Task StartMonitoring()
+    private async Task StartMonitoringAsync()
     {
         InitializeDeepLChart();
 
@@ -288,7 +302,7 @@ public partial class MainWindow
         }
     }
 
-    private async Task StartTwitchLibPubSub()
+    private async Task StartTwitchLibPubSubAsync()
     {
         while (true)
         {
@@ -468,8 +482,9 @@ public partial class MainWindow
             "chat%3Aread " + // Chat受信
             "whispers%3Aread " + // Whisper受信
             "channel%3Amanage%3Araids " + // raid管理
-            "moderator%3Aread%3Ashoutouts " + // shoutout取得
-            "moderator%3Amanage%3Ashoutouts" + // shoutout権限
+            "moderator%3Amanage%3Ashoutouts" + // shoutoutコマンド実行権限
+            // "channel%3Ashoutout%3Acreate " + // shoutout送信権限
+            // "channel%3Ashoutout%3Areceive" + // shoutout受信権限
             $"&state={state}"; // ランダムなUID
         try
         {
@@ -545,6 +560,9 @@ public partial class MainWindow
         _chatWindow ??= new ChatWindow();
         _chatWindow.Show();
         _chatWindow.OnTwitchRequestChatButtonClick += ChatWindow_OnTwitchRequestChatButtonClick;
+
+        _raidListWindow ??= new RaidListWindow();
+        _raidListWindow.Show();
     }
 
     /// <summary>

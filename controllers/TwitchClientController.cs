@@ -251,7 +251,8 @@ public class TwitchClientController
         LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}", TwitchEventEnum.Raid);
 
         Task.Run(
-            () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, Settings.Default.AccessToken));
+            () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, _secretKeys.Twitch.Client.AccessToken));
+        // () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, Settings.Default.AccessToken));
     }
 
     /// <summary>
@@ -277,10 +278,17 @@ public class TwitchClientController
     /// <param name="e"></param>
     private void TwitchClientOnReSubscriber(object? sender, OnReSubscriberArgs e)
     {
+        // debugのために、Logを残しておく
         var subscriberName = e.ReSubscriber.DisplayName;
+        LogController.OutputLog($"<Subscriber> Name: {subscriberName}",
+            TwitchEventEnum.Subscriber);
         var totalSubscriptionMonth = e.ReSubscriber.Months;
+        LogController.OutputLog($"<Subscriber> total: {totalSubscriptionMonth} time.",
+            TwitchEventEnum.Subscriber);
         var message = _secretKeys.Event.Subscription.Message.Replace("{subscriberName}", subscriberName)
             .Replace("{totalSubscriptionMonth}", totalSubscriptionMonth.ToString());
+        LogController.OutputLog($"<Subscriber> Message: {message}",
+            TwitchEventEnum.Subscriber);
         SendMessage(subscriberName, $"[{Settings.Default.BotName}] {message}");
         _bouyomiChanController.AddEventTalkTask($"{subscriberName}さん{totalSubscriptionMonth}か月目のサブスクありがとうございます",
             _secretKeys.BouyomiChan.Checked);
@@ -488,6 +496,7 @@ public class TwitchClientController
     {
         if (sourceMessage.Contains(Settings.Default.BotName)) return false;
         if (sourceMessage.Contains("cheer")) return false;
+        if (sourceMessage.Contains("!bomb")) return false;
         return true;
     }
 

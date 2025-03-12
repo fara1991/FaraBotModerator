@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:Wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+    xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     x:Class="FaraBotModerator.views.MainWindow"
     mc:Ignorable="d"
     Title="FaraBotModerator"
@@ -99,7 +99,7 @@
                 <GroupBox x:Name="WebViewGroupBox" Header="WebView" Height="443" Canvas.Left="478" Canvas.Top="10"
                           HorizontalAlignment="Left" VerticalAlignment="Center" Width="597">
                     <Canvas>
-                        <Wpf:WebView2 x:Name="FaraBotModeratorWebView" Height="391" Width="579"
+                        <wpf:WebView2 x:Name="FaraBotModeratorWebView" Height="391" Width="579"
                                       NavigationCompleted="FaraBotModeratorWebView_NavigationCompleted"
                                       HorizontalAlignment="Center" VerticalAlignment="Top" />
                     </Canvas>
