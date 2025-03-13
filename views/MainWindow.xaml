@@ -229,7 +229,7 @@
                             <materialDesign:PackIcon x:Name="LiveChartPackIcon"
                                                      Width="34"
                                                      Height="35"
-                                                     Foreground="{StaticResource PrimaryHueMidBrush}"
+                                                     Foreground="{StaticResource MaterialDesign.Brush.Primary}"
                                                      Kind="ChartBar" Canvas.Left="24" Canvas.Top="80" />
                             <Button
                                 x:Name="LiveChartUpdateButton"
@@ -270,6 +270,10 @@
                                     </Grid>
                                     <Grid x:Name="CycleTimer2Grid" HorizontalAlignment="Left" Height="30"
                                           Canvas.Left="10" Canvas.Top="38" VerticalAlignment="Center" Width="1027">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
                                         <CheckBox x:Name="CycleTimer2CheckBox" Content="CycleTimer2"
                                                   HorizontalAlignment="Left" VerticalAlignment="Center" Height="30"
                                                   Width="90" />
@@ -277,7 +281,7 @@
                                                 Value="15" TickPlacement="TopLeft" Ticks="15,30,45,60,90,120"
                                                 AutoToolTipPlacement="TopLeft" IsSnapToTickEnabled="True"
                                                 HorizontalAlignment="Left" VerticalAlignment="Center" Margin="95,0,0,0"
-                                                Grid.ColumnSpan="2" />
+                                                Grid.ColumnSpan="2" Grid.Column="0" />
                                         <Label x:Name="CycleTimer2Label" Content="min/time" HorizontalAlignment="Left"
                                                VerticalAlignment="Center" Width="60" Margin="220,0,0,0" Height="30"
                                                Grid.Column="1" />
