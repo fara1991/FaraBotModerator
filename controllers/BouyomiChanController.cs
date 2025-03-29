@@ -38,9 +38,7 @@ public class BouyomiChanController
             new KeyValuePair<string, string>("voice", "0")
         });
 
-        using (var client = new HttpClient())
-        {
-            _ = client.PostAsync("http://localhost:5008/Talk", content).Result;
-        }
+        using var client = new HttpClient();
+        _ = client.PostAsync("http://localhost:5008/Talk", content).Result;
     }
 }

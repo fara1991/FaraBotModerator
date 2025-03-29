@@ -30,6 +30,10 @@ public partial class MainWindow
 
     /// <summary>
     /// </summary>
+    private RaidListWindow? _raidListWindow;
+
+    /// <summary>
+    /// </summary>
     private TwitchApiController? _twitchApiController;
 
     /// <summary>
@@ -49,9 +53,10 @@ public partial class MainWindow
         InitializeSecretValue();
         InitializeChatWindow();
         // Task
-        StartTimer();
-        StartWebServer();
-        StartMonitoring();
+        _ = RunWithExceptionHandlingAsync(StartTimerAsync, "Timer");
+        _ = RunWithExceptionHandlingAsync(StartWebServerAsync, "WebServer");
+        _ = RunWithExceptionHandlingAsync(StartMonitoringAsync, "Monitoring");
+        _ = RunWithExceptionHandlingAsync(StartTwitchLibPubSubAsync, "TwitchPubSub");
     }
 
     /// <summary>
@@ -67,6 +72,7 @@ public partial class MainWindow
         var secretKeys = SecretKeyController.LoadKeys();
         TwitchClientUserNameTextBox.Text = secretKeys.Twitch.Client.UserName;
         TwitchClientAccessTokenPasswordBox.Password = secretKeys.Twitch.Client.AccessToken;
+        TwitchClientDisplayNameTextBox.Text = secretKeys.Twitch.Client.DisplayName;
 
         TwitchApiClientIdPasswordBox.Password = secretKeys.Twitch.Api.ClientId;
         TwitchApiClientSecretPasswordBox.Password = secretKeys.Twitch.Api.Secret;
@@ -137,10 +143,20 @@ public partial class MainWindow
         ShowChatWindow();
     }
 
+    private async Task RunWithExceptionHandlingAsync(Func<Task> taskFunc, string taskName) {
+        try {
+            await taskFunc();
+        }
+        catch (Exception ex) {
+            // ログ出力や通知など
+            LogController.OutputLog($"Error in {taskName}: {ex.Message}");
+        }
+    }
+    
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    private async Task StartTimer()
+    private async Task StartTimerAsync()
     {
         var timer1Count = 0;
         var timer2Count = 0;
@@ -240,7 +256,7 @@ public partial class MainWindow
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    private async Task StartWebServer()
+    private async Task StartWebServerAsync()
     {
         var accessTokenQuery = new[] {$"http://localhost:{Settings.Default.Port}", "code=", "scope=", "state="};
         while (true)
@@ -258,7 +274,7 @@ public partial class MainWindow
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    private async Task StartMonitoring()
+    private async Task StartMonitoringAsync()
     {
         InitializeDeepLChart();
 
@@ -283,6 +299,19 @@ public partial class MainWindow
                                                  !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password);
 
             if (_twitchClientController is not null) AddGridViewChatData();
+        }
+    }
+
+    private async Task StartTwitchLibPubSubAsync()
+    {
+        while (true)
+        {
+            while (_twitchClientController is null) await Task.Delay(1);
+
+            await Task.Delay(1);
+            TwitchConnectionStateLabel.Content = _twitchClientController.IsConnectTwitchPubSub()
+                ? @"State: Connect"
+                : @"State: Disconnect";
         }
     }
 
@@ -451,7 +480,11 @@ public partial class MainWindow
             "channel%3Amoderate " + // Moderator権限実行
             "chat%3Aedit " + // Chat送信
             "chat%3Aread " + // Chat受信
-            "whispers:read" + // Whisper受信
+            "whispers%3Aread " + // Whisper受信
+            "channel%3Amanage%3Araids " + // raid管理
+            "moderator%3Amanage%3Ashoutouts" + // shoutoutコマンド実行権限
+            // "channel%3Ashoutout%3Acreate " + // shoutout送信権限
+            // "channel%3Ashoutout%3Areceive" + // shoutout受信権限
             $"&state={state}"; // ランダムなUID
         try
         {
@@ -527,6 +560,9 @@ public partial class MainWindow
         _chatWindow ??= new ChatWindow();
         _chatWindow.Show();
         _chatWindow.OnTwitchRequestChatButtonClick += ChatWindow_OnTwitchRequestChatButtonClick;
+
+        _raidListWindow ??= new RaidListWindow();
+        _raidListWindow.Show();
     }
 
     /// <summary>
@@ -570,7 +606,8 @@ public partial class MainWindow
                 Client = new TwitchClientKeyModel
                 {
                     UserName = TwitchClientUserNameTextBox.Text, // TwitchのURLの末尾の名前
-                    AccessToken = TwitchClientAccessTokenPasswordBox.Password
+                    AccessToken = TwitchClientAccessTokenPasswordBox.Password,
+                    DisplayName = TwitchClientDisplayNameTextBox.Text
                 },
                 Api = new TwitchApiKeyModel
                 {
@@ -692,7 +729,6 @@ public partial class MainWindow
 
         _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
         _twitchPubSubController.Connect();
-        TwitchConnectionStateLabel.Content = @"State: Connect";
     }
 
     /// <summary>
@@ -705,16 +741,15 @@ public partial class MainWindow
         _twitchClientController = null;
         _twitchApiController = null;
         _twitchPubSubController = null;
-
-        TwitchConnectionStateLabel.Content = @"State: Disconnect";
     }
 
     /// <summary>
     /// </summary>
-    /// <param name="text"></param>
-    private void ChatWindow_OnTwitchRequestChatButtonClick(string text)
+    /// <param name="message"></param>
+    private void ChatWindow_OnTwitchRequestChatButtonClick(string message)
     {
-        _twitchClientController?.SendModeratorMessage(text);
+        _twitchClientController?.MessageTranslationProcess(message, TwitchClientUserNameTextBox.Text,
+            TwitchClientDisplayNameTextBox.Text);
         if (_chatWindow != null) _chatWindow.TwitchRequestChatTextBox.Text = "";
     }
 

@@ -24,41 +24,32 @@ public class TwitchPubSubController
         _twitchPubSub.OnListenResponse += PubSub_ListenResponse;
         _twitchPubSub.OnPubSubServiceConnected += PubSub_ServiceConnected;
 
-        // Follow
         _twitchPubSub.OnFollow += PubSub_Followed;
-        _twitchPubSub.ListenToFollows(twitchChannelId);
-
         // TODO この辺実装する Raidは欲しい情報ないので実装しない
-        // Bits
         _twitchPubSub.OnBitsReceivedV2 += PubSub_BitsReceived;
-        _twitchPubSub.ListenToBitsEventsV2(twitchChannelId);
-
-        // Stream
         _twitchPubSub.OnStreamUp += PubSub_StreamUp;
         _twitchPubSub.OnStreamDown += PubSub_StreamDown;
-
-        // ChannelPoint
         _twitchPubSub.OnChannelPointsRewardRedeemed += PubSub_ChannelPointReward;
-        _twitchPubSub.ListenToChannelPoints(twitchChannelId);
-
-        // Prediction
         _twitchPubSub.OnPrediction += PubSub_Prediction;
+
+        _twitchPubSub.ListenToFollows(twitchChannelId);
+        _twitchPubSub.ListenToBitsEventsV2(twitchChannelId);
+        _twitchPubSub.ListenToChannelPoints(twitchChannelId);
         _twitchPubSub.ListenToPredictions(twitchChannelId);
-        _twitchPubSub?.Connect();
     }
 
     /// <summary>
     /// </summary>
     public void Connect()
     {
-        _twitchPubSub?.Connect();
+        // _twitchPubSub?.Connect();
     }
 
     /// <summary>
     /// </summary>
     public void Disconnect()
     {
-        _twitchPubSub?.Disconnect();
+        // _twitchPubSub?.Disconnect();
     }
 
     /// <summary>
