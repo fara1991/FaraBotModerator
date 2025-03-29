@@ -36,21 +36,20 @@ public class TwitchPubSubController
         _twitchPubSub.ListenToBitsEventsV2(twitchChannelId);
         _twitchPubSub.ListenToChannelPoints(twitchChannelId);
         _twitchPubSub.ListenToPredictions(twitchChannelId);
-        _twitchPubSub.Connect();
     }
 
     /// <summary>
     /// </summary>
     public void Connect()
     {
-        _twitchPubSub?.Connect();
+        // _twitchPubSub?.Connect();
     }
 
     /// <summary>
     /// </summary>
     public void Disconnect()
     {
-        _twitchPubSub?.Disconnect();
+        // _twitchPubSub?.Disconnect();
     }
 
     /// <summary>

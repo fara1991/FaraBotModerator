@@ -112,66 +112,59 @@
                       VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="FollowEventCheckBox" Content="Follow" Height="30" Width="117"
                               RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="FollowEventTextBox" TextWrapping="Wrap" Width="569" Height="30"
+                    <TextBox x:Name="FollowEventTextBox" TextWrapping="Wrap" Width="900" Height="30"
                              HorizontalAlignment="Left" VerticalAlignment="Center"
                              Text="{}{followerName}, thanks follow. Channel URL: {followerChannelUrl}"
                              Margin="122,0,0,0" />
-                    <TextBox x:Name="FollowWebSocketTextBox" TextWrapping="Wrap" Width="215" Height="30"
-                             HorizontalAlignment="Left" VerticalAlignment="Center" Margin="696,0,0,0" Text="filePath" />
-                    <Button x:Name="FollowWebSocketButton" Content="Select" Width="72" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="916,0,0,0" />
-                    <Button x:Name="FollowEventTestButton" Content="Test" Width="72" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="993,0,0,0" />
                 </Grid>
                 <Grid x:Name="RaidGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10" Canvas.Top="45"
                       VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="RaidEventCheckBox" Content="Raid" Height="30" Width="117"
                               RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="RaidEventTextBox" TextWrapping="Wrap" Width="833" Height="30"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Text="Welcome raiders, thanks raid {raiderName}. Channel URL: {raiderChannelUrl}" />
-                    <Button x:Name="RaidEventTestButton" Content="Test" Width="105" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="960,0,0,0" />
+                    <TextBox x:Name="RaidEventTextBox" TextWrapping="Wrap" Width="900" Height="30"
+                             HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Text="Welcome raiders, thanks raid {raiderName}. Channel URL: {raiderChannelUrl}"
+                             Margin="122,0,0,0" />
                 </Grid>
                 <Grid x:Name="SubscriptionGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10" Canvas.Top="80"
                       VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="SubscriptionEventCheckBox" Content="Subscription" Height="30" Width="117"
                               RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="SubscriptionEventTextBox" TextWrapping="Wrap" Width="833" Height="30"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Text="{}{subscriberName}, thanks subscription {totalSubscriptionMonth} time." />
-                    <Button x:Name="SubscriptionEventTestButton" Content="Test" Width="105" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="960,0,0,0" />
+                    <TextBox x:Name="SubscriptionEventTextBox" TextWrapping="Wrap" Width="900" Height="30"
+                             HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Text="{}{subscriberName}, thanks subscription {totalSubscriptionMonth} time."
+                             Margin="122,0,0,0" />
+
                 </Grid>
                 <Grid x:Name="BitsGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10" Canvas.Top="115"
                       VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="BitsEventCheckBox" Content="Bits" Height="30" Width="117"
                               RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="BitsEventTextBox" TextWrapping="Wrap" Width="833" Height="30"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Text="{}{bitsSendUserName}, thanks {bitsAmount} bits (total {totalBitsAmount})." />
-                    <Button x:Name="BitsEventTestButton" Content="Test" Width="105" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="960,0,0,0" />
+                    <TextBox x:Name="BitsEventTextBox" TextWrapping="Wrap" Width="900" Height="30"
+                             HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Text="{}{bitsSendUserName}, thanks {bitsAmount} bits (total {totalBitsAmount})."
+                             Margin="122,0,0,0" />
+
                 </Grid>
                 <Grid x:Name="GiftGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10" Canvas.Top="150"
                       VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="GiftEventCheckBox" Content="Gift" Height="30" Width="117"
                               RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="GiftEventTextBox" TextWrapping="Wrap" Width="833" Height="30"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Text="{}{giftedUserName}, thanks gift present." />
-                    <Button x:Name="GiftEventTestButton" Content="Test" Width="105" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="960,0,0,0" />
+                    <TextBox x:Name="GiftEventTextBox" TextWrapping="Wrap" Width="900" Height="30"
+                             HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Text="{}{giftedUserName}, thanks gift present."
+                             Margin="122,0,0,0" />
+
                 </Grid>
                 <Grid x:Name="ChannelPointGrid" HorizontalAlignment="Left" Height="30" Canvas.Left="10"
                       Canvas.Top="185" VerticalAlignment="Center" Width="1075">
                     <CheckBox x:Name="ChannelPointEventCheckBox" Content="ChannelPoint" Height="30" Width="117"
                               RenderTransformOrigin="0.746,0.813" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <TextBox x:Name="ChannelPointEventTextBox" TextWrapping="Wrap" Width="833" Height="30"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
-                             Text="{}{channel Point UserName} used the {channel Point Title} with {cost} channel points" />
-                    <Button x:Name="ChannelPointEventTestButton" Content="Test" Width="105" Height="30"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="960,0,0,0" />
+                    <TextBox x:Name="ChannelPointEventTextBox" TextWrapping="Wrap" Width="900" Height="30"
+                             HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Text="{}{channel Point UserName} used the {channel Point Title} with {cost} channel points"
+                             Margin="122,0,0,0" />
+
                 </Grid>
                 <RichTextBox x:Name="ReplaceNotificationRichTextBox" Height="221" Canvas.Left="10" Canvas.Top="232"
                              Width="1065" HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left"
@@ -270,10 +263,6 @@
                                     </Grid>
                                     <Grid x:Name="CycleTimer2Grid" HorizontalAlignment="Left" Height="30"
                                           Canvas.Left="10" Canvas.Top="38" VerticalAlignment="Center" Width="1027">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
                                         <CheckBox x:Name="CycleTimer2CheckBox" Content="CycleTimer2"
                                                   HorizontalAlignment="Left" VerticalAlignment="Center" Height="30"
                                                   Width="90" />
