@@ -42,7 +42,7 @@ public partial class MainWindow
 
     /// <summary>
     /// </summary>
-    private TwitchPubSubController? _twitchPubSubController;
+    private TwitchEventSubController? _twitchEventSubController;
 
     /// <summary>
     /// </summary>
@@ -56,7 +56,7 @@ public partial class MainWindow
         _ = RunWithExceptionHandlingAsync(StartTimerAsync, "Timer");
         _ = RunWithExceptionHandlingAsync(StartWebServerAsync, "WebServer");
         _ = RunWithExceptionHandlingAsync(StartMonitoringAsync, "Monitoring");
-        _ = RunWithExceptionHandlingAsync(StartTwitchLibPubSubAsync, "TwitchPubSub");
+        _ = RunWithExceptionHandlingAsync(StartTwitchLibEventSubAsync, "TwitchPubSub");
     }
 
     /// <summary>
@@ -302,14 +302,14 @@ public partial class MainWindow
         }
     }
 
-    private async Task StartTwitchLibPubSubAsync()
+    private async Task StartTwitchLibEventSubAsync()
     {
         while (true)
         {
             while (_twitchClientController is null) await Task.Delay(1);
 
             await Task.Delay(1);
-            TwitchConnectionStateLabel.Content = _twitchClientController.IsConnectTwitchPubSub()
+            TwitchConnectionStateLabel.Content = _twitchClientController is {IsConnected: true} && _twitchEventSubController is {IsConnected: true}
                 ? @"State: Connect"
                 : @"State: Disconnect";
         }
@@ -372,7 +372,7 @@ public partial class MainWindow
     {
         var parameter =
             $"client_id={TwitchApiClientIdPasswordBox.Password}" +
-            $"&client_secret={TwitchApiClientIdPasswordBox.Password}" +
+            $"&client_secret={TwitchApiClientSecretPasswordBox.Password}" +
             "&grant_type=refresh_token" +
             $"&refresh_token={Settings.Default.RefreshToken}";
         try
@@ -482,9 +482,8 @@ public partial class MainWindow
             "chat%3Aread " + // Chat受信
             "whispers%3Aread " + // Whisper受信
             "channel%3Amanage%3Araids " + // raid管理
-            "moderator%3Amanage%3Ashoutouts" + // shoutoutコマンド実行権限
-            // "channel%3Ashoutout%3Acreate " + // shoutout送信権限
-            // "channel%3Ashoutout%3Areceive" + // shoutout受信権限
+            "moderator%3Amanage%3Ashoutouts " + // shoutoutコマンド実行権限
+            "moderator%3Aread%3Afollowers" + //EventSub Follow通知
             $"&state={state}"; // ランダムなUID
         try
         {
@@ -722,25 +721,29 @@ public partial class MainWindow
         var secretKeys = SecretKeyController.LoadKeys();
 
         _twitchApiController = new TwitchApiController(secretKeys);
-        var channelId = _twitchApiController.GetTwitchChannelId(secretKeys.Twitch.Client.UserName);
+        var channelId = _twitchApiController.GetTwitchChannelId();
+
+        var isTokenValid = _twitchApiController.ValidateToken();
+        LogController.OutputLog($"Token validation result: {isTokenValid}");
 
         _twitchClientController = new TwitchClientController(secretKeys, _twitchApiController);
         _twitchClientController.Connect();
 
-        _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
-        _twitchPubSubController.Connect();
+        // EventSub
+        _twitchEventSubController = new TwitchEventSubController(_twitchClientController, _twitchApiController);
+        _twitchEventSubController.Connect();
     }
 
     /// <summary>
     /// </summary>
     private void TwitchDisconnect()
     {
-        _twitchPubSubController?.Disconnect();
+        _twitchEventSubController?.Disconnect();
         _twitchClientController?.Disconnect();
 
         _twitchClientController = null;
         _twitchApiController = null;
-        _twitchPubSubController = null;
+        _twitchEventSubController = null;
     }
 
     /// <summary>

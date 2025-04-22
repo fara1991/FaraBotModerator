@@ -15,7 +15,8 @@ using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Enums;
 using TwitchLib.Communication.Events;
 using TwitchLib.Communication.Models;
-using TwitchLib.PubSub.Events;
+using TwitchLib.EventSub.Websockets.Core.EventArgs;
+using TwitchLib.EventSub.Websockets.Core.EventArgs.Channel;
 using OnLogArgs = TwitchLib.Client.Events.OnLogArgs;
 
 namespace FaraBotModerator.controllers;
@@ -33,7 +34,11 @@ public class TwitchClientController
     private readonly TwitchClient _twitchClient;
     private readonly string _twitchUserName;
     private readonly UniqueChannelPointController _uniqueChannelPointController = new();
-    private bool _pubsubFailure;
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsConnected { get; private set; }
 
     /// <summary>
     /// </summary>
@@ -87,7 +92,7 @@ public class TwitchClientController
         _deepLTranslator.Dispose();
         _twitchClient.Disconnect();
     }
-
+    
     /// <summary>
     /// </summary>
     /// <param name="message"></param>
@@ -143,6 +148,7 @@ public class TwitchClientController
     /// <param name="e"></param>
     private void TwitchClientOnConnected(object? sender, OnConnectedArgs e)
     {
+        IsConnected = true;
         LogController.OutputLog($@"Connected to {_twitchUserName}");
     }
 
@@ -152,6 +158,7 @@ public class TwitchClientController
     /// <param name="e"></param>
     private void TwitchClientOnDisconnected(object? sender, OnDisconnectedEventArgs e)
     {
+        IsConnected = false;
         LogController.OutputLog($"Disconnected to {_twitchUserName}");
     }
 
@@ -187,7 +194,7 @@ public class TwitchClientController
         LogController.OutputLog($"Login {Settings.Default.BotName}.");
 
         SendMessage(e.Channel,
-            Settings.Default.BotName + (_secretKeys.BouyomiChan.Checked ? " " : " Not ") + "Connectiong BouyomiChan.");
+            Settings.Default.BotName + (_secretKeys.BouyomiChan.Checked ? " " : " Not ") + "Connecting BouyomiChan.");
     }
 
     private void TwitchClientOnUserJoined(object? sender, OnUserJoinedArgs e)
@@ -196,43 +203,64 @@ public class TwitchClientController
     }
 
     /// <summary>
+    /// EventSubからのフォローイベントを処理
     /// </summary>
-    /// <param name="e"></param>
-    public void TwitchPubSubOnListen(OnListenResponseArgs e)
+    /// <param name="e">フォローイベント引数</param>
+    public void TwitchEventSubOnFollow(ChannelFollowArgs e)
     {
-        if (!_pubsubFailure && !e.Successful)
-        {
-            _pubsubFailure = true;
-            var message = "Failed to connect to Twitch PubSub. Please renew your token and reconnect.";
-            SendModeratorMessage($"[{Settings.Default.BotName}] {message}");
-            LogController.OutputLog($"{message} Exception: {e}");
-            Disconnect();
-        }
-    }
+        var followEvent = e.Notification.Payload.Event;
+        var followerName = followEvent.UserName;
+        var followerChannelUrl = $"https://twitch.tv/{followEvent.UserLogin}";
+        var message = _secretKeys.Event.Follow.Message.Replace("{followerName}", followerName).Replace("{followerChannelUrl}", followerChannelUrl);
 
-    /// <summary>
-    /// </summary>
-    /// <returns></returns>
-    public bool IsConnectTwitchPubSub()
-    {
-        return !_pubsubFailure;
-    }
-
-    /// <summary>
-    ///     Followerが増えたときに実行されます。
-    /// </summary>
-    /// <param name="e"></param>
-    public void TwitchPubSubOnFollow(OnFollowArgs e)
-    {
-        var followerChannelUrl = $"https://twitch.tv/{e.Username}";
-        var followerName = e.DisplayName;
-        var message = _secretKeys.Event.Follow.Message.Replace("{followerName}", followerName)
-            .Replace("{followerChannelUrl}", followerChannelUrl);
         SendMessage(followerName, $"[{Settings.Default.BotName}] {message}");
-        // 棒読みちゃん用の読み上げの言語設定あってもいいかも
         _bouyomiChanController.AddEventTalkTask($"{followerName}さんがFollowしました", _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Follow> Name: {followerName}, URL: {followerChannelUrl}",
             TwitchEventEnum.Follow);
+    }
+
+    /// <summary>
+    /// EventSubからのBitsイベントを処理
+    /// </summary>
+    /// <param name="e">Bitsイベント引数</param>
+    public void SendBitsEventSubMessage(ChannelCheerArgs e)
+    {
+        var bitsEvent = e.Notification.Payload.Event;
+        var bitsSendUserName = bitsEvent.UserName;
+        if (bitsSendUserName == null) return;
+
+        var bitsAmount = bitsEvent.Bits;
+        var message = _secretKeys.Event.Bits.Message.Replace("{bitsAmount}", bitsAmount.ToString()).Replace("{bitsSendUserName}", bitsSendUserName);
+
+        SendMessage(bitsSendUserName, $"[{Settings.Default.BotName}] {message}");
+        
+        _bouyomiChanController.AddEventTalkTask($"{bitsSendUserName}さん{bitsAmount}bitsありがとうございます",
+        _secretKeys.BouyomiChan.Checked);
+        LogController.OutputLog($"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}", TwitchEventEnum.Bits);
+    }
+
+    /// <summary>
+    /// EventSubからのチャンネルポイント交換イベントを処理
+    /// </summary>
+    /// <param name="e">チャンネルポイント交換イベント引数</param>
+    public void SendChannelPointEventSubMessage(ChannelPointsCustomRewardRedemptionArgs e)
+    {
+        var channelPointEvent = e.Notification.Payload.Event;
+        var channelPointTitle = channelPointEvent.Reward.Title;
+        var channelPointCost = channelPointEvent.Reward.Cost;
+        var channelPointUserId = channelPointEvent.UserLogin;
+        var message = _secretKeys.Event.ChannelPoint.Message
+        .Replace("{channelPointCost}", channelPointCost.ToString())
+        .Replace("{channelPointTitle}", channelPointTitle)
+        .Replace("{channelPointUserName}", channelPointUserId);
+        
+        // ChannelPointは読み上げしない
+        SendMessage(channelPointUserId, $"[{Settings.Default.BotName}] {message}");
+        LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserId}, Title: {channelPointTitle}",
+        TwitchEventEnum.ChannelPoint);
+        
+        // チャンネルポイント固有の処理は別で行う
+        SendModeratorMessage(_uniqueChannelPointController.Exec(channelPointUserId, channelPointTitle));
     }
 
     /// <summary>
@@ -251,7 +279,7 @@ public class TwitchClientController
         LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}", TwitchEventEnum.Raid);
 
         Task.Run(
-            () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, _secretKeys.Twitch.Client.AccessToken));
+            () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName));
         // () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, Settings.Default.AccessToken));
     }
 
@@ -297,26 +325,6 @@ public class TwitchClientController
     }
 
     /// <summary>
-    ///     Bitsを受け取った時に実行されます。
-    /// </summary>
-    /// <param name="e"></param>
-    public void SendBitsPubSubMessage(OnBitsReceivedV2Args e)
-    {
-        var bitsSendUserName = e.UserName;
-        var bitsAmount = e.BitsUsed;
-        var totalBitsAmount = e.TotalBitsUsed;
-        var message = _secretKeys.Event.Bits.Message.Replace("{bitsAmount}", bitsAmount.ToString())
-            .Replace("{totalBitsAmount}", totalBitsAmount.ToString())
-            .Replace("{bitsSendUserName}", bitsSendUserName);
-        SendMessage(bitsSendUserName, $"[{Settings.Default.BotName}] {message}");
-        _bouyomiChanController.AddEventTalkTask($"{bitsSendUserName}さん{bitsAmount}bitsありがとうございます",
-            _secretKeys.BouyomiChan.Checked);
-        LogController.OutputLog(
-            $"<Bits> UserName: {bitsSendUserName}, Amount: {bitsAmount}, Total: {totalBitsAmount}",
-            TwitchEventEnum.Bits);
-    }
-
-    /// <summary>
     ///     サブスクを受け取った時に実行されます。
     /// </summary>
     /// <param name="sender"></param>
@@ -330,36 +338,6 @@ public class TwitchClientController
         _bouyomiChanController.AddEventTalkTask($"{giftedUserName}さんGiftありがとうございます",
             _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Gift> Name: {giftedUserName} URL: {url}", TwitchEventEnum.Gift);
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="e"></param>
-    public void SendChannelPointPubSubMessage(OnChannelPointsRewardRedeemedArgs e)
-    {
-        var channelPointTitle = e.RewardRedeemed.Redemption.Reward.Title;
-        var channelPointCost = e.RewardRedeemed.Redemption.Reward.Cost;
-        var channelPointUserId = e.RewardRedeemed.Redemption.User.Login;
-        var message = _secretKeys.Event.ChannelPoint.Message
-            .Replace("{channelPointCost}", channelPointCost.ToString())
-            .Replace("{channelPointTitle}", channelPointTitle)
-            .Replace("{channelPointUserName}", channelPointUserId);
-
-        // ChannelPointは読み上げしない
-        SendMessage(channelPointUserId, $"[{Settings.Default.BotName}] {message}");
-        LogController.OutputLog($"<ChannelPoint> UserName: {channelPointUserId}, Title: {channelPointTitle}",
-            TwitchEventEnum.ChannelPoint);
-
-        // チャンネルポイント固有の処理は別で行う
-        SendModeratorMessage(_uniqueChannelPointController.Exec(channelPointUserId, channelPointTitle));
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="e"></param>
-    public void SendPredictionPubSubMessage(OnPredictionArgs e)
-    {
-        // Predictionは最終結果がどれか取得できないので無視
     }
 
     /// <summary>
