@@ -51,7 +51,6 @@ public partial class MainWindow
         InitializeComponent();
         InitializeEncodeRegister();
         InitializeSecretValue();
-        InitializeChatWindow();
         // Task
         _ = RunWithExceptionHandlingAsync(StartTimerAsync, "Timer");
         _ = RunWithExceptionHandlingAsync(StartWebServerAsync, "WebServer");
@@ -136,23 +135,19 @@ public partial class MainWindow
         FixedTimer4TextBox.Text = secretKeys.FixedMessage.Timer4.Message;
     }
 
-    /// <summary>
-    /// </summary>
-    private void InitializeChatWindow()
+    private async Task RunWithExceptionHandlingAsync(Func<Task> taskFunc, string taskName)
     {
-        ShowChatWindow();
-    }
-
-    private async Task RunWithExceptionHandlingAsync(Func<Task> taskFunc, string taskName) {
-        try {
+        try
+        {
             await taskFunc();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             // ログ出力や通知など
             LogController.OutputLog($"Error in {taskName}: {ex.Message}");
         }
     }
-    
+
     /// <summary>
     /// </summary>
     /// <returns></returns>
@@ -309,7 +304,8 @@ public partial class MainWindow
             while (_twitchClientController is null) await Task.Delay(1);
 
             await Task.Delay(1);
-            TwitchConnectionStateLabel.Content = _twitchClientController is {IsConnected: true} && _twitchEventSubController is {IsConnected: true}
+            TwitchConnectionStateLabel.Content = _twitchClientController is {IsConnected: true} &&
+                                                 _twitchEventSubController is {IsConnected: true}
                 ? @"State: Connect"
                 : @"State: Disconnect";
         }
@@ -526,11 +522,20 @@ public partial class MainWindow
     {
         Dispatcher.Invoke((Action) (() =>
         {
+            TwitchClientUserNameTextBox.IsEnabled = false;
+            TwitchClientAccessTokenPasswordBox.IsEnabled = false;
+            TwitchClientDisplayNameTextBox.IsEnabled = false;
             TwitchClientAccessTokenButton.IsEnabled = false;
+
+            TwitchApiClientIdPasswordBox.IsEnabled = false;
+            TwitchApiClientSecretPasswordBox.IsEnabled = false;
             TwitchApiAuthorizeButton.IsEnabled = false;
-            TwitchConnectionButton.IsEnabled = false;
-            TwitchDisconnectButton.IsEnabled = false;
+            TwitchApiExpireDateTimeTextBlock.IsEnabled = false;
+            TwitchApiAuthorizeButton.IsEnabled = false;
+
+            BouyomiChanConnectCheckBox.IsEnabled = false;
             TwitchPageButton.IsEnabled = false;
+            TwitchConnectionButton.IsEnabled = false;
             DeepLSiteGoButton.IsEnabled = false;
         }));
     }
@@ -542,26 +547,22 @@ public partial class MainWindow
     {
         Dispatcher.Invoke((Action) (() =>
         {
+            TwitchClientUserNameTextBox.IsEnabled = true;
+            TwitchClientAccessTokenPasswordBox.IsEnabled = true;
+            TwitchClientDisplayNameTextBox.IsEnabled = true;
             TwitchClientAccessTokenButton.IsEnabled = true;
+
+            TwitchApiClientIdPasswordBox.IsEnabled = true;
+            TwitchApiClientSecretPasswordBox.IsEnabled = true;
             TwitchApiAuthorizeButton.IsEnabled = true;
-            TwitchConnectionButton.IsEnabled = true;
-            TwitchDisconnectButton.IsEnabled = true;
+            TwitchApiExpireDateTimeTextBlock.IsEnabled = true;
+            TwitchApiAuthorizeButton.IsEnabled = true;
+
+            BouyomiChanConnectCheckBox.IsEnabled = true;
             TwitchPageButton.IsEnabled = true;
+            TwitchConnectionButton.IsEnabled = true;
             DeepLSiteGoButton.IsEnabled = true;
         }));
-    }
-
-    /// <summary>
-    ///     Chat窓表示
-    /// </summary>
-    private void ShowChatWindow()
-    {
-        _chatWindow ??= new ChatWindow();
-        _chatWindow.Show();
-        _chatWindow.OnTwitchRequestChatButtonClick += ChatWindow_OnTwitchRequestChatButtonClick;
-
-        _raidListWindow ??= new RaidListWindow();
-        _raidListWindow.Show();
     }
 
     /// <summary>
@@ -721,7 +722,7 @@ public partial class MainWindow
         var secretKeys = SecretKeyController.LoadKeys();
 
         _twitchApiController = new TwitchApiController(secretKeys);
-        var channelId = _twitchApiController.GetTwitchChannelId();
+        // var channelId = _twitchApiController.GetTwitchChannelId();
 
         var isTokenValid = _twitchApiController.ValidateToken();
         LogController.OutputLog($"Token validation result: {isTokenValid}");
@@ -732,6 +733,15 @@ public partial class MainWindow
         // EventSub
         _twitchEventSubController = new TwitchEventSubController(_twitchClientController, _twitchApiController);
         _twitchEventSubController.Connect();
+
+        // Window追加
+        _chatWindow ??= new ChatWindow(_twitchClientController);
+        _chatWindow.Show();
+
+        _raidListWindow ??= new RaidListWindow(_twitchApiController);
+        _raidListWindow.Show();
+
+        LockWindowControl();
     }
 
     /// <summary>
@@ -744,16 +754,12 @@ public partial class MainWindow
         _twitchClientController = null;
         _twitchApiController = null;
         _twitchEventSubController = null;
-    }
 
-    /// <summary>
-    /// </summary>
-    /// <param name="message"></param>
-    private void ChatWindow_OnTwitchRequestChatButtonClick(string message)
-    {
-        _twitchClientController?.MessageTranslationProcess(message, TwitchClientUserNameTextBox.Text,
-            TwitchClientDisplayNameTextBox.Text);
-        if (_chatWindow != null) _chatWindow.TwitchRequestChatTextBox.Text = "";
+        UnlockWindowControl();
+        _chatWindow?.Close();
+        _raidListWindow?.Close();
+        _chatWindow = null;
+        _raidListWindow = null;
     }
 
     /// <summary>
