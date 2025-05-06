@@ -42,7 +42,7 @@ public partial class MainWindow
 
     /// <summary>
     /// </summary>
-    private TwitchPubSubController? _twitchPubSubController;
+    private TwitchEventSubController? _twitchEventSubController;
 
     /// <summary>
     /// </summary>
@@ -51,12 +51,11 @@ public partial class MainWindow
         InitializeComponent();
         InitializeEncodeRegister();
         InitializeSecretValue();
-        InitializeChatWindow();
         // Task
         _ = RunWithExceptionHandlingAsync(StartTimerAsync, "Timer");
         _ = RunWithExceptionHandlingAsync(StartWebServerAsync, "WebServer");
         _ = RunWithExceptionHandlingAsync(StartMonitoringAsync, "Monitoring");
-        _ = RunWithExceptionHandlingAsync(StartTwitchLibPubSubAsync, "TwitchPubSub");
+        _ = RunWithExceptionHandlingAsync(StartTwitchLibEventSubAsync, "TwitchPubSub");
     }
 
     /// <summary>
@@ -136,23 +135,19 @@ public partial class MainWindow
         FixedTimer4TextBox.Text = secretKeys.FixedMessage.Timer4.Message;
     }
 
-    /// <summary>
-    /// </summary>
-    private void InitializeChatWindow()
+    private async Task RunWithExceptionHandlingAsync(Func<Task> taskFunc, string taskName)
     {
-        ShowChatWindow();
-    }
-
-    private async Task RunWithExceptionHandlingAsync(Func<Task> taskFunc, string taskName) {
-        try {
+        try
+        {
             await taskFunc();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             // ログ出力や通知など
             LogController.OutputLog($"Error in {taskName}: {ex.Message}");
         }
     }
-    
+
     /// <summary>
     /// </summary>
     /// <returns></returns>
@@ -294,22 +289,19 @@ public partial class MainWindow
 
             TwitchApiExpireDateTimeTextBlock.Text = $"Token expiration: {Settings.Default.expiresDateTime}";
 
-            // Button無効
-            TwitchApiAuthorizeButton.IsEnabled = !string.IsNullOrEmpty(TwitchApiClientIdPasswordBox.Password) &&
-                                                 !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password);
-
             if (_twitchClientController is not null) AddGridViewChatData();
         }
     }
 
-    private async Task StartTwitchLibPubSubAsync()
+    private async Task StartTwitchLibEventSubAsync()
     {
         while (true)
         {
             while (_twitchClientController is null) await Task.Delay(1);
 
             await Task.Delay(1);
-            TwitchConnectionStateLabel.Content = _twitchClientController.IsConnectTwitchPubSub()
+            TwitchConnectionStateLabel.Content = _twitchClientController is {IsConnected: true} &&
+                                                 _twitchEventSubController is {IsConnected: true}
                 ? @"State: Connect"
                 : @"State: Disconnect";
         }
@@ -372,7 +364,7 @@ public partial class MainWindow
     {
         var parameter =
             $"client_id={TwitchApiClientIdPasswordBox.Password}" +
-            $"&client_secret={TwitchApiClientIdPasswordBox.Password}" +
+            $"&client_secret={TwitchApiClientSecretPasswordBox.Password}" +
             "&grant_type=refresh_token" +
             $"&refresh_token={Settings.Default.RefreshToken}";
         try
@@ -482,13 +474,12 @@ public partial class MainWindow
             "chat%3Aread " + // Chat受信
             "whispers%3Aread " + // Whisper受信
             "channel%3Amanage%3Araids " + // raid管理
-            "moderator%3Amanage%3Ashoutouts" + // shoutoutコマンド実行権限
-            // "channel%3Ashoutout%3Acreate " + // shoutout送信権限
-            // "channel%3Ashoutout%3Areceive" + // shoutout受信権限
+            "moderator%3Amanage%3Ashoutouts " + // shoutoutコマンド実行権限
+            "moderator%3Aread%3Afollowers" + //EventSub Follow通知
             $"&state={state}"; // ランダムなUID
         try
         {
-            LockWindowControl();
+            LockWindowControl(true);
             FaraBotModeratorWebView.Source = new Uri(requestUrl); // WebView表示して操作
         }
         catch (Exception ex)
@@ -523,16 +514,25 @@ public partial class MainWindow
     /// <summary>
     ///     Control全体をロック
     /// </summary>
-    private void LockWindowControl()
+    private void LockWindowControl(bool isAuthorize = false)
     {
         Dispatcher.Invoke((Action) (() =>
         {
+            TwitchClientUserNameTextBox.IsEnabled = false;
+            TwitchClientAccessTokenPasswordBox.IsEnabled = false;
+            TwitchClientDisplayNameTextBox.IsEnabled = false;
             TwitchClientAccessTokenButton.IsEnabled = false;
-            TwitchApiAuthorizeButton.IsEnabled = false;
-            TwitchConnectionButton.IsEnabled = false;
-            TwitchDisconnectButton.IsEnabled = false;
+
+            TwitchApiClientIdPasswordBox.IsEnabled = false;
+            TwitchApiClientSecretPasswordBox.IsEnabled = false;
+            TwitchApiExpireDateTimeTextBlock.IsEnabled = false;
+
+            BouyomiChanConnectCheckBox.IsEnabled = false;
             TwitchPageButton.IsEnabled = false;
+            TwitchConnectionButton.IsEnabled = false;
             DeepLSiteGoButton.IsEnabled = false;
+            if (isAuthorize) TwitchDisconnectButton.IsEnabled = false;
+            else TwitchApiAuthorizeButton.IsEnabled = false;
         }));
     }
 
@@ -543,26 +543,22 @@ public partial class MainWindow
     {
         Dispatcher.Invoke((Action) (() =>
         {
+            TwitchClientUserNameTextBox.IsEnabled = true;
+            TwitchClientAccessTokenPasswordBox.IsEnabled = true;
+            TwitchClientDisplayNameTextBox.IsEnabled = true;
             TwitchClientAccessTokenButton.IsEnabled = true;
+
+            TwitchApiClientIdPasswordBox.IsEnabled = true;
+            TwitchApiClientSecretPasswordBox.IsEnabled = true;
+            TwitchApiExpireDateTimeTextBlock.IsEnabled = true;
             TwitchApiAuthorizeButton.IsEnabled = true;
+
+            BouyomiChanConnectCheckBox.IsEnabled = true;
+            TwitchPageButton.IsEnabled = true;
             TwitchConnectionButton.IsEnabled = true;
             TwitchDisconnectButton.IsEnabled = true;
-            TwitchPageButton.IsEnabled = true;
             DeepLSiteGoButton.IsEnabled = true;
         }));
-    }
-
-    /// <summary>
-    ///     Chat窓表示
-    /// </summary>
-    private void ShowChatWindow()
-    {
-        _chatWindow ??= new ChatWindow();
-        _chatWindow.Show();
-        _chatWindow.OnTwitchRequestChatButtonClick += ChatWindow_OnTwitchRequestChatButtonClick;
-
-        _raidListWindow ??= new RaidListWindow();
-        _raidListWindow.Show();
     }
 
     /// <summary>
@@ -722,35 +718,44 @@ public partial class MainWindow
         var secretKeys = SecretKeyController.LoadKeys();
 
         _twitchApiController = new TwitchApiController(secretKeys);
-        var channelId = _twitchApiController.GetTwitchChannelId(secretKeys.Twitch.Client.UserName);
+        // var channelId = _twitchApiController.GetTwitchChannelId();
+
+        var isTokenValid = _twitchApiController.ValidateToken();
+        LogController.OutputLog($"Token validation result: {isTokenValid}");
 
         _twitchClientController = new TwitchClientController(secretKeys, _twitchApiController);
         _twitchClientController.Connect();
 
-        _twitchPubSubController = new TwitchPubSubController(_twitchClientController, channelId);
-        _twitchPubSubController.Connect();
+        // EventSub
+        _twitchEventSubController = new TwitchEventSubController(_twitchClientController, _twitchApiController);
+        _twitchEventSubController.Connect();
+
+        // Window追加
+        _chatWindow ??= new ChatWindow(_twitchClientController);
+        _chatWindow.Show();
+
+        _raidListWindow ??= new RaidListWindow(_twitchApiController);
+        _raidListWindow.Show();
+
+        LockWindowControl();
     }
 
     /// <summary>
     /// </summary>
     private void TwitchDisconnect()
     {
-        _twitchPubSubController?.Disconnect();
+        _twitchEventSubController?.Disconnect();
         _twitchClientController?.Disconnect();
 
         _twitchClientController = null;
         _twitchApiController = null;
-        _twitchPubSubController = null;
-    }
+        _twitchEventSubController = null;
 
-    /// <summary>
-    /// </summary>
-    /// <param name="message"></param>
-    private void ChatWindow_OnTwitchRequestChatButtonClick(string message)
-    {
-        _twitchClientController?.MessageTranslationProcess(message, TwitchClientUserNameTextBox.Text,
-            TwitchClientDisplayNameTextBox.Text);
-        if (_chatWindow != null) _chatWindow.TwitchRequestChatTextBox.Text = "";
+        UnlockWindowControl();
+        _chatWindow?.Close();
+        _raidListWindow?.Close();
+        _chatWindow = null;
+        _raidListWindow = null;
     }
 
     /// <summary>

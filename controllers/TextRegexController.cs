@@ -77,8 +77,11 @@ internal static class TextRegexController
         };
         var jsonData = JsonSerializer.Serialize(textRegex, options);
 
-        // \003Cだけ変換できないので手動で変換
-        writer.WriteLine(jsonData.Replace("\\u003C", "<"));
+        // 変換したい特殊文字は先に変換
+        jsonData = jsonData
+            .Replace("\\u002B", "+")
+            .Replace("\\u003C", "<");
+        writer.WriteLine(jsonData);
     }
 
     /// <summary>
@@ -90,12 +93,8 @@ internal static class TextRegexController
             BeatSaberChat = new List<BeatSaberChatModel>
             {
                 new("(?<=!bsr ).*", "から、ソングリクエスト{0}を頂きました。"),
-                new("(?<=Request).*(?=)", "リクエスト曲 {0} が登録されました。"),
-                // SongSubNameに()が付く場合
-                new(".*(?= \\(.*?\\)\\/.*requested by )|(?<=by ).*(?= is next)",
-                    "次の曲は、{1}さんがリクエストした{0}です。"),
-                // SongSubNameに()が付かない場合
-                new(".*(?= .*\\/.*requested by )|(?<=by ).*(?= is next)",
+                new("(?<=Request ).*?(?= /)", "リクエスト曲 {0} が登録されました。"),
+                new("^[^/]+(?= */)|(?<=requested by )[^ ]+(?= +is next)",
                     "次の曲は、{1}さんがリクエストした{0}です。"),
                 new("(?=Queue is closed).*", "ソングリクエストを終了します。皆さんありがとう！"),
                 new("(?=Queue is open).*", "ソングリクエストを開始しました。リクエストお待ちしてます。"),
