@@ -293,9 +293,7 @@ public class TwitchClientController
         _bouyomiChanController.AddEventTalkTask($"{raiderName}さんにRaidされました", _secretKeys.BouyomiChan.Checked);
         LogController.OutputLog($"<Raid> Name: {raiderName}, URL: {raiderChannelUrl}", TwitchEventEnum.Raid);
 
-        Task.Run(
-            () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName));
-        // () => _twitchApiController.SendShoutoutAsync(_twitchUserName, raiderName, Settings.Default.AccessToken));
+        _twitchApiController.SendShoutout(raiderName);
     }
 
     /// <summary>
@@ -359,6 +357,7 @@ public class TwitchClientController
         }
         catch (Exception ex)
         {
+            _bouyomiChanController.AddEventTalkTask("翻訳に失敗しました", _secretKeys.BouyomiChan.Checked);
             LogController.OutputLog($"<Subscriber> Error: {ex.Message}", TwitchEventEnum.Subscriber);
         }
     }
@@ -409,7 +408,7 @@ public class TwitchClientController
     /// <param name="displayName"></param>
     /// <param name="sourceMessage"></param>
     /// <param name="isAnnouncement"></param>
-    private async void SendMessageTranslation(string userName, string displayName, string sourceMessage,
+    private void SendMessageTranslation(string userName, string displayName, string sourceMessage,
         bool isAnnouncement = false)
     {
         if (!TargetTranslationWord(sourceMessage)) return;
@@ -422,7 +421,7 @@ public class TwitchClientController
             return;
         }
 
-        await MessageTranslationProcess(sourceMessage, userName, displayName, isAnnouncement);
+        MessageTranslationProcess(sourceMessage, userName, displayName, isAnnouncement);
     }
 
     /// <summary>
@@ -431,7 +430,7 @@ public class TwitchClientController
     /// <param name="userName"></param>
     /// <param name="displayName"></param>
     /// <param name="isAnnouncement"></param>
-    public async Task MessageTranslationProcess(string sourceMessage, string userName, string displayName,
+    private void MessageTranslationProcess(string sourceMessage, string userName, string displayName,
         bool isAnnouncement = false)
     {
         try
@@ -452,7 +451,8 @@ public class TwitchClientController
                     return;
                 }
 
-                var text = await _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage);
+                var text = Task.Run(() => _deepLTranslator.TranslateTextAsync(sourceMessage, null, targetLanguage))
+                    .Result;
                 var sourceLanguage = text.DetectedSourceLanguageCode;
                 var translateMessage = (isAnnouncement ? "☆☆☆Announcement☆☆☆ " : "") + text.Text;
                 SendMessage(userName,
@@ -467,7 +467,7 @@ public class TwitchClientController
         }
         catch (Exception ex)
         {
-            var errorMessage = "DeepL翻訳に失敗しています。詳しくはログを確認してください。";
+            var errorMessage = "DeepL翻訳に失敗しています。";
             SendMessage(displayName,
                 $"[{Settings.Default.BotName}] @{_twitchClient.TwitchUsername} {errorMessage}");
             if (_secretKeys.BouyomiChan.Checked && !isAnnouncement)
@@ -520,11 +520,12 @@ public class TwitchClientController
     /// <summary>
     /// </summary>
     /// <returns></returns>
-    public async Task<Usage> DeepLUsage()
+    public Usage DeepLUsage()
     {
         // 定期的に文字数取得してグラフ表示
         // https://blog.hiros-dot.net/?p=2123
-        return await _deepLTranslator.GetUsageAsync();
+        var usage = Task.Run(() => _deepLTranslator.GetUsageAsync()).Result;
+        return usage;
     }
 
     /// <summary>

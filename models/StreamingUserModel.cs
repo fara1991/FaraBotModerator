@@ -21,19 +21,19 @@ public class StreamingUserModel
     /// </summary>
     [JsonPropertyName("gameId")]
     public string GameId { get; set; } = "";
-    
+
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("gameName")]
     public string GameName { get; set; } = "";
-    
+
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("startedAt")]
     public DateTime StartedAt { get; set; }
-    
+
     /// <summary>
     /// 
     /// </summary>

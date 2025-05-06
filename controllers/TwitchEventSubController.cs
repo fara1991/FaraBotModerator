@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using FaraBotModerator.Properties;
-using Microsoft.Extensions.Hosting;
-using TwitchLib.Api;
-using TwitchLib.Api.Core.Enums;
-using TwitchLib.Client;
-using TwitchLib.EventSub;
 using TwitchLib.EventSub.Websockets;
 using TwitchLib.EventSub.Websockets.Core.EventArgs;
 using TwitchLib.EventSub.Websockets.Core.EventArgs.Channel;
-using TwitchLib.EventSub.Websockets.Core.EventArgs.Stream;
-using TwitchLib.Api.Helix.Models.EventSub;
 
 namespace FaraBotModerator.controllers;
 
@@ -25,7 +14,7 @@ public class TwitchEventSubController
     private static EventSubWebsocketClient? _eventSubClient;
     private readonly TwitchClientController _twitchClientController;
     private readonly TwitchApiController _twitchApiController;
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -35,17 +24,18 @@ public class TwitchEventSubController
     /// </summary>
     /// <param name="twitchClientController"></param>
     /// <param name="twitchApiController"></param>
-    public TwitchEventSubController(TwitchClientController twitchClientController, TwitchApiController twitchApiController)
+    public TwitchEventSubController(TwitchClientController twitchClientController,
+        TwitchApiController twitchApiController)
     {
         _twitchClientController = twitchClientController;
         _twitchApiController = twitchApiController;
         // EventSub WebSocketクライアントを初期化
         _eventSubClient = new EventSubWebsocketClient();
-        
+
         // 接続関連のイベントハンドラを設定
         _eventSubClient.WebsocketConnected += TwitchEventSubOnConnected;
         _eventSubClient.WebsocketDisconnected += TwitchEventSubOnDisconnected;
-        
+
         // チャンネル関連のイベントハンドラを設定
         _eventSubClient.ChannelFollow += TwitchEventSubOnFollowed;
         _eventSubClient.ChannelCheer += TwitchEventSubOnCheerReceived;

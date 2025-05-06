@@ -9,11 +9,6 @@ namespace FaraBotModerator.views;
 /// </summary>
 public partial class ChatWindow : Window
 {
-    /// <summary>
-    /// </summary>
-    /// <param name="text"></param>
-    public delegate void ButtonClickHandler(string text);
-
     private readonly TwitchClientController _twitchClientController;
 
     /// <summary>
@@ -23,7 +18,7 @@ public partial class ChatWindow : Window
         _twitchClientController = twitchClientController;
         InitializeComponent();
     }
-    
+
     /// <summary>
     /// </summary>
     /// <param name="sender"></param>

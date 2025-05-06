@@ -289,10 +289,6 @@ public partial class MainWindow
 
             TwitchApiExpireDateTimeTextBlock.Text = $"Token expiration: {Settings.Default.expiresDateTime}";
 
-            // Button無効
-            TwitchApiAuthorizeButton.IsEnabled = !string.IsNullOrEmpty(TwitchApiClientIdPasswordBox.Password) &&
-                                                 !string.IsNullOrEmpty(TwitchApiClientSecretPasswordBox.Password);
-
             if (_twitchClientController is not null) AddGridViewChatData();
         }
     }
@@ -483,7 +479,7 @@ public partial class MainWindow
             $"&state={state}"; // ランダムなUID
         try
         {
-            LockWindowControl();
+            LockWindowControl(true);
             FaraBotModeratorWebView.Source = new Uri(requestUrl); // WebView表示して操作
         }
         catch (Exception ex)
@@ -518,7 +514,7 @@ public partial class MainWindow
     /// <summary>
     ///     Control全体をロック
     /// </summary>
-    private void LockWindowControl()
+    private void LockWindowControl(bool isAuthorize = false)
     {
         Dispatcher.Invoke((Action) (() =>
         {
@@ -529,14 +525,14 @@ public partial class MainWindow
 
             TwitchApiClientIdPasswordBox.IsEnabled = false;
             TwitchApiClientSecretPasswordBox.IsEnabled = false;
-            TwitchApiAuthorizeButton.IsEnabled = false;
             TwitchApiExpireDateTimeTextBlock.IsEnabled = false;
-            TwitchApiAuthorizeButton.IsEnabled = false;
 
             BouyomiChanConnectCheckBox.IsEnabled = false;
             TwitchPageButton.IsEnabled = false;
             TwitchConnectionButton.IsEnabled = false;
             DeepLSiteGoButton.IsEnabled = false;
+            if (isAuthorize) TwitchDisconnectButton.IsEnabled = false;
+            else TwitchApiAuthorizeButton.IsEnabled = false;
         }));
     }
 
@@ -554,13 +550,13 @@ public partial class MainWindow
 
             TwitchApiClientIdPasswordBox.IsEnabled = true;
             TwitchApiClientSecretPasswordBox.IsEnabled = true;
-            TwitchApiAuthorizeButton.IsEnabled = true;
             TwitchApiExpireDateTimeTextBlock.IsEnabled = true;
             TwitchApiAuthorizeButton.IsEnabled = true;
 
             BouyomiChanConnectCheckBox.IsEnabled = true;
             TwitchPageButton.IsEnabled = true;
             TwitchConnectionButton.IsEnabled = true;
+            TwitchDisconnectButton.IsEnabled = true;
             DeepLSiteGoButton.IsEnabled = true;
         }));
     }
